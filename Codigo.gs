@@ -214,15 +214,6 @@ function processAtestado(dados) {
       arquivo.getUrl()
     ]);
 
-    var diasNum  = parseInt(dados.dias) || 1;
-    var atInicio = new Date();
-    var atFim    = new Date(atInicio.getTime() + diasNum * 86400000);
-    _criarEventoCalendar(
-      '🏥 Atestado: ' + dados.nome + ' — ' + dados.empresa + ' (' + dados.dias + 'd)',
-      atInicio, atFim,
-      'CID: ' + (dados.cid || 'Não informado') + '\nArquivo: ' + arquivo.getUrl()
-    );
-
     return { ok: true, link: arquivo.getUrl() };
   } catch (err) {
     return { ok: false, erro: err.message };
@@ -1741,12 +1732,16 @@ function getAtividades() {
       if (!sheet) continue;
       var rows  = sheet.getDataRange().getValues();
       var total = rows.length;
-      for (var i = Math.max(1, total - 6); i < total; i++) {
+      var tz2 = Session.getScriptTimeZone();
+      for (var i = Math.max(1, total - 15); i < total; i++) {
         if (!rows[i][0]) continue;
+        var dataVal = rows[i][0] instanceof Date
+          ? Utilities.formatDate(rows[i][0], tz2, 'dd/MM/yyyy HH:mm')
+          : String(rows[i][0]);
         lista.push({
           tipo:    fontes[f][1],
           cor:     fontes[f][2],
-          data:    String(rows[i][0]),
+          data:    dataVal,
           nome:    String(rows[i][1] || ''),
           empresa: String(rows[i][2] || '')
         });
@@ -1763,7 +1758,7 @@ function getAtividades() {
       lista.push({ tipo: 'Aniversário', cor: 'ok', data: a.dataAniv, nome: a.nome, empresa: a.empresa || '' });
     });
     lista.sort(function(a, b) { return b.data > a.data ? 1 : -1; });
-    return lista.slice(0, 25);
+    return lista.slice(0, 80);
   } catch (e) {
     return [];
   }
