@@ -1,0 +1,373 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>Guia do Gestor — Portal Crescer</title>
+<link rel="preconnect" href="https://fonts.googleapis.com"/>
+<link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800&display=swap" rel="stylesheet"/>
+<style>
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+:root {
+  --graphite: #3D3A34;
+  --gold: #C9A84C;
+  --ok: #16a34a;
+  --ok-l: #f0fdf4;
+  --warn: #d97706;
+  --warn-l: #fef3c7;
+  --err: #dc2626;
+  --err-l: #fee2e2;
+  --blue: #2563eb;
+  --blue-l: #eff6ff;
+  --bg: #FAF9F7;
+  --surface: #FFFFFF;
+  --border: #E8E5DE;
+  --txt-1: #1C1B18;
+  --txt-2: #5C5952;
+  --txt-3: #9B9890;
+}
+body { font-family: 'Outfit', sans-serif; background: var(--bg); color: var(--txt-1); min-height: 100vh; }
+
+/* HEADER */
+.header { background: var(--graphite); padding: 24px 20px 20px; text-align: center; }
+.header-badge { display: inline-block; background: var(--gold); color: #fff; font-size: 10px; font-weight: 700; letter-spacing: 2px; text-transform: uppercase; padding: 4px 12px; border-radius: 20px; margin-bottom: 10px; }
+.header-title { font-size: 22px; font-weight: 800; color: #fff; line-height: 1.2; }
+.header-sub { font-size: 13px; color: #B0ADA6; margin-top: 6px; }
+
+/* INTRO */
+.intro { background: var(--gold); padding: 20px; text-align: center; }
+.intro-text { font-size: 14px; font-weight: 600; color: #fff; line-height: 1.6; }
+
+/* NAV INDEX */
+.nav-index { padding: 20px; display: flex; flex-direction: column; gap: 8px; }
+.nav-item { display: flex; align-items: center; gap: 12px; padding: 14px 16px; background: var(--surface); border: 1.5px solid var(--border); border-radius: 12px; text-decoration: none; color: var(--txt-1); font-weight: 600; font-size: 14px; }
+.nav-num { width: 28px; height: 28px; border-radius: 8px; display: flex; align-items: center; justify-content: center; font-size: 13px; font-weight: 800; color: #fff; flex-shrink: 0; }
+
+/* SECTIONS */
+.section { padding: 0 20px 32px; }
+.section-header { display: flex; align-items: center; gap: 12px; padding: 20px 0 14px; border-bottom: 2px solid var(--border); margin-bottom: 20px; }
+.section-num { width: 36px; height: 36px; border-radius: 10px; display: flex; align-items: center; justify-content: center; font-size: 15px; font-weight: 800; color: #fff; flex-shrink: 0; }
+.section-title { font-size: 18px; font-weight: 800; color: var(--graphite); }
+.section-desc { font-size: 13px; color: var(--txt-2); margin-top: 2px; }
+
+/* STEPS */
+.steps { display: flex; flex-direction: column; gap: 12px; }
+.step { display: flex; gap: 14px; align-items: flex-start; padding: 16px; background: var(--surface); border: 1.5px solid var(--border); border-radius: 12px; }
+.step-num { width: 32px; height: 32px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 14px; font-weight: 800; color: #fff; flex-shrink: 0; }
+.step-body { flex: 1; }
+.step-title { font-size: 14px; font-weight: 700; color: var(--txt-1); margin-bottom: 4px; }
+.step-desc { font-size: 13px; color: var(--txt-2); line-height: 1.6; }
+.step-tip { display: inline-flex; align-items: center; gap: 5px; margin-top: 8px; font-size: 12px; font-weight: 600; padding: 4px 10px; border-radius: 20px; }
+
+/* DOCS LIST */
+.docs-list { display: flex; flex-direction: column; gap: 6px; margin-top: 10px; }
+.doc-item { display: flex; align-items: center; gap: 8px; padding: 10px 12px; background: var(--bg); border: 1px solid var(--border); border-radius: 8px; font-size: 13px; color: var(--txt-2); }
+.doc-dot { width: 6px; height: 6px; border-radius: 50%; flex-shrink: 0; }
+
+/* ALERT BOX */
+.alert { padding: 14px 16px; border-radius: 10px; font-size: 13px; line-height: 1.6; margin-bottom: 16px; }
+.alert strong { display: block; font-size: 14px; font-weight: 700; margin-bottom: 4px; }
+
+/* DIVIDER */
+.divider { height: 8px; background: var(--bg); border-top: 1px solid var(--border); border-bottom: 1px solid var(--border); margin: 0 0 0; }
+
+/* FOOTER */
+.footer { background: var(--graphite); color: #B0ADA6; text-align: center; padding: 24px 20px; font-size: 12px; line-height: 1.8; }
+.footer strong { color: var(--gold); }
+</style>
+</head>
+<body>
+
+<!-- HEADER -->
+<div class="header">
+  <div class="header-badge">Crescer Consultoria</div>
+  <div class="header-title">Guia do Gestor</div>
+  <div class="header-sub">Como usar o Portal RH da Crescer</div>
+</div>
+
+<!-- INTRO -->
+<div class="intro">
+  <div class="intro-text">Este guia foi feito para você, gestor.<br/>Simples, rápido e sem complicação.</div>
+</div>
+
+<!-- ÍNDICE -->
+<div class="nav-index">
+  <a href="#sec-acesso" class="nav-item">
+    <div class="nav-num" style="background:var(--graphite)">1</div>
+    <div>Como acessar o portal</div>
+  </a>
+  <a href="#sec-admissao" class="nav-item">
+    <div class="nav-num" style="background:var(--ok)">2</div>
+    <div>Admitir um colaborador</div>
+  </a>
+  <a href="#sec-atestado" class="nav-item">
+    <div class="nav-num" style="background:var(--warn)">3</div>
+    <div>Enviar atestado médico</div>
+  </a>
+  <a href="#sec-vaga" class="nav-item">
+    <div class="nav-num" style="background:var(--blue)">4</div>
+    <div>Abrir uma vaga</div>
+  </a>
+  <a href="#sec-duvidas" class="nav-item">
+    <div class="nav-num" style="background:#7c3aed)">5</div>
+    <div>Dúvidas — fale com a Crescer</div>
+  </a>
+</div>
+
+<div class="divider"></div>
+
+<!-- SEÇÃO 1: ACESSO -->
+<div class="section" id="sec-acesso">
+  <div class="section-header">
+    <div class="section-num" style="background:var(--graphite)">1</div>
+    <div>
+      <div class="section-title">Como acessar o portal</div>
+      <div class="section-desc">É simples — não precisa instalar nada</div>
+    </div>
+  </div>
+
+  <div class="alert" style="background:var(--blue-l);border:1.5px solid #bfdbfe;">
+    <strong style="color:var(--blue)">O link foi enviado pela sua consultora Crescer</strong>
+    Salve o link nos favoritos do seu celular ou computador para acessar sempre que precisar.
+  </div>
+
+  <div class="steps">
+    <div class="step">
+      <div class="step-num" style="background:var(--graphite)">1</div>
+      <div class="step-body">
+        <div class="step-title">Abra o link no seu navegador</div>
+        <div class="step-desc">Funciona em qualquer celular ou computador. Não precisa criar conta nem senha.</div>
+      </div>
+    </div>
+    <div class="step">
+      <div class="step-num" style="background:var(--graphite)">2</div>
+      <div class="step-body">
+        <div class="step-title">Escolha o que quer fazer</div>
+        <div class="step-desc">A tela inicial mostra as 3 opções disponíveis: Admissão, Atestado e Vaga.</div>
+      </div>
+    </div>
+    <div class="step">
+      <div class="step-num" style="background:var(--graphite)">3</div>
+      <div class="step-body">
+        <div class="step-title">Preencha e envie</div>
+        <div class="step-desc">A Crescer recebe automaticamente. Você não precisa enviar nada por WhatsApp — o sistema já cuida disso.</div>
+        <div class="step-tip" style="background:var(--ok-l);color:var(--ok)">
+          <svg fill="none" viewBox="0 0 24 24" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="width:13px;height:13px;stroke:var(--ok)"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg>
+          A confirmação aparece na tela após o envio
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="divider"></div>
+
+<!-- SEÇÃO 2: ADMISSÃO -->
+<div class="section" id="sec-admissao">
+  <div class="section-header">
+    <div class="section-num" style="background:var(--ok)">2</div>
+    <div>
+      <div class="section-title">Admitir um colaborador</div>
+      <div class="section-desc">Use quando for contratar alguém novo</div>
+    </div>
+  </div>
+
+  <div class="alert" style="background:var(--ok-l);border:1.5px solid #86efac;">
+    <strong style="color:var(--ok)">Faça isso assim que decidir a contratação</strong>
+    Quanto antes enviar, mais rápido a Crescer processa a documentação e o colaborador pode começar.
+  </div>
+
+  <div class="steps">
+    <div class="step">
+      <div class="step-num" style="background:var(--ok)">1</div>
+      <div class="step-body">
+        <div class="step-title">Clique em "Nova Admissão"</div>
+        <div class="step-desc">Na tela inicial do portal.</div>
+      </div>
+    </div>
+    <div class="step">
+      <div class="step-num" style="background:var(--ok)">2</div>
+      <div class="step-body">
+        <div class="step-title">Preencha os dados do colaborador</div>
+        <div class="step-desc">Nome completo, CPF, data de nascimento, telefone, e-mail, empresa, cargo, data de início e salário.</div>
+        <div class="step-tip" style="background:#fef3c7;color:var(--warn)">
+          <svg fill="none" viewBox="0 0 24 24" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="width:13px;height:13px;stroke:var(--warn)"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg>
+          Confira os dados antes de enviar — erros de CPF causam problemas no eSocial
+        </div>
+      </div>
+    </div>
+    <div class="step">
+      <div class="step-num" style="background:var(--ok)">3</div>
+      <div class="step-body">
+        <div class="step-title">Anexe os documentos</div>
+        <div class="step-desc">Fotografe ou escaneie cada documento e anexe no campo correspondente.</div>
+        <div class="docs-list">
+          <div class="doc-item"><div class="doc-dot" style="background:var(--ok)"></div>RG (frente e verso)</div>
+          <div class="doc-item"><div class="doc-dot" style="background:var(--ok)"></div>CPF</div>
+          <div class="doc-item"><div class="doc-dot" style="background:var(--ok)"></div>CNH (se tiver)</div>
+          <div class="doc-item"><div class="doc-dot" style="background:var(--ok)"></div>Certidão de Nascimento ou Casamento</div>
+          <div class="doc-item"><div class="doc-dot" style="background:var(--ok)"></div>Foto 3x4 (fundo branco)</div>
+          <div class="doc-item"><div class="doc-dot" style="background:var(--ok)"></div>Comprovante de residência</div>
+          <div class="doc-item"><div class="doc-dot" style="background:var(--ok)"></div>Comprovante de escolaridade</div>
+          <div class="doc-item"><div class="doc-dot" style="background:var(--ok)"></div>PIS / PASEP</div>
+          <div class="doc-item"><div class="doc-dot" style="background:var(--ok)"></div>Título de eleitor</div>
+          <div class="doc-item"><div class="doc-dot" style="background:var(--ok)"></div>Dados bancários</div>
+        </div>
+      </div>
+    </div>
+    <div class="step">
+      <div class="step-num" style="background:var(--ok)">4</div>
+      <div class="step-body">
+        <div class="step-title">Clique em "Confirmar Admissão"</div>
+        <div class="step-desc">Pronto! A Crescer recebe tudo e entra em contato para os próximos passos, incluindo o agendamento do ASO (exame admissional).</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="divider"></div>
+
+<!-- SEÇÃO 3: ATESTADO -->
+<div class="section" id="sec-atestado">
+  <div class="section-header">
+    <div class="section-num" style="background:var(--warn)">3</div>
+    <div>
+      <div class="section-title">Enviar atestado médico</div>
+      <div class="section-desc">Quando um colaborador apresentar atestado</div>
+    </div>
+  </div>
+
+  <div class="alert" style="background:var(--warn-l);border:1.5px solid #fcd34d;">
+    <strong style="color:var(--warn)">Envie no mesmo dia que receber o atestado</strong>
+    Atrasos podem causar problemas com contabilidade, ponto e INSS (em casos de mais de 15 dias).
+  </div>
+
+  <div class="steps">
+    <div class="step">
+      <div class="step-num" style="background:var(--warn)">1</div>
+      <div class="step-body">
+        <div class="step-title">Clique em "Enviar Atestado"</div>
+        <div class="step-desc">Na tela inicial do portal.</div>
+      </div>
+    </div>
+    <div class="step">
+      <div class="step-num" style="background:var(--warn)">2</div>
+      <div class="step-body">
+        <div class="step-title">Preencha os dados</div>
+        <div class="step-desc">Nome do colaborador, sua empresa, quantos dias de afastamento e o CID (código do atestado, se houver).</div>
+      </div>
+    </div>
+    <div class="step">
+      <div class="step-num" style="background:var(--warn)">3</div>
+      <div class="step-body">
+        <div class="step-title">Fotografe e anexe o atestado</div>
+        <div class="step-desc">Foto nítida do documento original, frente. O arquivo pode ser JPG, PNG ou PDF.</div>
+        <div class="step-tip" style="background:#fee2e2;color:var(--err)">
+          <svg fill="none" viewBox="0 0 24 24" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="width:13px;height:13px;stroke:var(--err)"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg>
+          Atestado sem anexo não será aceito
+        </div>
+      </div>
+    </div>
+    <div class="step">
+      <div class="step-num" style="background:var(--warn)">4</div>
+      <div class="step-body">
+        <div class="step-title">Clique em "Enviar Atestado"</div>
+        <div class="step-desc">A Crescer recebe, comunica a contabilidade e registra o afastamento. Você não precisa fazer mais nada.</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="divider"></div>
+
+<!-- SEÇÃO 4: VAGA -->
+<div class="section" id="sec-vaga">
+  <div class="section-header">
+    <div class="section-num" style="background:var(--blue)">4</div>
+    <div>
+      <div class="section-title">Abrir uma vaga</div>
+      <div class="section-desc">Quando precisar contratar alguém</div>
+    </div>
+  </div>
+
+  <div class="alert" style="background:var(--blue-l);border:1.5px solid #bfdbfe;">
+    <strong style="color:var(--blue)">Preencha com o máximo de detalhes possível</strong>
+    Quanto mais informações você fornecer, mais rápido a Crescer encontra o candidato ideal.
+  </div>
+
+  <div class="steps">
+    <div class="step">
+      <div class="step-num" style="background:var(--blue)">1</div>
+      <div class="step-body">
+        <div class="step-title">Clique em "Abrir Vaga"</div>
+        <div class="step-desc">Na tela inicial do portal.</div>
+      </div>
+    </div>
+    <div class="step">
+      <div class="step-num" style="background:var(--blue)">2</div>
+      <div class="step-body">
+        <div class="step-title">Descreva a vaga</div>
+        <div class="step-desc">Título, área, nível, tipo de contrato, salário e o que o candidato vai fazer no dia a dia.</div>
+      </div>
+    </div>
+    <div class="step">
+      <div class="step-num" style="background:var(--blue)">3</div>
+      <div class="step-body">
+        <div class="step-title">Informe os requisitos</div>
+        <div class="step-desc">Escolaridade mínima, experiência necessária e qualquer habilidade importante para a função.</div>
+      </div>
+    </div>
+    <div class="step">
+      <div class="step-num" style="background:var(--blue)">4</div>
+      <div class="step-body">
+        <div class="step-title">Clique em "Abrir Vaga"</div>
+        <div class="step-desc">A Crescer inicia o processo seletivo e mantém você atualizado sobre os candidatos.</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="divider"></div>
+
+<!-- SEÇÃO 5: DÚVIDAS -->
+<div class="section" id="sec-duvidas">
+  <div class="section-header">
+    <div class="section-num" style="background:#7c3aed">5</div>
+    <div>
+      <div class="section-title">Ficou com dúvida?</div>
+      <div class="section-desc">Estamos aqui para ajudar</div>
+    </div>
+  </div>
+
+  <div class="alert" style="background:#faf5ff;border:1.5px solid #c4b5fd;">
+    <strong style="color:#7c3aed">Entre em contato com sua consultora Crescer</strong>
+    Se algo não ficou claro ou aparecer algum erro no portal, chame pelo WhatsApp. Não tente resolver sozinho — estamos aqui para isso.
+  </div>
+
+  <div class="steps">
+    <div class="step">
+      <div class="step-num" style="background:#7c3aed">1</div>
+      <div class="step-body">
+        <div class="step-title">Anotou algum erro?</div>
+        <div class="step-desc">Tire uma foto da tela e envie para a consultora pelo WhatsApp com a descrição do que estava tentando fazer.</div>
+      </div>
+    </div>
+    <div class="step">
+      <div class="step-num" style="background:#7c3aed">2</div>
+      <div class="step-body">
+        <div class="step-title">Não encontrou o que precisava?</div>
+        <div class="step-desc">O portal cobre admissão, atestado e vagas. Para outros processos (férias, rescisão, documentos), entre em contato diretamente com a Crescer.</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- FOOTER -->
+<div class="footer">
+  <div style="font-size:15px;font-weight:700;color:#fff;margin-bottom:6px">Crescer Consultoria Empresarial</div>
+  <div>Este guia foi preparado especialmente para você.</div>
+  <div style="margin-top:8px">Feito por <strong>Domani Consultoria</strong></div>
+</div>
+
+</body>
+</html>
