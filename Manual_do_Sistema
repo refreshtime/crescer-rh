@@ -1,0 +1,1309 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>CRESCER · Manual do Sistema</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet"/>
+<style>
+:root {
+  --bg:       #F5F4F1;
+  --surface:  #FFFFFF;
+  --border:   #E3E1DA;
+  --border-s: #CCCAC2;
+  --txt:      #18171A;
+  --txt-2:    #5C5A55;
+  --txt-3:    #9A9890;
+  --graphite: #1E1D1B;
+  --gold:     #8B7A55;
+  --gold-l:   #F0EBE1;
+  --ok:       #3D7A5C;
+  --ok-l:     #EBF5F0;
+  --warn:     #7A5C20;
+  --warn-l:   #FFF8EC;
+  --err:      #8B3A3A;
+  --err-l:    #F5EBEB;
+  --adm:      #1D4068;
+  --adm-l:    #E4EDF6;
+  --at:       #1B5E38;
+  --at-l:     #E3F1E9;
+  --vaga:     #3D2868;
+  --vaga-l:   #EAE5F5;
+  --des:      #7A2828;
+  --des-l:    #F5E8E8;
+  --drive:    #1558D0;
+  --drive-l:  #E6EEFF;
+  --sheet:    #1A5C34;
+  --sheet-l:  #E4F1EA;
+}
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+html { scroll-behavior: smooth; background: var(--bg); }
+body {
+  font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+  color: var(--txt);
+  -webkit-font-smoothing: antialiased;
+  font-size: 14px;
+  line-height: 1.6;
+}
+
+/* ── HEADER ── */
+.header { background: var(--graphite); padding: 40px 28px 32px; }
+.header-inner { max-width: 900px; margin: 0 auto; }
+.brand { font-size: 10px; font-weight: 700; letter-spacing: 4px; color: var(--gold); margin-bottom: 8px; text-transform: uppercase; }
+.title { font-size: 24px; font-weight: 800; color: #fff; line-height: 1.2; letter-spacing: -0.3px; }
+.sub   { font-size: 13px; color: #9A9890; margin-top: 6px; font-weight: 400; }
+.header-pills { display: flex; gap: 8px; flex-wrap: wrap; margin-top: 18px; }
+.header-pill { font-size: 11px; font-weight: 600; padding: 4px 12px; border-radius: 20px; letter-spacing: 0.2px; }
+.header-pill.int { background: rgba(139,122,85,0.2); color: #C9B07A; }
+.header-pill.ext { background: rgba(29,64,104,0.3);  color: #8AB2D8; }
+.header-pill.doc { background: rgba(255,255,255,0.08); color: #7A7870; }
+
+/* ── LAYOUT ── */
+.wrap { max-width: 900px; margin: 0 auto; padding: 40px 20px 100px; }
+
+/* ── ÍNDICE ── */
+.idx-box {
+  border-top: 2px solid var(--graphite);
+  border-bottom: 1px solid var(--border);
+  padding: 18px 0 22px;
+  margin-bottom: 48px;
+}
+.idx-title { font-size: 10px; font-weight: 700; letter-spacing: 3px; text-transform: uppercase; color: var(--txt-3); margin-bottom: 14px; }
+.idx-list  { display: grid; grid-template-columns: 1fr 1fr; gap: 0 48px; }
+@media(max-width:560px){ .idx-list { grid-template-columns: 1fr; } }
+.idx-item  {
+  display: flex; align-items: baseline; gap: 10px; text-decoration: none;
+  padding: 6px 0; transition: color .12s;
+}
+.idx-item:hover .idx-name { color: var(--graphite); text-decoration: underline; }
+.idx-num  { font-size: 11px; font-weight: 500; color: var(--txt-3); min-width: 20px; flex-shrink: 0; }
+.idx-name { font-size: 13px; font-weight: 500; color: var(--txt-2); line-height: 1.4; }
+
+/* ── CABEÇALHO DE SEÇÃO ── */
+.section-wrap { margin-bottom: 48px; }
+.section-label { display: flex; align-items: center; gap: 12px; margin-bottom: 20px; padding-bottom: 16px; border-bottom: 2px solid var(--border); }
+.section-num { width: 36px; height: 36px; border-radius: 10px; background: var(--graphite); color: #fff; font-size: 13px; font-weight: 800; display: flex; align-items: center; justify-content: center; flex-shrink: 0; }
+.section-name { font-size: 16px; font-weight: 800; color: var(--graphite); letter-spacing: -0.2px; }
+.section-desc { font-size: 13px; color: var(--txt-2); margin-top: 2px; font-weight: 400; }
+
+/* ── OS PORTAIS ── */
+.portais-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; }
+@media(max-width:620px){ .portais-grid { grid-template-columns: 1fr; } }
+.portal-card { border-radius: 14px; padding: 22px 20px 20px; border: 1.5px solid var(--border); background: var(--surface); position: relative; transition: box-shadow .15s; }
+.portal-card:hover { box-shadow: 0 4px 20px rgba(0,0,0,0.07); }
+.portal-badge { position: absolute; top: 16px; right: 16px; font-size: 9px; font-weight: 700; letter-spacing: 1.5px; padding: 3px 9px; border-radius: 20px; text-transform: uppercase; }
+.portal-badge.rh  { background: var(--gold-l); color: var(--gold); }
+.portal-badge.ext { background: var(--adm-l);  color: var(--adm); }
+.portal-badge.man { background: #F0F0EE; color: var(--txt-3); }
+.portal-badge.gui { background: var(--ok-l); color: var(--ok); }
+.portal-icon { font-size: 28px; margin-bottom: 12px; }
+.portal-name { font-size: 15px; font-weight: 700; color: var(--graphite); margin-bottom: 3px; }
+.portal-file { font-size: 11px; color: var(--txt-3); font-family: 'Courier New', monospace; background: var(--bg); padding: 3px 8px; border-radius: 5px; display: inline-block; margin-bottom: 12px; }
+.portal-desc { font-size: 13px; color: var(--txt-2); line-height: 1.7; }
+.portal-who  { font-size: 11px; font-weight: 600; color: var(--txt-3); margin-top: 14px; padding-top: 12px; border-top: 1px solid var(--border); display: flex; align-items: center; gap: 6px; }
+
+/* ── PROCESSOS (entrada) ── */
+.proc-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; }
+@media(max-width:580px){ .proc-grid { grid-template-columns: 1fr; } }
+.proc-card { border-radius: 14px; padding: 20px; border: 1.5px solid transparent; }
+.proc-card.adm  { background: var(--adm-l);  border-color: #B8CEE4; }
+.proc-card.at   { background: var(--at-l);   border-color: #A8D4BC; }
+.proc-card.vaga { background: var(--vaga-l); border-color: #C0B2E0; }
+.proc-card.des  { background: var(--des-l);  border-color: #E0B0B0; }
+.proc-head { display: flex; align-items: center; gap: 10px; margin-bottom: 14px; }
+.proc-emoji { font-size: 24px; }
+.proc-name  { font-size: 14px; font-weight: 700; }
+.proc-name.adm  { color: var(--adm); }
+.proc-name.at   { color: var(--at); }
+.proc-name.vaga { color: var(--vaga); }
+.proc-name.des  { color: var(--des); }
+.proc-who { font-size: 11px; font-weight: 600; color: var(--txt-3); background: rgba(255,255,255,0.6); border-radius: 6px; padding: 3px 8px; display: inline-block; margin-bottom: 12px; }
+.proc-fields { list-style: none; }
+.proc-fields li { font-size: 12px; color: var(--txt-2); line-height: 1.85; display: flex; align-items: flex-start; gap: 6px; }
+.proc-fields li::before { content: '·'; color: var(--txt-3); flex-shrink: 0; margin-top: 1px; }
+
+/* ── SETA ── */
+.arrow { display: flex; flex-direction: column; align-items: center; gap: 2px; margin: 16px 0; }
+.arrow-line { width: 2px; height: 24px; background: var(--border-s); }
+.arrow-tip  { width: 0; height: 0; border-left: 6px solid transparent; border-right: 6px solid transparent; border-top: 9px solid var(--border-s); }
+.arrow-label { font-size: 10px; font-weight: 600; letter-spacing: 2px; color: var(--txt-3); text-transform: uppercase; margin: 2px 0; }
+
+/* ── BACKEND ── */
+.backend-box { background: var(--warn-l); border: 1.5px dashed #C9A34A; border-radius: 14px; padding: 20px 22px; display: flex; align-items: flex-start; gap: 16px; }
+@media(max-width:500px){ .backend-box { flex-direction: column; } }
+.backend-icon  { font-size: 26px; flex-shrink: 0; margin-top: 1px; }
+.backend-title { font-size: 14px; font-weight: 700; color: var(--warn); margin-bottom: 5px; }
+.backend-desc  { font-size: 13px; color: #7A5C20; line-height: 1.65; }
+
+/* ── DESTINO ── */
+.dest-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; align-items: start; }
+@media(max-width:580px){ .dest-grid { grid-template-columns: 1fr; } }
+.dest-card { border-radius: 14px; padding: 22px; border: 1.5px solid transparent; }
+.dest-card.drive { background: var(--drive-l); border-color: #A0BEF0; }
+.dest-card.sheet { background: var(--sheet-l); border-color: #9ACDB0; }
+.dest-head { display: flex; align-items: center; gap: 12px; margin-bottom: 16px; }
+.dest-logo { width: 36px; height: 36px; border-radius: 10px; display: flex; align-items: center; justify-content: center; font-size: 16px; flex-shrink: 0; }
+.dest-logo.drive { background: var(--drive); }
+.dest-logo.sheet { background: var(--sheet); }
+.dest-n { font-size: 15px; font-weight: 700; }
+.dest-n.drive { color: var(--drive); }
+.dest-n.sheet { color: var(--sheet); }
+.dest-sub { font-size: 12px; color: var(--txt-3); font-weight: 500; }
+.tree { font-size: 12px; color: var(--txt-2); line-height: 2.1; font-family: 'Courier New', monospace; }
+.tree .folder { font-weight: 700; color: var(--drive); }
+.tree .file   { color: var(--txt-3); }
+.stabs { display: flex; flex-direction: column; gap: 8px; }
+.stab  { border-radius: 9px; padding: 10px 13px; border-left: 3px solid transparent; }
+.stab.adm  { background: rgba(29,64,104,0.08);  border-color: var(--adm); }
+.stab.at   { background: rgba(27,94,56,0.08);   border-color: var(--at); }
+.stab.vaga { background: rgba(61,40,104,0.08);  border-color: var(--vaga); }
+.stab.des  { background: rgba(122,40,40,0.08);  border-color: var(--des); }
+.stab.cli  { background: rgba(139,122,85,0.10); border-color: var(--gold); }
+.stab.lem  { background: rgba(61,122,92,0.08);  border-color: var(--ok); }
+.stab.dia  { background: rgba(29,64,104,0.05);  border-color: #7A6A9A; }
+.stab-name { font-size: 12px; font-weight: 700; margin-bottom: 3px; font-family: 'Courier New', monospace; }
+.stab-name.adm  { color: var(--adm); }
+.stab-name.at   { color: var(--at); }
+.stab-name.vaga { color: var(--vaga); }
+.stab-name.des  { color: var(--des); }
+.stab-name.cli  { color: var(--gold); }
+.stab-name.lem  { color: var(--ok); }
+.stab-name.dia  { color: #5A4A8A; }
+.stab-cols { font-size: 11px; color: var(--txt-2); }
+
+/* ── RESULTADO ── */
+.res-grid { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 12px; }
+@media(max-width:580px){ .res-grid { grid-template-columns: 1fr; } }
+.res-card { background: var(--surface); border: 1px solid var(--border); border-radius: 14px; padding: 20px; text-align: center; }
+.res-num   { font-size: 36px; font-weight: 900; color: var(--graphite); letter-spacing: -1px; }
+.res-label { font-size: 12px; color: var(--txt-2); margin-top: 6px; line-height: 1.5; font-weight: 500; }
+.res-tag   { display: inline-block; margin-top: 10px; font-size: 10px; font-weight: 700; padding: 3px 10px; border-radius: 20px; letter-spacing: 0.5px; text-transform: uppercase; }
+.res-tag.ok   { background: var(--ok-l);   color: var(--ok); }
+.res-tag.warn { background: var(--warn-l); color: var(--warn); }
+.res-tag.gold { background: var(--gold-l); color: var(--gold); }
+
+/* ── LEGENDA ── */
+.legend { display: flex; flex-wrap: wrap; gap: 10px; align-items: center; background: var(--surface); border: 1px solid var(--border); border-radius: 12px; padding: 16px 20px; margin-top: 24px; }
+.legend-title { font-size: 10px; font-weight: 700; letter-spacing: 2px; color: var(--txt-3); width: 100%; text-transform: uppercase; }
+.leg-item { display: flex; align-items: center; gap: 6px; font-size: 12px; font-weight: 600; color: var(--txt-2); }
+.leg-dot  { width: 9px; height: 9px; border-radius: 50%; flex-shrink: 0; }
+
+/* ── ABAS DE PROCESSO ── */
+.ptab-nav { display: flex; flex-wrap: wrap; gap: 8px; margin-bottom: 18px; }
+.ptab-btn {
+  padding: 9px 18px; border-radius: 22px; font-size: 12px; font-weight: 600;
+  font-family: 'Inter', sans-serif; border: 1.5px solid var(--border);
+  background: var(--surface); color: var(--txt-2); cursor: pointer; transition: all .15s;
+}
+.ptab-btn:hover { border-color: var(--graphite); color: var(--graphite); }
+.ptab-btn.adm.active  { background: var(--adm);  border-color: var(--adm);  color: #fff; }
+.ptab-btn.at.active   { background: var(--at);   border-color: var(--at);   color: #fff; }
+.ptab-btn.vaga.active { background: var(--vaga); border-color: var(--vaga); color: #fff; }
+.ptab-btn.des.active  { background: var(--des);  border-color: var(--des);  color: #fff; }
+.ptab-content { display: none; }
+.ptab-content.active { display: block; }
+
+.pflow { background: var(--surface); border: 1px solid var(--border); border-radius: 16px; overflow: hidden; }
+.pflow-head { padding: 22px 24px 20px; display: flex; align-items: center; gap: 16px; }
+.pflow-head.adm  { background: var(--adm-l); }
+.pflow-head.at   { background: var(--at-l); }
+.pflow-head.vaga { background: var(--vaga-l); }
+.pflow-head.des  { background: var(--des-l); }
+.pflow-emoji { font-size: 32px; flex-shrink: 0; }
+.pflow-title { font-size: 17px; font-weight: 800; letter-spacing: -0.2px; }
+.pflow-title.adm  { color: var(--adm); }
+.pflow-title.at   { color: var(--at); }
+.pflow-title.vaga { color: var(--vaga); }
+.pflow-title.des  { color: var(--des); }
+.pflow-sub  { font-size: 13px; color: var(--txt-2); margin-top: 3px; font-weight: 400; }
+.pflow-body { padding: 22px 24px; }
+.pflow-cols { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 12px; margin-bottom: 20px; }
+@media(max-width:580px){ .pflow-cols { grid-template-columns: 1fr; } }
+.pflow-col { background: var(--bg); border-radius: 12px; padding: 16px; border: 1px solid var(--border); }
+.pflow-col-step { font-size: 10px; font-weight: 700; letter-spacing: 2px; text-transform: uppercase; color: var(--txt-3); margin-bottom: 10px; display: flex; align-items: center; gap: 6px; }
+.pflow-col-step span { width: 18px; height: 18px; border-radius: 50%; background: var(--graphite); color: #fff; font-size: 10px; font-weight: 800; display: flex; align-items: center; justify-content: center; flex-shrink: 0; }
+.pflow-col ul { list-style: none; }
+.pflow-col ul li { font-size: 12px; color: var(--txt-2); line-height: 1.9; padding-left: 12px; position: relative; }
+.pflow-col ul li::before { content: '·'; position: absolute; left: 0; color: var(--txt-3); }
+.agenda-result-label { font-size: 11px; font-weight: 700; letter-spacing: 1.5px; text-transform: uppercase; color: var(--txt-3); margin-bottom: 8px; }
+.agenda-pill { display: inline-flex; align-items: center; gap: 8px; padding: 10px 16px; border-radius: 10px; font-size: 13px; font-weight: 600; }
+
+/* ── FLUXO AGENDA ── */
+.aflow-wrap { background: var(--surface); border: 1px solid var(--border); border-radius: 16px; padding: 24px; margin-bottom: 16px; }
+.aflow-title { font-size: 15px; font-weight: 700; color: var(--graphite); margin-bottom: 6px; }
+.aflow-desc  { font-size: 13px; color: var(--txt-2); line-height: 1.75; margin-bottom: 22px; }
+.aflow-row { display: grid; grid-template-columns: 1fr 28px 1fr 28px 1fr; align-items: center; margin-bottom: 10px; }
+@media(max-width:600px){ .aflow-row { grid-template-columns: 1fr; gap: 4px; } .aflow-arrow { display: none; } }
+.aflow-source { background: var(--bg); border: 1px solid var(--border); border-radius: 10px; padding: 12px 14px; }
+.aflow-source-name { font-size: 12px; font-weight: 700; color: var(--graphite); }
+.aflow-source-sub  { font-size: 11px; color: var(--txt-3); margin-top: 2px; }
+.aflow-arrow { text-align: center; font-size: 14px; color: var(--border-s); font-weight: 700; }
+.aflow-dest { border-radius: 10px; padding: 12px 14px; }
+.aflow-dest.ok   { background: var(--ok-l); }
+.aflow-dest.warn { background: var(--warn-l); }
+.aflow-dest.err  { background: var(--err-l); }
+.aflow-dest.gold { background: var(--gold-l); }
+.aflow-dest-name { font-size: 12px; font-weight: 700; }
+.aflow-dest-name.ok   { color: var(--ok); }
+.aflow-dest-name.warn { color: var(--warn); }
+.aflow-dest-name.err  { color: var(--err); }
+.aflow-dest-name.gold { color: var(--gold); }
+.aflow-dest-sub { font-size: 11px; font-weight: 500; color: var(--txt-3); margin-top: 2px; }
+
+.notif-bar { background: var(--graphite); border-radius: 14px; padding: 20px 22px; margin-top: 20px; display: flex; align-items: flex-start; gap: 16px; }
+.notif-icon  { font-size: 24px; flex-shrink: 0; margin-top: 2px; }
+.notif-title { font-size: 14px; font-weight: 700; color: #fff; margin-bottom: 6px; }
+.notif-desc  { font-size: 12px; color: #9A9890; line-height: 1.7; }
+.notif-badge { display: inline-block; margin-top: 10px; background: #D32F2F; color: #fff; font-size: 10px; font-weight: 700; padding: 3px 10px; border-radius: 20px; letter-spacing: 0.3px; }
+.cal-legend { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 12px; margin-top: 16px; }
+@media(max-width:500px){ .cal-legend { grid-template-columns: 1fr; } }
+.cal-leg-item { background: var(--bg); border-radius: 12px; padding: 16px; text-align: center; border: 1px solid var(--border); }
+.cal-leg-icon  { font-size: 22px; margin-bottom: 8px; }
+.cal-leg-title { font-size: 12px; font-weight: 700; margin-bottom: 4px; }
+.cal-leg-desc  { font-size: 11px; color: var(--txt-2); line-height: 1.5; }
+
+/* ── JORNADA (passos) ── */
+.step-card { background: var(--surface); border: 1px solid var(--border); border-radius: 16px; padding: 24px; margin-bottom: 12px; }
+.step-head  { display: flex; align-items: center; gap: 14px; margin-bottom: 16px; }
+.step-num   { width: 34px; height: 34px; border-radius: 50%; background: var(--graphite); color: #fff; font-weight: 800; font-size: 14px; display: flex; align-items: center; justify-content: center; flex-shrink: 0; }
+.step-title { font-size: 15px; font-weight: 700; color: var(--graphite); line-height: 1.3; }
+.step-body  { font-size: 13px; color: var(--txt-2); line-height: 1.75; }
+.code-box   { background: var(--bg); border-radius: 10px; padding: 14px 18px; font-size: 12px; color: var(--txt-2); line-height: 1.9; font-family: 'Courier New', monospace; margin-top: 12px; }
+.params-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-top: 14px; }
+@media(max-width:500px){ .params-grid { grid-template-columns: 1fr; } }
+.param-card { border-radius: 10px; padding: 14px; }
+.param-card.normal  { background: var(--gold-l); border: 1.5px solid #D4B87A; }
+.param-card.special { background: var(--warn-l); border: 1.5px solid #C9A34A; }
+.param-card.ok      { background: var(--ok-l);   border: 1.5px solid #8AC8A8; }
+.param-label { font-size: 11px; font-weight: 700; letter-spacing: 0.8px; text-transform: uppercase; margin-bottom: 6px; }
+.param-card.normal  .param-label { color: var(--gold); }
+.param-card.special .param-label { color: var(--warn); }
+.param-card.ok      .param-label { color: var(--ok); }
+.param-text { font-size: 12px; color: var(--graphite); line-height: 1.65; }
+.dark-box { background: var(--graphite); border-radius: 12px; padding: 20px 22px; margin: 16px 0; }
+.dark-box-title { font-size: 12px; font-weight: 700; color: var(--gold); letter-spacing: 1.5px; margin-bottom: 10px; text-transform: uppercase; }
+.dark-box-main  { font-size: 14px; font-weight: 700; color: #fff; margin-bottom: 14px; }
+.dark-cols { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
+.dark-col  { background: rgba(255,255,255,0.06); border-radius: 9px; padding: 14px; }
+.dark-col-title { font-size: 11px; font-weight: 700; letter-spacing: 1px; margin-bottom: 10px; }
+.dark-col-title.red   { color: #EF9A9A; }
+.dark-col-title.green { color: #A5D6A7; }
+.dark-col-item { font-size: 12px; color: #9A9890; line-height: 2.0; }
+.dark-footer { font-size: 12px; color: #9A9890; line-height: 1.7; margin-top: 14px; padding-top: 14px; border-top: 1px solid rgba(255,255,255,0.1); }
+.checks-grid { display: flex; flex-direction: column; gap: 8px; margin-top: 14px; }
+.check-item  { display: flex; align-items: flex-start; gap: 12px; background: var(--bg); border-radius: 9px; padding: 12px 14px; border: 1px solid var(--border); }
+.check-icon  { font-size: 16px; flex-shrink: 0; }
+.check-title { font-size: 13px; font-weight: 700; color: var(--graphite); }
+.check-desc  { font-size: 12px; color: var(--txt-2); margin-top: 2px; }
+
+/* ── INFO BOX ── */
+.info-box { background: var(--ok-l); border: 1.5px solid #8AC8A8; border-radius: 12px; padding: 16px 20px; margin-top: 16px; font-size: 13px; color: #1B5E38; line-height: 1.7; }
+.info-box strong { font-weight: 700; }
+
+/* ── RODAPÉ ── */
+.footer { text-align: center; padding: 32px 0 40px; border-top: 1px solid var(--border); margin-top: 16px; }
+.footer-eyebrow { font-size: 10px; font-weight: 700; letter-spacing: 2.5px; color: var(--txt-3); text-transform: uppercase; margin-bottom: 6px; }
+.footer-name { font-size: 13px; color: var(--txt-2); }
+.footer-name strong { color: var(--graphite); font-weight: 700; }
+</style>
+</head>
+<body>
+
+<!-- HEADER -->
+<div class="header">
+  <div class="header-inner">
+    <div class="brand">Crescer · Consultoria em Gestão Empresarial</div>
+    <div class="title">Manual do Sistema</div>
+    <div class="sub">Como o sistema funciona do começo ao fim — para toda a equipe RH</div>
+    <div class="header-pills">
+      <span class="header-pill int">Portal RH Interno</span>
+      <span class="header-pill ext">Portal Externo para Empresas</span>
+      <span class="header-pill doc">Documentação</span>
+    </div>
+  </div>
+</div>
+
+<div class="wrap">
+
+  <!-- ÍNDICE -->
+  <div class="idx-box">
+    <div class="idx-title">Índice</div>
+    <div class="idx-list">
+      <a href="#sec-portais"     class="idx-item"><span class="idx-num">01</span><span class="idx-name">Os 4 Portais do Sistema</span></a>
+      <a href="#sec-fluxo"       class="idx-item"><span class="idx-num">05</span><span class="idx-name">Fluxo detalhado por processo</span></a>
+      <a href="#sec-entrada"     class="idx-item"><span class="idx-num">02</span><span class="idx-name">O que chega pelo Portal Externo</span></a>
+      <a href="#sec-agenda"      class="idx-item"><span class="idx-num">06</span><span class="idx-name">Agenda, Lembretes &amp; Aniversários</span></a>
+      <a href="#sec-destino"     class="idx-item"><span class="idx-num">03</span><span class="idx-name">Onde os dados vão parar</span></a>
+      <a href="#sec-jornada"     class="idx-item"><span class="idx-num">07</span><span class="idx-name">Análise de Jornada</span></a>
+      <a href="#sec-resultado"   class="idx-item"><span class="idx-num">04</span><span class="idx-name">Quem preenche o quê</span></a>
+      <a href="#sec-ferramentas" class="idx-item"><span class="idx-num">08</span><span class="idx-name">Ferramentas do Portal RH Interno</span></a>
+    </div>
+  </div>
+
+  <!-- ════════════════════════════════════════ -->
+  <!-- 01 · OS 4 PORTAIS -->
+  <!-- ════════════════════════════════════════ -->
+  <div class="section-wrap" id="sec-portais">
+    <div class="section-label">
+      <div class="section-num">01</div>
+      <div>
+        <div class="section-name">Os 4 Portais do Sistema</div>
+        <div class="section-desc">Cada portal tem um público e uma função diferente</div>
+      </div>
+    </div>
+
+    <div class="portais-grid">
+
+      <div class="portal-card">
+        <div class="portal-badge rh">RH Interno</div>
+        <div class="portal-icon">🖥️</div>
+        <div class="portal-name">Portal da Equipe RH</div>
+        <div class="portal-file">portal/Index.html</div>
+        <div class="portal-desc">Painel exclusivo do RH Crescer. Aqui a equipe cadastra empresas, faz diagnóstico de compliance, processa desligamentos, gera documentos, analisa jornada de trabalho e acompanha a agenda com lembretes e aniversários.</div>
+        <div class="portal-who">👩‍💼 Quem acessa: equipe interna RH Crescer</div>
+      </div>
+
+      <div class="portal-card">
+        <div class="portal-badge ext">Externo</div>
+        <div class="portal-icon">📱</div>
+        <div class="portal-name">Portal das Empresas</div>
+        <div class="portal-file">externo/index.html</div>
+        <div class="portal-desc">Portal enviado para colaboradores e gestores das empresas clientes. Por aqui eles enviam documentos de admissão, atestados, solicitam vagas e comunicam desligamentos — sem precisar ligar ou mandar WhatsApp.</div>
+        <div class="portal-who">🏢 Quem acessa: colaboradores e gestores das empresas clientes</div>
+      </div>
+
+      <div class="portal-card">
+        <div class="portal-badge gui">Guia</div>
+        <div class="portal-icon">📋</div>
+        <div class="portal-name">Onboarding do Gestor</div>
+        <div class="portal-file">onboarding/index.html</div>
+        <div class="portal-desc">Guia visual enviado ao gestor após o cadastro da empresa. Explica passo a passo como usar o portal externo: como admitir colaborador, enviar atestado, abrir vaga e comunicar desligamento. Linguagem simples, sem termos técnicos.</div>
+        <div class="portal-who">🏢 Quem acessa: gestores das empresas clientes (recebem o link)</div>
+      </div>
+
+      <div class="portal-card">
+        <div class="portal-badge man">Manual</div>
+        <div class="portal-icon">📖</div>
+        <div class="portal-name">Manual do Sistema</div>
+        <div class="portal-file">Manual_do_Sistema.html</div>
+        <div class="portal-desc">Este arquivo. Explica visualmente como tudo funciona. Consulte sempre que tiver dúvidas sobre o fluxo do sistema, quem faz o quê, ou onde os dados ficam salvos.</div>
+        <div class="portal-who">📚 Quem acessa: equipe RH Crescer para consulta</div>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- ════════════════════════════════════════ -->
+  <!-- 02 · ENTRADA -->
+  <!-- ════════════════════════════════════════ -->
+  <div class="section-wrap" id="sec-entrada">
+    <div class="section-label">
+      <div class="section-num">02</div>
+      <div>
+        <div class="section-name">O que chega pelo Portal Externo</div>
+        <div class="section-desc">4 tipos de formulário que as empresas preenchem no portal externo</div>
+      </div>
+    </div>
+
+    <div class="proc-grid">
+
+      <div class="proc-card adm">
+        <div class="proc-head">
+          <div class="proc-emoji">👤</div>
+          <div class="proc-name adm">Nova Admissão</div>
+        </div>
+        <div class="proc-who">Colaborador · Portal Externo</div>
+        <ul class="proc-fields">
+          <li>Nome completo + CPF + CTPS</li>
+          <li>Data de nascimento + WhatsApp + E-mail</li>
+          <li>Empresa onde vai trabalhar</li>
+          <li>RG frente e verso (foto/PDF)</li>
+          <li>CPF, CNH, Certidão de nascimento</li>
+          <li>Foto 3x4, Comprovante de residência</li>
+          <li>Comprovante de escolaridade</li>
+          <li>PIS/PASEP, Título de Eleitor, Dados bancários</li>
+          <li>Aceite LGPD (obrigatório)</li>
+        </ul>
+      </div>
+
+      <div class="proc-card at">
+        <div class="proc-head">
+          <div class="proc-emoji">🏥</div>
+          <div class="proc-name at">Atestado Médico</div>
+        </div>
+        <div class="proc-who">Colaborador · Portal Externo</div>
+        <ul class="proc-fields">
+          <li>Nome do colaborador</li>
+          <li>Empresa</li>
+          <li>Quantidade de dias de afastamento</li>
+          <li>Foto ou PDF do atestado</li>
+        </ul>
+      </div>
+
+      <div class="proc-card vaga">
+        <div class="proc-head">
+          <div class="proc-emoji">🔍</div>
+          <div class="proc-name vaga">Abertura de Vaga</div>
+        </div>
+        <div class="proc-who">Gestor da empresa · Portal Externo</div>
+        <ul class="proc-fields">
+          <li>Empresa e cargo pretendido</li>
+          <li>Tipo de contrato (CLT, PJ...)</li>
+          <li>Salário + benefícios</li>
+          <li>Requisitos mínimos e diferenciais</li>
+          <li>Horário de trabalho</li>
+        </ul>
+      </div>
+
+      <div class="proc-card des">
+        <div class="proc-head">
+          <div class="proc-emoji">🚪</div>
+          <div class="proc-name des">Comunicar Desligamento</div>
+        </div>
+        <div class="proc-who">Gestor da empresa · Portal Externo</div>
+        <ul class="proc-fields">
+          <li>Nome do colaborador</li>
+          <li>Empresa e data do desligamento</li>
+          <li>Tipo de saída (pedido, demissão...)</li>
+          <li>Nome do gestor responsável</li>
+          <li>Observações da rescisão</li>
+        </ul>
+      </div>
+
+    </div>
+
+    <div class="arrow" style="margin-top:8px">
+      <div class="arrow-line"></div>
+      <div class="arrow-label">processamento automático</div>
+      <div class="arrow-line"></div>
+      <div class="arrow-tip"></div>
+    </div>
+
+    <div class="backend-box">
+      <div class="backend-icon">⚙️</div>
+      <div>
+        <div class="backend-title">Backend — Google Apps Script (Codigo.gs)</div>
+        <div class="backend-desc">Ao clicar em "Enviar" em qualquer formulário, o sistema automaticamente organiza os arquivos no Google Drive e registra os dados na Planilha Mestre. Nenhuma ação manual do RH é necessária para isso acontecer.</div>
+      </div>
+    </div>
+
+  </div>
+
+  <!-- ════════════════════════════════════════ -->
+  <!-- 03 · DESTINO -->
+  <!-- ════════════════════════════════════════ -->
+  <div class="section-wrap" id="sec-destino">
+    <div class="section-label">
+      <div class="section-num">03</div>
+      <div>
+        <div class="section-name">Onde os dados vão parar</div>
+        <div class="section-desc">Cada envio salva em dois lugares ao mesmo tempo: Drive e Planilha</div>
+      </div>
+    </div>
+
+    <div class="dest-grid">
+
+      <div class="dest-card drive">
+        <div class="dest-head">
+          <div class="dest-logo drive">📁</div>
+          <div>
+            <div class="dest-n drive">Google Drive</div>
+            <div class="dest-sub">Arquivos e documentos por empresa</div>
+          </div>
+        </div>
+        <div class="tree">
+          <div>📂 <span class="folder">Empresas/</span></div>
+          <div>&nbsp;&nbsp;📂 <span class="folder">Chez Vous/</span></div>
+          <div>&nbsp;&nbsp;&nbsp;&nbsp;📂 <span class="folder">João Silva/</span></div>
+          <div>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;📄 <span class="file">Admissão/ (docs)</span></div>
+          <div>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;📄 <span class="file">Rescisão/ (docs)</span></div>
+          <div>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;📄 <span class="file">Documentos/ (gerados)</span></div>
+          <div>&nbsp;&nbsp;&nbsp;&nbsp;📂 <span class="folder">Diagnóstico/</span></div>
+          <div>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;📄 <span class="file">Avaliação de Compliance RH.gdoc</span></div>
+          <div>&nbsp;&nbsp;📂 <span class="folder">Mix Bolos/</span></div>
+          <div>&nbsp;&nbsp;&nbsp;&nbsp;📄 <span class="file">...</span></div>
+        </div>
+      </div>
+
+      <div class="dest-card sheet">
+        <div class="dest-head">
+          <div class="dest-logo sheet">📊</div>
+          <div>
+            <div class="dest-n sheet">Planilha Mestre</div>
+            <div class="dest-sub">Banco de dados estruturado</div>
+          </div>
+        </div>
+        <div class="stabs">
+          <div class="stab adm">
+            <div class="stab-name adm">Base_Admissoes</div>
+            <div class="stab-cols">Nome · CPF · Nascimento · Empresa · Data · Aceite LGPD · Link Drive</div>
+          </div>
+          <div class="stab at">
+            <div class="stab-name at">Base_Atestados</div>
+            <div class="stab-cols">Nome · Empresa · Dias · Data · Link arquivo</div>
+          </div>
+          <div class="stab vaga">
+            <div class="stab-name vaga">Base_Vagas</div>
+            <div class="stab-cols">Empresa · Cargo · Salário · Requisitos · Data</div>
+          </div>
+          <div class="stab des">
+            <div class="stab-name des">Base_Desligamentos</div>
+            <div class="stab-cols">Nome · Empresa · Data · Tipo de saída · Obs · Link Arquivo</div>
+          </div>
+          <div class="stab cli">
+            <div class="stab-name cli">Base_Clientes</div>
+            <div class="stab-cols">Razão Social · CNPJ · Contabilidade · Horário · Sistema Ponto · VR/VT · Saúde/Odonto · SST · Nome Fantasia · Relógio Modelo/Série · WhatsApp Liderança/Equipe</div>
+          </div>
+          <div class="stab lem">
+            <div class="stab-name lem">Base_Lembretes</div>
+            <div class="stab-cols">Empresa · Título · Data Alvo · Antecedência · Data Disparo · Obs · Status</div>
+          </div>
+          <div class="stab dia">
+            <div class="stab-name dia">Base_Diagnosticos</div>
+            <div class="stab-cols">Empresa · Score · Nível · Q01–Q23 (SIM/NÃO) · Obs · URL Documento</div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+
+  </div>
+
+  <!-- ════════════════════════════════════════ -->
+  <!-- 04 · LEGENDA -->
+  <!-- ════════════════════════════════════════ -->
+  <div class="section-wrap" id="sec-resultado">
+    <div class="section-label">
+      <div class="section-num">04</div>
+      <div>
+        <div class="section-name">Quem preenche o quê</div>
+        <div class="section-desc">Referência rápida de responsabilidades por processo</div>
+      </div>
+    </div>
+
+    <div class="legend">
+      <div class="legend-title">Responsabilidades</div>
+      <div class="leg-item"><div class="leg-dot" style="background:var(--adm)"></div> Colaborador — documentos de admissão (portal externo)</div>
+      <div class="leg-item"><div class="leg-dot" style="background:var(--at)"></div> Colaborador — atestado médico (portal externo)</div>
+      <div class="leg-item"><div class="leg-dot" style="background:var(--vaga)"></div> Gestor da empresa — abertura de vaga</div>
+      <div class="leg-item"><div class="leg-dot" style="background:var(--des)"></div> Gestor da empresa — comunicar desligamento</div>
+      <div class="leg-item"><div class="leg-dot" style="background:var(--graphite)"></div> RH Crescer — cadastro de empresa, diagnóstico de compliance, geração de documentos</div>
+    </div>
+  </div>
+
+  <!-- ════════════════════════════════════════ -->
+  <!-- 05 · FLUXO POR PROCESSO -->
+  <!-- ════════════════════════════════════════ -->
+  <div class="section-wrap" id="sec-fluxo">
+    <div class="section-label">
+      <div class="section-num">05</div>
+      <div>
+        <div class="section-name">Fluxo detalhado por processo</div>
+        <div class="section-desc">Selecione o processo para ver o passo a passo completo</div>
+      </div>
+    </div>
+
+    <div class="ptab-nav">
+      <button class="ptab-btn adm active" onclick="showTab('adm')">👤 Admissão</button>
+      <button class="ptab-btn at"         onclick="showTab('at')">🏥 Atestado</button>
+      <button class="ptab-btn vaga"       onclick="showTab('vaga')">🔍 Vaga</button>
+      <button class="ptab-btn des"        onclick="showTab('des')">🚪 Desligamento</button>
+    </div>
+
+    <!-- Tab Admissão -->
+    <div class="ptab-content active" id="ptab-adm">
+      <div class="pflow">
+        <div class="pflow-head adm">
+          <div class="pflow-emoji">👤</div>
+          <div>
+            <div class="pflow-title adm">Admissão de Colaborador</div>
+            <div class="pflow-sub">Novo funcionário enviando documentos para contratação — somente pelo portal externo</div>
+          </div>
+        </div>
+        <div class="pflow-body">
+          <div class="pflow-cols">
+            <div class="pflow-col">
+              <div class="pflow-col-step"><span>1</span>Quem preenche</div>
+              <ul>
+                <li>O próprio colaborador</li>
+                <li>Pelo portal externo</li>
+                <li>No celular ou computador</li>
+                <li>Antes de começar a trabalhar</li>
+              </ul>
+            </div>
+            <div class="pflow-col">
+              <div class="pflow-col-step"><span>2</span>O que informa</div>
+              <ul>
+                <li>Todos os dados pessoais</li>
+                <li>Contatos e e-mail</li>
+                <li>Empresa contratante</li>
+                <li>Todos os documentos em foto</li>
+                <li>Aceite LGPD obrigatório</li>
+              </ul>
+            </div>
+            <div class="pflow-col">
+              <div class="pflow-col-step"><span>3</span>Onde fica salvo</div>
+              <ul>
+                <li>Drive: pasta empresa/colaborador</li>
+                <li>Planilha: Base_Admissoes</li>
+                <li>Base_Colaboradores atualizada</li>
+                <li>Calendário: evento criado</li>
+              </ul>
+            </div>
+          </div>
+          <div class="agenda-result-label">Aparece na Agenda do RH como:</div>
+          <div class="agenda-pill" style="background:var(--ok-l);color:var(--ok)">
+            <div style="width:9px;height:9px;border-radius:50%;background:var(--ok);flex-shrink:0"></div>
+            Admissão · Nome do colaborador · Nome da empresa &nbsp;·&nbsp; ponto verde
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Tab Atestado -->
+    <div class="ptab-content" id="ptab-at">
+      <div class="pflow">
+        <div class="pflow-head at">
+          <div class="pflow-emoji">🏥</div>
+          <div>
+            <div class="pflow-title at">Atestado Médico</div>
+            <div class="pflow-sub">Colaborador comunicando afastamento — somente pelo portal externo</div>
+          </div>
+        </div>
+        <div class="pflow-body">
+          <div class="pflow-cols">
+            <div class="pflow-col">
+              <div class="pflow-col-step"><span>1</span>Quem preenche</div>
+              <ul>
+                <li>O próprio colaborador</li>
+                <li>Pelo portal externo</li>
+                <li>Assim que tiver o atestado em mãos</li>
+              </ul>
+            </div>
+            <div class="pflow-col">
+              <div class="pflow-col-step"><span>2</span>O que informa</div>
+              <ul>
+                <li>Nome e empresa</li>
+                <li>Quantidade de dias</li>
+                <li>Foto ou PDF do atestado</li>
+              </ul>
+            </div>
+            <div class="pflow-col">
+              <div class="pflow-col-step"><span>3</span>Onde fica salvo</div>
+              <ul>
+                <li>Drive: pasta da empresa/colaborador</li>
+                <li>Planilha: Base_Atestados</li>
+                <li>Arquivo nomeado com a data</li>
+              </ul>
+            </div>
+          </div>
+          <div class="agenda-result-label">Aparece na Agenda do RH como:</div>
+          <div class="agenda-pill" style="background:var(--warn-l);color:var(--warn)">
+            <div style="width:9px;height:9px;border-radius:50%;background:var(--warn);flex-shrink:0"></div>
+            Atestado · Nome do colaborador · Empresa · X dias &nbsp;·&nbsp; ponto amarelo
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Tab Vaga -->
+    <div class="ptab-content" id="ptab-vaga">
+      <div class="pflow">
+        <div class="pflow-head vaga">
+          <div class="pflow-emoji">🔍</div>
+          <div>
+            <div class="pflow-title vaga">Abertura de Vaga</div>
+            <div class="pflow-sub">Gestor solicitando processo seletivo ao RH Crescer</div>
+          </div>
+        </div>
+        <div class="pflow-body">
+          <div class="pflow-cols">
+            <div class="pflow-col">
+              <div class="pflow-col-step"><span>1</span>Quem preenche</div>
+              <ul>
+                <li>Gestor da empresa cliente</li>
+                <li>Pelo portal externo</li>
+              </ul>
+            </div>
+            <div class="pflow-col">
+              <div class="pflow-col-step"><span>2</span>O que informa</div>
+              <ul>
+                <li>Empresa e cargo</li>
+                <li>Tipo de contrato</li>
+                <li>Salário e benefícios</li>
+                <li>Requisitos e horário</li>
+              </ul>
+            </div>
+            <div class="pflow-col">
+              <div class="pflow-col-step"><span>3</span>Onde fica salvo</div>
+              <ul>
+                <li>Planilha: Base_Vagas</li>
+                <li>Sem arquivo no Drive</li>
+                <li>Calendário: evento criado</li>
+              </ul>
+            </div>
+          </div>
+          <div class="agenda-result-label">Aparece na Agenda do RH como:</div>
+          <div class="agenda-pill" style="background:var(--gold-l);color:var(--gold)">
+            <div style="width:9px;height:9px;border-radius:50%;background:var(--gold);flex-shrink:0"></div>
+            Nova Vaga · Cargo · Nome da empresa &nbsp;·&nbsp; ponto dourado
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Tab Desligamento -->
+    <div class="ptab-content" id="ptab-des">
+      <div class="pflow">
+        <div class="pflow-head des">
+          <div class="pflow-emoji">🚪</div>
+          <div>
+            <div class="pflow-title des">Comunicar Desligamento</div>
+            <div class="pflow-sub">Gestor informando saída de colaborador ao RH Crescer</div>
+          </div>
+        </div>
+        <div class="pflow-body">
+          <div class="pflow-cols">
+            <div class="pflow-col">
+              <div class="pflow-col-step"><span>1</span>Quem preenche</div>
+              <ul>
+                <li>Gestor da empresa cliente</li>
+                <li>Pelo portal externo</li>
+              </ul>
+            </div>
+            <div class="pflow-col">
+              <div class="pflow-col-step"><span>2</span>O que informa</div>
+              <ul>
+                <li>Empresa (seleciona no menu)</li>
+                <li>Colaborador (carrega automaticamente)</li>
+                <li>Data e tipo de saída</li>
+                <li>Nome do gestor</li>
+                <li>Observações da rescisão</li>
+              </ul>
+            </div>
+            <div class="pflow-col">
+              <div class="pflow-col-step"><span>3</span>Onde fica salvo</div>
+              <ul>
+                <li>Planilha: Base_Desligamentos</li>
+                <li>Calendário: evento criado</li>
+                <li>RH seleciona lembretes de acompanhamento (ex: avisar contabilidade em 2 dias) — criados automaticamente em Base_Lembretes</li>
+              </ul>
+            </div>
+          </div>
+          <div class="agenda-result-label">Aparece na Agenda do RH como:</div>
+          <div class="agenda-pill" style="background:var(--err-l);color:var(--err)">
+            <div style="width:9px;height:9px;border-radius:50%;background:var(--err);flex-shrink:0"></div>
+            Desligamento · Nome do colaborador · Empresa &nbsp;·&nbsp; ponto vermelho
+          </div>
+          <div class="info-box" style="margin-top:16px">
+            <strong>Lembretes automáticos de acompanhamento:</strong> O RH marca quais etapas quer monitorar (ex: "Avisar contabilidade", "Remover do sistema de ponto") e define em quantos dias a partir do desligamento. O sistema cria um lembrete para cada item marcado, que aparece na Agenda na data configurada.
+          </div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+
+  <!-- ════════════════════════════════════════ -->
+  <!-- 06 · AGENDA + LEMBRETES -->
+  <!-- ════════════════════════════════════════ -->
+  <div class="section-wrap" id="sec-agenda">
+    <div class="section-label">
+      <div class="section-num">06</div>
+      <div>
+        <div class="section-name">Agenda, Lembretes &amp; Aniversários</div>
+        <div class="section-desc">Tudo em uma única tela — atividades automáticas, lembretes manuais e aniversários</div>
+      </div>
+    </div>
+
+    <div class="aflow-wrap">
+      <div class="aflow-title">Como a Agenda é alimentada?</div>
+      <div class="aflow-desc">
+        A Agenda no portal RH é alimentada de quatro formas: <strong>automaticamente</strong>, quando alguém preenche um formulário no portal externo (os dados vão direto para a Planilha Mestre e aparecem na agenda); <strong>manualmente</strong>, quando o RH clica em <strong>"+ Nova Atividade"</strong> dentro da tela de Agenda; <strong>via lembretes</strong>, criados diretamente na seção "Lembretes &amp; Aniversários" dentro da própria tela de Agenda (com data alvo e antecedência configurável) — ou gerados <strong>automaticamente</strong> ao final de um desligamento; e <strong>por aniversário automático</strong>, quando o sistema detecta colaboradores com aniversário nos próximos 7 dias.
+      </div>
+
+      <div style="font-size:11px;font-weight:700;color:var(--txt-3);letter-spacing:2px;text-transform:uppercase;margin-bottom:12px">Fluxo de cada fonte até a agenda:</div>
+
+      <div class="aflow-row">
+        <div class="aflow-source">
+          <div class="aflow-source-name">Admissão enviada</div>
+          <div class="aflow-source-sub">Portal Externo</div>
+        </div>
+        <div class="aflow-arrow">→</div>
+        <div class="aflow-source">
+          <div class="aflow-source-name">Base_Admissoes</div>
+          <div class="aflow-source-sub">Planilha Mestre</div>
+        </div>
+        <div class="aflow-arrow">→</div>
+        <div class="aflow-dest ok">
+          <div class="aflow-dest-name ok">Agenda RH</div>
+          <div class="aflow-dest-sub">ponto verde · Admissão</div>
+        </div>
+      </div>
+
+      <div class="aflow-row" style="margin-top:10px">
+        <div class="aflow-source">
+          <div class="aflow-source-name">Atestado enviado</div>
+          <div class="aflow-source-sub">Portal Externo</div>
+        </div>
+        <div class="aflow-arrow">→</div>
+        <div class="aflow-source">
+          <div class="aflow-source-name">Base_Atestados</div>
+          <div class="aflow-source-sub">Planilha Mestre</div>
+        </div>
+        <div class="aflow-arrow">→</div>
+        <div class="aflow-dest warn">
+          <div class="aflow-dest-name warn">Agenda RH</div>
+          <div class="aflow-dest-sub">ponto amarelo · Atestado</div>
+        </div>
+      </div>
+
+      <div class="aflow-row" style="margin-top:10px">
+        <div class="aflow-source">
+          <div class="aflow-source-name">Vaga aberta</div>
+          <div class="aflow-source-sub">Portal Externo</div>
+        </div>
+        <div class="aflow-arrow">→</div>
+        <div class="aflow-source">
+          <div class="aflow-source-name">Base_Vagas</div>
+          <div class="aflow-source-sub">Planilha Mestre</div>
+        </div>
+        <div class="aflow-arrow">→</div>
+        <div class="aflow-dest gold">
+          <div class="aflow-dest-name gold">Agenda RH</div>
+          <div class="aflow-dest-sub">ponto dourado · Vaga</div>
+        </div>
+      </div>
+
+      <div class="aflow-row" style="margin-top:10px">
+        <div class="aflow-source">
+          <div class="aflow-source-name">Desligamento comunicado</div>
+          <div class="aflow-source-sub">Portal Externo</div>
+        </div>
+        <div class="aflow-arrow">→</div>
+        <div class="aflow-source">
+          <div class="aflow-source-name">Base_Desligamentos</div>
+          <div class="aflow-source-sub">Planilha Mestre</div>
+        </div>
+        <div class="aflow-arrow">→</div>
+        <div class="aflow-dest err">
+          <div class="aflow-dest-name err">Agenda RH</div>
+          <div class="aflow-dest-sub">ponto vermelho · Desligamento</div>
+        </div>
+      </div>
+
+      <div class="aflow-row" style="margin-top:10px">
+        <div class="aflow-source">
+          <div class="aflow-source-name">RH cria atividade manual</div>
+          <div class="aflow-source-sub">Portal RH · "+ Nova Atividade" na Agenda</div>
+        </div>
+        <div class="aflow-arrow">→</div>
+        <div class="aflow-source">
+          <div class="aflow-source-name">Base_Atividades</div>
+          <div class="aflow-source-sub">Planilha Mestre</div>
+        </div>
+        <div class="aflow-arrow">→</div>
+        <div class="aflow-dest gold">
+          <div class="aflow-dest-name gold">Agenda RH</div>
+          <div class="aflow-dest-sub">ponto dourado · Atividade</div>
+        </div>
+      </div>
+
+      <div class="aflow-row" style="margin-top:10px">
+        <div class="aflow-source">
+          <div class="aflow-source-name">RH cria lembrete</div>
+          <div class="aflow-source-sub">Portal RH · seção "Lembretes" dentro da Agenda</div>
+        </div>
+        <div class="aflow-arrow">→</div>
+        <div class="aflow-source">
+          <div class="aflow-source-name">Base_Lembretes</div>
+          <div class="aflow-source-sub">data de disparo = dataAlvo − antecedência</div>
+        </div>
+        <div class="aflow-arrow">→</div>
+        <div class="aflow-dest gold">
+          <div class="aflow-dest-name gold">Agenda RH</div>
+          <div class="aflow-dest-sub">ponto dourado · aparece na data configurada</div>
+        </div>
+      </div>
+
+      <div class="aflow-row" style="margin-top:10px">
+        <div class="aflow-source">
+          <div class="aflow-source-name">RH processa desligamento</div>
+          <div class="aflow-source-sub">Portal RH · marca etapas para monitorar</div>
+        </div>
+        <div class="aflow-arrow">→</div>
+        <div class="aflow-source">
+          <div class="aflow-source-name">Base_Lembretes</div>
+          <div class="aflow-source-sub">1 lembrete por etapa · data = desligamento + dias</div>
+        </div>
+        <div class="aflow-arrow">→</div>
+        <div class="aflow-dest gold">
+          <div class="aflow-dest-name gold">Agenda RH</div>
+          <div class="aflow-dest-sub">ponto dourado · Lembrete de acompanhamento</div>
+        </div>
+      </div>
+
+      <div class="aflow-row" style="margin-top:10px">
+        <div class="aflow-source">
+          <div class="aflow-source-name">Data de nascimento do colaborador</div>
+          <div class="aflow-source-sub">Base_Colaboradores · cadastrado na admissão</div>
+        </div>
+        <div class="aflow-arrow">→</div>
+        <div class="aflow-source">
+          <div class="aflow-source-name">Cálculo automático</div>
+          <div class="aflow-source-sub">Sistema verifica aniversários dos próximos 7 dias</div>
+        </div>
+        <div class="aflow-arrow">→</div>
+        <div class="aflow-dest ok">
+          <div class="aflow-dest-name ok">Agenda RH</div>
+          <div class="aflow-dest-sub">ponto verde · Aniversário · 7 dias antes</div>
+        </div>
+      </div>
+
+      <div class="notif-bar">
+        <div class="notif-icon">🔔</div>
+        <div>
+          <div class="notif-title">Notificação discreta no Portal RH</div>
+          <div class="notif-desc">Quando há atividades registradas <strong style="color:#fff">hoje</strong>, um badge vermelho aparece automaticamente no card "Agenda &amp; Atividades" na tela inicial. O RH vê quantos itens chegaram sem precisar clicar. Ao abrir a agenda, o aviso desaparece.</div>
+          <div class="notif-badge">NOVO · 3 itens hoje</div>
+        </div>
+      </div>
+    </div>
+
+    <div style="background:var(--surface);border:1px solid var(--border);border-radius:16px;padding:22px 24px;">
+      <div style="font-size:14px;font-weight:700;color:var(--graphite);margin-bottom:16px">Legenda do calendário visual</div>
+      <div class="cal-legend">
+        <div class="cal-leg-item">
+          <div class="cal-leg-icon">🔴</div>
+          <div class="cal-leg-title" style="color:#C62828">Atividades novas</div>
+          <div class="cal-leg-desc">Dia com registros que ainda não foram visualizados. Clique no dia para ver.</div>
+        </div>
+        <div class="cal-leg-item">
+          <div class="cal-leg-icon">🔵</div>
+          <div class="cal-leg-title" style="color:#1558D0">Já visualizado</div>
+          <div class="cal-leg-desc">O RH já clicou neste dia e viu as atividades registradas.</div>
+        </div>
+        <div class="cal-leg-item">
+          <div class="cal-leg-icon">⬜</div>
+          <div class="cal-leg-title" style="color:var(--txt-3)">Sem atividades</div>
+          <div class="cal-leg-desc">Nenhum processo foi registrado neste dia específico.</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="aflow-wrap" style="margin-top:16px">
+      <div class="aflow-title">Lembretes — como funcionam</div>
+      <div class="aflow-desc">
+        O RH acessa a tela <strong>Agenda</strong> e clica em <strong>"+ Novo lembrete"</strong> na seção de Lembretes &amp; Aniversários. Preenche título, empresa (opcional), data alvo e antecedência desejada (ex: 7 dias antes). O sistema calcula a <strong>data de disparo</strong> (dataAlvo − antecedência) e salva em <code>Base_Lembretes</code>. A partir da data de disparo até a data alvo, o lembrete aparece listado.
+      </div>
+      <div class="code-box">
+        <strong>Planilha:</strong> Base_Lembretes<br/>
+        <strong>Colunas:</strong> Data/Hora Criação · Empresa · Título · Data Alvo · Antecedência (dias) · Data Disparo · Obs · Status<br/>
+        <strong>Status:</strong> <em>ativo</em> (padrão) — altere para <em>concluido</em> na planilha quando resolvido
+      </div>
+      <div class="params-grid" style="margin-top:16px">
+        <div class="param-card normal">
+          <div class="param-label">Antecedência 0 dias</div>
+          <div class="param-text">Lembrete aparece somente no dia da data alvo.</div>
+        </div>
+        <div class="param-card normal">
+          <div class="param-label">Antecedência 7 dias</div>
+          <div class="param-text">Lembrete aparece 7 dias antes e fica visível até a data alvo — ideal para vencimentos e prazos.</div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+
+  <!-- ════════════════════════════════════════ -->
+  <!-- 07 · ANÁLISE DE JORNADA -->
+  <!-- ════════════════════════════════════════ -->
+  <div class="section-wrap" id="sec-jornada">
+    <div class="section-label">
+      <div class="section-num">07</div>
+      <div>
+        <div class="section-name">Análise de Jornada — Manual de uso</div>
+        <div class="section-desc">Ferramenta exclusiva do RH · importa CSV do Secullum e gera relatório automático</div>
+      </div>
+    </div>
+
+    <div class="step-card">
+      <div class="step-head">
+        <div class="step-num">1</div>
+        <div class="step-title">Exporte o CSV do Secullum Ponto</div>
+      </div>
+      <div class="step-body">
+        No Secullum, selecione o colaborador e o período desejado e exporte o relatório em formato <strong>.CSV</strong>. Esse arquivo contém todas as batidas de ponto — entradas, saídas, intervalos, dias de folga, feriados, justificativas, etc.
+      </div>
+      <div class="code-box">
+        <strong style="color:var(--graphite)">Colunas do CSV exportado:</strong><br>
+        Dia · Previsto · Entrada 1 · Saída 1 · Entrada 2 · Saída 2 · Total · Banco Saldo...
+      </div>
+    </div>
+
+    <div class="step-card">
+      <div class="step-head">
+        <div class="step-num">2</div>
+        <div class="step-title">Preencha os campos antes de importar</div>
+      </div>
+      <div class="step-body" style="margin-bottom:14px">
+        Esses campos são o cabeçalho do relatório final. Preencha todos antes de importar o arquivo.
+      </div>
+      <div class="params-grid">
+        <div class="param-card normal">
+          <div class="param-label">Nome do Colaborador</div>
+          <div class="param-text">Aparece no cabeçalho do relatório. Não afeta a análise dos dados.</div>
+        </div>
+        <div class="param-card normal">
+          <div class="param-label">Empresa / Cliente</div>
+          <div class="param-text">Necessário para salvar o documento no Drive na pasta correta.</div>
+        </div>
+        <div class="param-card normal">
+          <div class="param-label">Período do Relatório</div>
+          <div class="param-text">Data de início e fim. Aparece no cabeçalho do relatório gerado.</div>
+        </div>
+        <div class="param-card special">
+          <div class="param-label">Duração do Intervalo de Almoço</div>
+          <div class="param-text"><strong>Único parâmetro técnico.</strong> Informe os minutos conforme o contrato:<br><br>60 = 1 hora · 90 = 1h30 · 120 = 2 horas<br><br>O sistema usa esse valor para detectar se o colaborador voltou cedo ou atrasado do intervalo.</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="step-card">
+      <div class="step-head">
+        <div class="step-num">3</div>
+        <div class="step-title">Importe o CSV — o sistema analisa tudo automaticamente</div>
+      </div>
+      <div class="step-body" style="margin-bottom:14px">
+        Após importar, o sistema lê cada linha e identifica o que é horário e o que é justificativa ou texto especial.
+      </div>
+
+      <div class="dark-box">
+        <div class="dark-box-title">Como o sistema interpreta cada célula</div>
+        <div class="dark-box-main">Regra simples: se a célula não tiver um horário no formato HH:MM, ela é ignorada.</div>
+        <div class="dark-cols">
+          <div class="dark-col">
+            <div class="dark-col-title red">Ignora — sem HH:MM</div>
+            <div class="dark-col-item">
+              Feriado: Sexta-feira Santa<br>
+              Folga<br>
+              Justificado Banco<br>
+              Atestado Médico<br>
+              Licença Maternidade<br>
+              Afastamento INSS<br>
+              <em style="color:#6B6860">...qualquer outro texto</em>
+            </div>
+          </div>
+          <div class="dark-col">
+            <div class="dark-col-title green">Processa — tem HH:MM</div>
+            <div class="dark-col-item">
+              07:44 (M)<br>
+              12:00 (M)<br>
+              13:30 (I)<br>
+              17:02 (M)<br>
+              08:00<br>
+              09:06<br>
+              <em style="color:#6B6860">...qualquer horário</em>
+            </div>
+          </div>
+        </div>
+        <div class="dark-footer">
+          Isso garante que o sistema funcione com <strong style="color:#fff">qualquer CSV do Secullum, de qualquer empresa</strong> — independente dos feriados, justificativas ou textos que o sistema de ponto usar. Se não tem horário, não é processado.
+        </div>
+      </div>
+
+      <div style="font-size:13px;font-weight:700;color:var(--graphite);margin:4px 0 12px">O relatório aponta:</div>
+      <div class="checks-grid">
+        <div class="check-item">
+          <div class="check-icon">🕐</div>
+          <div>
+            <div class="check-title">Atrasos de entrada</div>
+            <div class="check-desc">Horário batido comparado com o horário previsto no CSV</div>
+          </div>
+        </div>
+        <div class="check-item">
+          <div class="check-icon">🚪</div>
+          <div>
+            <div class="check-title">Saídas antecipadas e horas extras</div>
+            <div class="check-desc">Saída batida comparada com o fim do expediente previsto</div>
+          </div>
+        </div>
+        <div class="check-item">
+          <div class="check-icon">🍽️</div>
+          <div>
+            <div class="check-title">Descumprimentos de intervalo</div>
+            <div class="check-desc">Retorno antes do tempo ou estouro além do intervalo configurado</div>
+          </div>
+        </div>
+        <div class="check-item">
+          <div class="check-icon">❌</div>
+          <div>
+            <div class="check-title">Faltas e ausências</div>
+            <div class="check-desc">Dias com horário previsto mas sem nenhuma batida de entrada</div>
+          </div>
+        </div>
+        <div class="check-item">
+          <div class="check-icon">⚠️</div>
+          <div>
+            <div class="check-title">Registros incompletos</div>
+            <div class="check-desc">Colaborador entrou mas não bateu nenhuma saída no dia</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="step-card">
+      <div class="step-head">
+        <div class="step-num">4</div>
+        <div class="step-title">Adicione sua análise e envie para o Google Docs</div>
+      </div>
+      <div class="step-body">
+        Após o relatório aparecer na tela, adicione suas <strong>Observações / Análise da Consultora</strong> — comentários, contexto e recomendações. Em seguida clique em <strong>"Enviar e Criar Documento no Google Docs"</strong>. O sistema gera automaticamente um documento formatado e salvo na pasta do colaborador no Drive.
+      </div>
+    </div>
+
+  </div>
+
+  <!-- ════════════════════════════════════════ -->
+  <!-- 08 · FERRAMENTAS DO PORTAL RH INTERNO -->
+  <!-- ════════════════════════════════════════ -->
+  <div class="section-wrap" id="sec-ferramentas">
+    <div class="section-label">
+      <div class="section-num">08</div>
+      <div>
+        <div class="section-name">Ferramentas do Portal RH Interno</div>
+        <div class="section-desc">Gerador de Documentos, Cadastrar Empresa e Diagnóstico de Compliance — uso exclusivo da equipe Crescer</div>
+      </div>
+    </div>
+
+    <!-- Gerador de Documentos -->
+    <div class="step-card">
+      <div class="step-head">
+        <div class="step-num">A</div>
+        <div class="step-title">Gerador de Documentos — pacote em lote</div>
+      </div>
+      <div class="step-body" style="margin-bottom:14px">
+        Gera múltiplos documentos de uma vez para o mesmo colaborador. O RH seleciona a empresa, preenche os dados uma única vez e marca os documentos desejados — o sistema cria todos em uma pasta no Drive e devolve o link da pasta mais os links individuais de cada documento.
+      </div>
+      <div class="params-grid">
+        <div class="param-card normal">
+          <div class="param-label">Empresa</div>
+          <div class="param-text">Seleciona no menu. Os colaboradores já cadastrados carregam automaticamente no campo abaixo para preenchimento automático dos dados.</div>
+        </div>
+        <div class="param-card normal">
+          <div class="param-label">Dados do colaborador</div>
+          <div class="param-text">Nome, CPF, CTPS, cargo, salário, data de admissão e endereço. Os campos aparecem imediatamente ao selecionar a empresa.</div>
+        </div>
+        <div class="param-card special">
+          <div class="param-label">6 documentos disponíveis (checkboxes)</div>
+          <div class="param-text">
+            Contrato de Trabalho · Declaração de Ajuda de Custo · Declaração de Vale Transporte ·
+            Declaração de Benefícios · Recibo de Entrega de EPI · Termo de Recebimento (Código de Ética e Regimento Interno)<br><br>
+            Marque quantos quiser. Para Ajuda de Custo e Vale Transporte, campos extras aparecem automaticamente.
+          </div>
+        </div>
+        <div class="param-card normal">
+          <div class="param-label">Resultado</div>
+          <div class="param-text">Uma pasta no Drive da empresa com todos os documentos gerados. O sistema exibe o link da pasta + link individual de cada documento gerado.</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Cadastrar Empresa -->
+    <div class="step-card">
+      <div class="step-head">
+        <div class="step-num">B</div>
+        <div class="step-title">Cadastrar Empresa — campos e onboarding</div>
+      </div>
+      <div class="step-body" style="margin-bottom:14px">
+        Ao cadastrar uma empresa cliente, preencha todos os dados operacionais de uma vez. Após salvar, o sistema exibe um aviso para enviar o Guia do Gestor ao cliente.
+      </div>
+      <div class="params-grid">
+        <div class="param-card normal">
+          <div class="param-label">Nome Fantasia</div>
+          <div class="param-text">Nome curto usado nos <strong>menus de seleção</strong>, no <strong>nome da pasta no Drive</strong> e na <strong>Agenda</strong>. Exemplo: <em>Vi Dog</em>.</div>
+        </div>
+        <div class="param-card special">
+          <div class="param-label">Razão Social</div>
+          <div class="param-text">Nome jurídico completo usado no <strong>corpo dos documentos gerados</strong>. Exemplo: <em>Vi Dog Serviços Pet LTDA</em>. O sistema busca automaticamente — o RH não precisa digitar ao gerar documentos.</div>
+        </div>
+        <div class="param-card normal">
+          <div class="param-label">Relógio de Ponto</div>
+          <div class="param-text">Modelo e número de série do equipamento físico de controle de ponto. Campos: <em>Modelo</em> e <em>Série</em>.</div>
+        </div>
+        <div class="param-card normal">
+          <div class="param-label">Grupos WhatsApp</div>
+          <div class="param-text">Links dos grupos de liderança e de colaboradores após criação. Centraliza o acesso para toda a equipe RH.</div>
+        </div>
+        <div class="param-card ok">
+          <div class="param-label">Aviso de Onboarding</div>
+          <div class="param-text">Após salvar a empresa, aparece um aviso com link para o <strong>Guia do Gestor</strong> (onboarding/index.html). Envie esse link ao gestor da empresa para que ele saiba usar o portal externo.</div>
+        </div>
+      </div>
+      <div class="code-box">
+        <strong style="color:var(--graphite)">Regra:</strong> Se Nome Fantasia não for preenchido, o sistema usa a Razão Social nos dois contextos. Todos os campos são salvos na planilha <strong>Base_Clientes</strong> e uma pasta é criada automaticamente no Drive.
+      </div>
+    </div>
+
+    <!-- Diagnóstico de Compliance -->
+    <div class="step-card">
+      <div class="step-head">
+        <div class="step-num">C</div>
+        <div class="step-title">Diagnóstico de Compliance — Avaliação de RH</div>
+      </div>
+      <div class="step-body" style="margin-bottom:14px">
+        Avaliação de conformidade em RH com 23 perguntas divididas em 5 eixos. Ao finalizar, o sistema calcula o score, exibe o nível de compliance e gera um documento completo no Google Drive da empresa.
+      </div>
+      <div class="params-grid">
+        <div class="param-card normal">
+          <div class="param-label">5 Eixos Avaliados</div>
+          <div class="param-text">
+            1. Estrutura e Documentação (6 perguntas)<br>
+            2. Saúde e Segurança — SST (4 perguntas)<br>
+            3. Controles Operacionais (6 perguntas)<br>
+            4. Contratos e LGPD (4 perguntas)<br>
+            5. Engajamento e Cultura (3 perguntas)
+          </div>
+        </div>
+        <div class="param-card normal">
+          <div class="param-label">Níveis de Resultado</div>
+          <div class="param-text">
+            <strong style="color:#1e7e34">Excelente</strong> — &ge;87% (20+/23)<br>
+            <strong style="color:#155724">Bom</strong> — 65–86% (15–19/23)<br>
+            <strong style="color:#856404">Médio</strong> — 39–64% (9–14/23)<br>
+            <strong style="color:#721c24">Crítico</strong> — &lt;39% (0–8/23)
+          </div>
+        </div>
+        <div class="param-card special">
+          <div class="param-label">Documento Gerado Automaticamente</div>
+          <div class="param-text">O sistema cria uma "Avaliação de Compliance RH" formatada no Google Docs, salva na pasta <em>empresa/Diagnóstico/</em> no Drive. O link aparece direto no portal após salvar.</div>
+        </div>
+        <div class="param-card normal">
+          <div class="param-label">Dados Salvos na Planilha</div>
+          <div class="param-text">Todas as 23 respostas (SIM/NÃO), score, nível, observações e URL do documento ficam registrados em <strong>Base_Diagnosticos</strong>.</div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+
+</div>
+
+<!-- RODAPÉ -->
+<div class="footer">
+  <div class="footer-eyebrow">Sistema exclusivo</div>
+  <div class="footer-name">Feito por <strong>Domani Consultoria</strong> · para Crescer Consultoria Empresarial</div>
+</div>
+
+<script>
+function showTab(id) {
+  document.querySelectorAll('.ptab-btn').forEach(function(b) { b.classList.remove('active'); });
+  document.querySelectorAll('.ptab-content').forEach(function(c) { c.classList.remove('active'); });
+  var btn = document.querySelector('.ptab-btn[onclick*="\'' + id + '\'"]');
+  if (btn) btn.classList.add('active');
+  var content = document.getElementById('ptab-' + id);
+  if (content) content.classList.add('active');
+}
+</script>
+</body>
+</html>
