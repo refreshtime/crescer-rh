@@ -132,6 +132,12 @@ body {
 
 /* ── BACKEND ── */
 .backend-box { background: var(--warn-l); border: 1.5px dashed #C9A34A; border-radius: 14px; padding: 20px 22px; display: flex; align-items: flex-start; gap: 16px; }
+.aviso-perigo { background: #fff5f5; border: 1.5px solid #fca5a5; border-radius: 14px; padding: 20px 22px; margin-top: 20px; }
+.aviso-perigo-title { font-size: 13px; font-weight: 700; letter-spacing: 1px; text-transform: uppercase; color: var(--err); margin-bottom: 12px; display: flex; align-items: center; gap: 8px; }
+.aviso-perigo ul { margin: 0; padding-left: 18px; display: flex; flex-direction: column; gap: 6px; }
+.aviso-perigo li { font-size: 13px; color: #7f1d1d; line-height: 1.5; }
+.aviso-perigo li strong { color: var(--err); }
+.aviso-ok-tip { background: var(--ok-l); border: 1.5px solid #6ee7b7; border-radius: 10px; padding: 12px 16px; margin-top: 10px; font-size: 13px; color: var(--ok); line-height: 1.5; }
 @media(max-width:500px){ .backend-box { flex-direction: column; } }
 .backend-icon  { font-size: 26px; flex-shrink: 0; margin-top: 1px; }
 .backend-title { font-size: 14px; font-weight: 700; color: var(--warn); margin-bottom: 5px; }
@@ -555,6 +561,23 @@ body {
         </div>
       </div>
 
+    </div>
+
+    <div class="aviso-perigo">
+      <div class="aviso-perigo-title">
+        <svg fill="none" viewBox="0 0 24 24" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="width:16px;height:16px;stroke:var(--err);flex-shrink:0"><path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"/><line x1="12" y1="9" x2="12" y2="13"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg>
+        O que nunca deve ser feito na planilha
+      </div>
+      <ul>
+        <li><strong>Não altere a ordem das colunas</strong> em nenhuma aba — o sistema lê as colunas por posição fixa. Reorganizar quebra todos os registros futuros.</li>
+        <li><strong>Não renomeie as abas</strong> (ex: Base_Admissoes, Base_Clientes, Base_Lembretes) — o sistema busca as abas pelo nome exato.</li>
+        <li><strong>Não exclua nem mova a linha 1</strong> (cabeçalho) em nenhuma aba — ela é a referência de estrutura e é congelada pelo sistema.</li>
+        <li><strong>Não insira linhas antes da linha 2</strong> — os dados começam sempre na linha 2. Inserir linhas no meio desloca os registros e quebra a leitura.</li>
+        <li><strong>Não exclua colunas</strong> — mesmo que um campo esteja vazio, a coluna precisa existir para manter o alinhamento.</li>
+        <li><strong>Não mescle células</strong> — mesclagem impede a leitura linha a linha pelo sistema.</li>
+        <li><strong>Não altere o formato das datas</strong> nas colunas de data — o sistema espera <code>yyyy-MM-dd</code>. Converter para outro formato (ex: "jan/2025") quebra a leitura.</li>
+        <li><strong>Não altere o nome da empresa</strong> em Base_Clientes sem atualizar todos os registros relacionados nas demais abas — o sistema usa o nome como chave de vínculo.</li>
+      </ul>
     </div>
 
   </div>
@@ -989,7 +1012,11 @@ body {
       <div class="code-box">
         <strong>Planilha:</strong> Base_Lembretes<br/>
         <strong>Colunas:</strong> Data/Hora Criação · Empresa · Título · Data Alvo · Antecedência (dias) · Data Disparo · Obs · Status<br/>
-        <strong>Status:</strong> <em>ativo</em> (padrão) — altere para <em>concluido</em> na planilha quando resolvido
+        <strong>Status possíveis:</strong> <code>ativo</code> · <code>concluído</code>
+      </div>
+      <div class="aviso-ok-tip">
+        <strong>Concluir pelo portal:</strong> Na seção Lembretes &amp; Aniversários, cada lembrete tem um botão <strong>✓</strong> — ao clicar, o status muda para <code>concluído</code> na planilha e o lembrete desaparece da lista automaticamente.<br/><br/>
+        <strong>Restaurar pela planilha:</strong> Se quiser que um lembrete concluído volte a aparecer, acesse a aba <code>Base_Lembretes</code>, localize a linha e altere o valor da coluna <strong>Status</strong> de <code>concluído</code> para <code>ativo</code>. O lembrete voltará a aparecer no próximo carregamento da tela.
       </div>
       <div class="params-grid" style="margin-top:16px">
         <div class="param-card normal">
