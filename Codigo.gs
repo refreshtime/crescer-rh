@@ -625,8 +625,7 @@ function processDiagnostico(dados) {
 function getColaboradores(empresa) {
   try {
     var ss    = SpreadsheetApp.openById(CONFIG.SPREADSHEET_ID);
-    // Lê de Base_Colaboradores (fonte principal); fallback para Base_Admissoes
-    var sheet = ss.getSheetByName('Base_Colaboradores') || ss.getSheetByName('Base_Admissoes');
+    var sheet = ss.getSheetByName('Base_Colaboradores');
     if (!sheet) return [];
     var data = sheet.getDataRange().getValues();
     if (data.length < 2) return [];
@@ -1723,7 +1722,6 @@ function getAtividades() {
       ['Base_Atestados',     'Atestado',       'warn'],
       ['Base_Desligamentos', 'Desligamento',   'err'],
       ['Base_Vagas',         'Vaga',           'gold'],
-      ['Base_Admissoes',     'Admissão',       'ok'],
       ['Base_Atividades',    'Atividade',      'gold']
     ];
     var lista = [];

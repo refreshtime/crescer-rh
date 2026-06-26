@@ -532,8 +532,8 @@ body {
         </div>
         <div class="stabs">
           <div class="stab adm">
-            <div class="stab-name adm">Base_Admissoes</div>
-            <div class="stab-cols">Nome · CPF · Nascimento · Empresa · Data · Aceite LGPD · Link Drive</div>
+            <div class="stab-name adm">Base_Envio_Docs</div>
+            <div class="stab-cols">Data/Hora · Nome · CPF · Nascimento · Telefone · Empresa · LGPD · Docs Enviados · Link Pasta</div>
           </div>
           <div class="stab at">
             <div class="stab-name at">Base_Atestados</div>
@@ -571,7 +571,7 @@ body {
       </div>
       <ul>
         <li><strong>Não altere a ordem das colunas</strong> em nenhuma aba — o sistema lê as colunas por posição fixa. Reorganizar quebra todos os registros futuros.</li>
-        <li><strong>Não renomeie as abas</strong> (ex: Base_Admissoes, Base_Clientes, Base_Lembretes) — o sistema busca as abas pelo nome exato.</li>
+        <li><strong>Não renomeie as abas</strong> (ex: Base_Envio_Docs, Base_Clientes, Base_Lembretes) — o sistema busca as abas pelo nome exato.</li>
         <li><strong>Não exclua nem mova a linha 1</strong> (cabeçalho) em nenhuma aba — ela é a referência de estrutura e é congelada pelo sistema.</li>
         <li><strong>Não insira linhas antes da linha 2</strong> — os dados começam sempre na linha 2. Inserir linhas no meio desloca os registros e quebra a leitura.</li>
         <li><strong>Não exclua colunas</strong> — mesmo que um campo esteja vazio, a coluna precisa existir para manter o alinhamento.</li>
@@ -659,7 +659,7 @@ body {
               <div class="pflow-col-step"><span>3</span>Onde fica salvo</div>
               <ul>
                 <li>Drive: pasta empresa/colaborador</li>
-                <li>Planilha: Base_Admissoes</li>
+                <li>Planilha: Base_Envio_Docs</li>
                 <li>Base_Colaboradores atualizada</li>
                 <li>Calendário: evento criado</li>
               </ul>
@@ -845,7 +845,7 @@ body {
         </div>
         <div class="aflow-arrow">→</div>
         <div class="aflow-source">
-          <div class="aflow-source-name">Base_Admissoes</div>
+          <div class="aflow-source-name">Base_Envio_Docs</div>
           <div class="aflow-source-sub">Planilha Mestre</div>
         </div>
         <div class="aflow-arrow">→</div>
