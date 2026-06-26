@@ -2049,9 +2049,16 @@ function _atividadesNoDia(dateKey) {
   for (var i = 0; i < calData.atividades.length; i++) {
     var a = calData.atividades[i];
     if (!a.data) continue;
-    var parts = String(a.data).split(' ')[0].split('/');
-    if (parts.length < 3) continue;
-    if (parts[2] + '-' + parts[1] + '-' + parts[0] === dateKey) result.push(a);
+    var dataPart = String(a.data).split(' ')[0];
+    var key;
+    if (dataPart.indexOf('/') !== -1) {
+      var parts = dataPart.split('/');
+      if (parts.length < 3) continue;
+      key = parts[2] + '-' + parts[1] + '-' + parts[0];
+    } else {
+      key = dataPart; // já está em yyyy-MM-dd
+    }
+    if (key === dateKey) result.push(a);
   }
   return result;
 }
