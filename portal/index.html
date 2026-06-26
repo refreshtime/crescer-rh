@@ -1379,15 +1379,27 @@ function enviarDesligamento() {
     }, function(res2) {
       showLoading('des', false);
       document.getElementById('btn-des').disabled = false;
-      showToast('des', true, '✓ Desligamento registrado com sucesso.');
-      if (res2.ok) {
-        var html = '';
-        if (res2.pasta) html += '<div style="margin-bottom:8px"><a href="' + res2.pasta + '" target="_blank" style="font-weight:700;color:var(--ok)">Abrir Pasta no Drive</a></div>';
-        (res2.documentos || []).forEach(function(d) {
-          html += '<div><a href="' + d.url + '" target="_blank" style="color:var(--ok)">' + d.nome + '</a></div>';
-        });
-        document.getElementById('des-docs-links').innerHTML = html;
-        document.getElementById('des-docs-result').style.display = 'block';
+      if (res2 && res2.ok) {
+        var docs = res2.documentos || [];
+        var msgHtml = '✓ Desligamento registrado.';
+        if (docs.length) {
+          msgHtml += ' Documentos gerados:';
+          docs.forEach(function(d) {
+            msgHtml += ' <a href="' + d.url + '" target="_blank" style="color:inherit;font-weight:700;text-decoration:underline">' + d.nome + '</a>';
+          });
+        }
+        showToast('des', true, msgHtml, res2.pasta || '');
+        if (res2.pasta || docs.length) {
+          var html = '';
+          if (res2.pasta) html += '<div style="margin-bottom:8px"><a href="' + res2.pasta + '" target="_blank" style="font-weight:700;color:var(--ok)">📁 Abrir Pasta no Drive</a></div>';
+          docs.forEach(function(d) {
+            html += '<div><a href="' + d.url + '" target="_blank" style="color:var(--ok)">→ ' + d.nome + '</a></div>';
+          });
+          document.getElementById('des-docs-links').innerHTML = html;
+          document.getElementById('des-docs-result').style.display = 'block';
+        }
+      } else {
+        showToast('des', true, '✓ Desligamento registrado com sucesso.');
       }
     }, function() {
       showLoading('des', false);
