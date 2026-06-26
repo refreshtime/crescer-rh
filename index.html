@@ -1,0 +1,1339 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0"/>
+<title>CRESCER · RH Digital</title>
+<link rel="preconnect" href="https://fonts.googleapis.com"/>
+<link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800&display=swap" rel="stylesheet"/>
+<style>
+:root {
+  --bg:       #F7F6F3;
+  --surface:  #FFFFFF;
+  --border:   #E4E2DC;
+  --border-s: #CCCAC2;
+  --txt:      #1A1918;
+  --txt-2:    #6B6860;
+  --txt-3:    #9B9890;
+  --graphite: #2C2B28;
+  --gold:     #8B7A55;
+  --gold-l:   #F0EBE1;
+  --ok:       #3D7A5C;
+  --ok-l:     #EBF5F0;
+  --err:      #8B3A3A;
+  --err-l:    #F5EBEB;
+  --warn:     #7A5C20;
+  --warn-l:   #FFF8EC;
+  --radius:   14px;
+  --shadow:   0 2px 16px rgba(0,0,0,0.06);
+  --shadow-m: 0 4px 32px rgba(0,0,0,0.10);
+}
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+html, body { height: 100%; background: var(--bg); font-family: 'Outfit', sans-serif; color: var(--txt); -webkit-font-smoothing: antialiased; }
+.app { min-height: 100vh; max-width: 480px; margin: 0 auto; padding: 0 0 60px; }
+
+/* HEADER */
+.header { padding: 52px 28px 0; margin-bottom: 40px; }
+.header-brand { font-size: 11px; font-weight: 700; letter-spacing: 4px; text-transform: uppercase; color: var(--gold); margin-bottom: 6px; }
+.header-title { font-size: 26px; font-weight: 700; color: var(--graphite); line-height: 1.2; }
+.header-sub   { font-size: 14px; color: var(--txt-2); margin-top: 6px; }
+.header-rule  { width: 32px; height: 2px; background: var(--gold); margin-top: 16px; }
+
+/* SCREENS */
+.screen { display: none; padding: 0 20px; }
+.screen.active { display: block; }
+
+/* HUB */
+.hub { padding: 0 20px; }
+.hub-card {
+  display: flex; align-items: center; gap: 20px;
+  background: var(--surface); border: 1px solid var(--border);
+  border-radius: var(--radius); padding: 24px 22px; margin-bottom: 14px;
+  cursor: pointer; transition: box-shadow .2s, border-color .2s, transform .15s;
+  -webkit-tap-highlight-color: transparent;
+}
+.hub-card:active { transform: scale(0.98); }
+.hub-card:hover  { box-shadow: var(--shadow-m); border-color: var(--border-s); }
+.hub-card.danger .hub-icon { background: var(--err-l); }
+.hub-card.danger .hub-icon svg { stroke: var(--err); }
+.hub-icon { width: 48px; height: 48px; border-radius: 12px; background: var(--gold-l); display: flex; align-items: center; justify-content: center; flex-shrink: 0; }
+.hub-icon svg { width: 22px; height: 22px; stroke: var(--gold); }
+.hub-label { font-size: 15px; font-weight: 600; color: var(--graphite); line-height: 1.2; }
+.hub-desc  { font-size: 12px; color: var(--txt-3); margin-top: 3px; }
+.hub-arrow { margin-left: auto; color: var(--border-s); }
+
+/* FORMS */
+.form-header { display: flex; align-items: center; gap: 14px; margin-bottom: 32px; }
+.back-btn {
+  width: 38px; height: 38px; border-radius: 10px; border: 1px solid var(--border);
+  background: var(--surface); display: flex; align-items: center; justify-content: center;
+  cursor: pointer; flex-shrink: 0; -webkit-tap-highlight-color: transparent;
+}
+.back-btn svg { width: 18px; height: 18px; stroke: var(--txt-2); }
+.form-title { font-size: 20px; font-weight: 700; color: var(--graphite); }
+.form-step  { font-size: 11px; color: var(--txt-3); font-weight: 500; letter-spacing: 1px; margin-top: 2px; }
+
+/* FIELDS */
+.field { margin-bottom: 20px; }
+.field > label { display: block; font-size: 11px; font-weight: 700; letter-spacing: 1.5px; text-transform: uppercase; color: var(--txt-2); margin-bottom: 8px; }
+.field input, .field select, .field textarea {
+  width: 100%; background: var(--surface); border: 1.5px solid var(--border);
+  border-radius: 10px; padding: 14px 16px; font-family: 'Outfit', sans-serif;
+  font-size: 15px; color: var(--txt); outline: none; transition: border-color .2s;
+  appearance: none; -webkit-appearance: none;
+}
+.field textarea { resize: vertical; min-height: 90px; line-height: 1.5; }
+.field input:focus, .field select:focus, .field textarea:focus { border-color: var(--graphite); }
+.field input::placeholder, .field textarea::placeholder { color: var(--txt-3); }
+.field select {
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='16' height='16' viewBox='0 0 24 24' fill='none' stroke='%236B6860' stroke-width='2'%3E%3Cpath d='M6 9l6 6 6-6'/%3E%3C/svg%3E");
+  background-repeat: no-repeat; background-position: right 14px center; padding-right: 40px;
+}
+.field-row { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
+
+/* NOVO INPUT (campo extra quando "Adicionar novo" é selecionado) */
+.novo-wrap { display: none; margin-top: 8px; }
+.novo-wrap input {
+  width: 100%; background: var(--gold-l); border: 1.5px solid var(--gold);
+  border-radius: 10px; padding: 12px 16px; font-family: 'Outfit', sans-serif;
+  font-size: 14px; color: var(--txt); outline: none;
+}
+.novo-wrap input:focus { border-color: var(--graphite); background: var(--surface); }
+.novo-wrap input::placeholder { color: var(--gold); }
+
+/* TOGGLE TIPO */
+.toggle-group { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-bottom: 20px; }
+.toggle-opt { display: none; }
+.toggle-lbl { display: block; text-align: center; padding: 14px; border-radius: 10px; border: 1.5px solid var(--border); font-size: 14px; font-weight: 600; color: var(--txt-2); cursor: pointer; transition: all .2s; }
+.toggle-opt:checked + .toggle-lbl { background: var(--graphite); border-color: var(--graphite); color: #fff; }
+
+/* TERMOS */
+.terms-box { border: 1.5px solid var(--border); border-radius: 10px; overflow: hidden; margin-bottom: 16px; }
+.terms-scroll { height: 200px; overflow-y: scroll; padding: 18px; background: var(--surface); font-size: 13px; color: var(--txt-2); line-height: 1.7; }
+.terms-scroll::-webkit-scrollbar { width: 4px; }
+.terms-scroll::-webkit-scrollbar-thumb { background: var(--border-s); border-radius: 4px; }
+.terms-scroll h4 { font-size: 12px; font-weight: 700; text-transform: uppercase; letter-spacing: 1px; color: var(--graphite); margin: 18px 0 8px; }
+.terms-scroll h4:first-child { margin-top: 0; }
+.terms-accept { display: flex; align-items: center; gap: 12px; padding: 14px 18px; background: var(--gold-l); border-top: 1px solid var(--border); cursor: pointer; }
+.terms-accept input[type="checkbox"] { width: 20px; height: 20px; accent-color: var(--graphite); flex-shrink: 0; }
+.terms-accept span { font-size: 13px; font-weight: 500; color: var(--graphite); line-height: 1.4; }
+
+/* UPLOAD */
+.upload-area {
+  border: 1.5px dashed var(--border-s); border-radius: 10px; background: var(--surface);
+  padding: 20px; text-align: center; cursor: pointer; position: relative; transition: border-color .2s, background .2s;
+}
+.upload-area:hover { border-color: var(--gold); background: var(--gold-l); }
+.upload-area input[type="file"] { position: absolute; inset: 0; opacity: 0; cursor: pointer; width: 100%; height: 100%; }
+.upload-icon  { font-size: 24px; margin-bottom: 6px; }
+.upload-label { font-size: 13px; font-weight: 600; color: var(--graphite); }
+.upload-hint  { font-size: 11px; color: var(--txt-3); margin-top: 2px; }
+.upload-name  { font-size: 12px; color: var(--ok); font-weight: 600; margin-top: 8px; display: none; }
+
+/* CHECKLIST */
+.checklist { background: var(--surface); border: 1.5px solid var(--border); border-radius: 10px; overflow: hidden; margin-bottom: 20px; }
+.checklist-title { font-size: 11px; font-weight: 700; letter-spacing: 1.5px; text-transform: uppercase; color: var(--txt-2); padding: 14px 16px 10px; border-bottom: 1px solid var(--border); }
+.check-item { display: flex; align-items: center; gap: 12px; padding: 12px 16px; border-bottom: 1px solid var(--border); cursor: pointer; }
+.check-item:last-child { border-bottom: none; }
+.check-item input[type="checkbox"] { width: 18px; height: 18px; accent-color: var(--graphite); flex-shrink: 0; cursor: pointer; }
+.check-item span { font-size: 13px; color: var(--txt); font-weight: 500; }
+.check-item .badge { margin-left: auto; font-size: 10px; font-weight: 700; padding: 3px 8px; border-radius: 20px; flex-shrink: 0; }
+.badge-opt { background: var(--gold-l); color: var(--gold); }
+
+/* SECTION TAG */
+.section-tag { font-size: 11px; font-weight: 700; letter-spacing: 2px; text-transform: uppercase; color: var(--txt-3); margin-bottom: 16px; margin-top: 28px; }
+
+/* BUTTONS */
+.btn-primary {
+  display: block; width: 100%; padding: 17px; background: var(--graphite);
+  color: #fff; border: none; border-radius: 12px; font-family: 'Outfit', sans-serif;
+  font-size: 15px; font-weight: 700; letter-spacing: 0.5px; cursor: pointer;
+  transition: opacity .2s, transform .15s; -webkit-tap-highlight-color: transparent; margin-top: 8px;
+}
+.btn-primary:active { transform: scale(0.98); opacity: 0.85; }
+.btn-primary:disabled { opacity: 0.45; cursor: not-allowed; transform: none; }
+.btn-danger { background: var(--err); }
+
+/* LOADING */
+.loading { display: none; flex-direction: column; align-items: center; justify-content: center; padding: 48px 0; gap: 16px; }
+.loading.show { display: flex; }
+.spinner { width: 36px; height: 36px; border: 3px solid var(--border); border-top-color: var(--graphite); border-radius: 50%; animation: spin .8s linear infinite; }
+@keyframes spin { to { transform: rotate(360deg); } }
+.loading-txt { font-size: 14px; color: var(--txt-2); font-weight: 500; }
+
+/* TOAST */
+.toast { display: none; border-radius: 12px; padding: 18px 20px; margin-top: 24px; font-size: 14px; font-weight: 500; line-height: 1.5; }
+.toast.ok  { display: block; background: var(--ok-l);  color: var(--ok);  border: 1px solid #B8DFD0; }
+.toast.err { display: block; background: var(--err-l); color: var(--err); border: 1px solid #E8C4C4; }
+.toast-link { display: block; margin-top: 8px; font-size: 13px; color: var(--ok); text-decoration: underline; word-break: break-all; }
+
+/* CONDITIONAL */
+.cond-digital { display: none; }
+.cond-digital.show { display: block; }
+
+/* PLACEHOLDER */
+.placeholder-field {
+  background: var(--warn-l); border: 1.5px dashed #D4A84B; border-radius: 10px;
+  padding: 14px 16px; font-size: 13px; color: var(--warn); font-weight: 500;
+  margin-bottom: 20px; display: flex; align-items: center; gap: 8px;
+}
+
+/* DIAGNÓSTICO */
+.diag-q { background: var(--surface); border: 1.5px solid var(--border); border-radius: 10px; padding: 14px 16px; margin-bottom: 10px; }
+.diag-q-cat { font-size: 10px; font-weight: 800; letter-spacing: 1.5px; text-transform: uppercase; color: var(--txt-3); margin-bottom: 4px; }
+.diag-q-text { font-size: 13px; font-weight: 500; color: var(--txt); margin-bottom: 10px; line-height: 1.5; }
+.diag-q-opts { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; }
+.diag-r { display: none; }
+.diag-lbl { display: block; text-align: center; padding: 10px 4px; border-radius: 8px; border: 1.5px solid var(--border); font-size: 13px; font-weight: 700; color: var(--txt-2); cursor: pointer; transition: all .2s; }
+.diag-r:checked + .diag-lbl.diag-sim { background: var(--ok-l);  border-color: var(--ok);  color: var(--ok); }
+.diag-r:checked + .diag-lbl.diag-nao { background: var(--err-l); border-color: var(--err); color: var(--err); }
+.score-bar-track { height: 8px; background: var(--border); border-radius: 4px; overflow: hidden; margin: 10px 0 6px; }
+.score-bar-fill  { height: 100%; width: 0%; border-radius: 4px; transition: width .3s, background .3s; }
+</style>
+</head>
+<body>
+<div class="app">
+
+  <div class="header">
+    <div class="header-brand">Crescer · RH — Interno</div>
+    <div class="header-title">Painel da Equipe</div>
+    <div class="header-sub">Acesso restrito — Crescer Consultoria</div>
+    <div class="header-rule"></div>
+  </div>
+
+  <!-- ══ HUB ══ -->
+  <div class="hub screen active" id="screen-hub">
+
+    <div class="hub-card" onclick="goto('admissao')">
+      <div class="hub-icon">
+        <svg fill="none" viewBox="0 0 24 24" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/>
+          <line x1="19" y1="8" x2="19" y2="14"/><line x1="22" y1="11" x2="16" y2="11"/>
+        </svg>
+      </div>
+      <div><div class="hub-label">Nova Admissão</div><div class="hub-desc">Cadastrar colaborador e documentos</div></div>
+      <div class="hub-arrow"><svg width="18" height="18" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor"><path d="M9 18l6-6-6-6"/></svg></div>
+    </div>
+
+    <div class="hub-card" onclick="goto('atestado')">
+      <div class="hub-icon">
+        <svg fill="none" viewBox="0 0 24 24" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/>
+          <polyline points="14 2 14 8 20 8"/>
+          <line x1="12" y1="18" x2="12" y2="12"/><line x1="9" y1="15" x2="15" y2="15"/>
+        </svg>
+      </div>
+      <div><div class="hub-label">Enviar Atestado</div><div class="hub-desc">Registrar afastamento médico</div></div>
+      <div class="hub-arrow"><svg width="18" height="18" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor"><path d="M9 18l6-6-6-6"/></svg></div>
+    </div>
+
+    <div class="hub-card danger" onclick="goto('desligamento')">
+      <div class="hub-icon">
+        <svg fill="none" viewBox="0 0 24 24" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/>
+          <line x1="23" y1="11" x2="17" y2="11"/>
+        </svg>
+      </div>
+      <div><div class="hub-label">Desligamento</div><div class="hub-desc">Registrar saída de colaborador</div></div>
+      <div class="hub-arrow"><svg width="18" height="18" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor"><path d="M9 18l6-6-6-6"/></svg></div>
+    </div>
+
+
+    <div class="hub-card" onclick="goto('diagnostico')">
+      <div class="hub-icon">
+        <svg fill="none" viewBox="0 0 24 24" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M9 11l3 3L22 4"/><path d="M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11"/>
+        </svg>
+      </div>
+      <div><div class="hub-label">Diagnóstico de Empresa</div><div class="hub-desc">Avaliação inicial de compliance RH</div></div>
+      <div class="hub-arrow"><svg width="18" height="18" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor"><path d="M9 18l6-6-6-6"/></svg></div>
+    </div>
+
+    <div class="hub-card" onclick="goto('cliente')">
+      <div class="hub-icon">
+        <svg fill="none" viewBox="0 0 24 24" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+          <rect x="2" y="7" width="20" height="14" rx="2"/>
+          <path d="M16 7V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v2"/>
+        </svg>
+      </div>
+      <div><div class="hub-label">Cadastrar Empresa</div><div class="hub-desc">Registrar novo cliente / contrato</div></div>
+      <div class="hub-arrow"><svg width="18" height="18" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor"><path d="M9 18l6-6-6-6"/></svg></div>
+    </div>
+
+  </div>
+
+  <!-- ══ ADMISSÃO ══ -->
+  <div class="screen" id="screen-admissao">
+    <div class="form-header">
+      <button class="back-btn" onclick="goto('hub')"><svg fill="none" viewBox="0 0 24 24" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M19 12H5M12 19l-7-7 7-7"/></svg></button>
+      <div><div class="form-title">Nova Admissão</div><div class="form-step">Dados do colaborador</div></div>
+    </div>
+
+    <div id="form-admissao-wrap">
+      <div class="field"><label>Nome Completo</label><input type="text" id="adm-nome" placeholder="Nome do colaborador" autocomplete="name"/></div>
+      <div class="field"><label>CPF</label><input type="text" id="adm-cpf" placeholder="000.000.000-00" maxlength="14" inputmode="numeric"/></div>
+      <div class="field-row">
+        <div class="field"><label>Data de Nascimento</label><input type="date" id="adm-nasc"/></div>
+        <div class="field"><label>Telefone / WhatsApp</label><input type="tel" id="adm-tel" placeholder="(83) 99999-9999"/></div>
+      </div>
+
+      <div class="field">
+        <label>Empresa Cliente</label>
+        <select id="adm-empresa" onchange="toggleNovo(this)">
+          <option value="">Selecione a empresa…</option>
+          <option value="__novo__">➕ Cadastrar nova empresa…</option>
+        </select>
+        <div class="novo-wrap" id="adm-empresa-novo-wrap">
+          <input type="text" placeholder="Digite o nome da empresa…"/>
+        </div>
+      </div>
+
+      <div class="field"><label>Função / Cargo</label><input type="text" id="adm-cargo" placeholder="Ex: Auxiliar de Cozinha"/></div>
+      <div class="field-row">
+        <div class="field"><label>Data de Admissão</label><input type="date" id="adm-data"/></div>
+        <div class="field"><label>Salário</label><input type="text" id="adm-salario" placeholder="R$ 0,00" inputmode="decimal"/></div>
+      </div>
+      <div class="field"><label>Data do ASO <span style="font-weight:400;text-transform:none;letter-spacing:0">(Atestado de Saúde Ocupacional)</span></label><input type="date" id="adm-aso-data"/></div>
+
+      <div class="section-tag">Tipo de Processo</div>
+      <div class="toggle-group">
+        <input type="radio" name="adm-tipo" id="tipo-digital" value="digital" class="toggle-opt" onchange="toggleTipo()"/>
+        <label for="tipo-digital" class="toggle-lbl">⚡ Digital</label>
+        <input type="radio" name="adm-tipo" id="tipo-fisico" value="fisico" class="toggle-opt" onchange="toggleTipo()"/>
+        <label for="tipo-fisico" class="toggle-lbl">📋 Físico</label>
+      </div>
+
+      <div class="cond-digital" id="bloco-digital">
+        <div class="section-tag">Termos e Documentos</div>
+        <div class="terms-box">
+          <div class="terms-scroll">
+            <h4>Regimento Interno</h4>
+            <p>O colaborador se compromete a cumprir integralmente as normas internas da empresa, incluindo horários de trabalho estabelecidos em contrato, uso adequado de equipamentos e ferramentas fornecidos, postura profissional no ambiente de trabalho e respeito à hierarquia e aos colegas.</p>
+            <p style="margin-top:10px">Qualquer descumprimento das normas poderá acarretar medidas disciplinares previstas na legislação trabalhista vigente, incluindo advertência verbal, advertência escrita, suspensão e demissão por justa causa, conforme a gravidade da infração.</p>
+            <h4>Banco de Horas</h4>
+            <p>O colaborador declara estar ciente do regime de Banco de Horas adotado pela empresa, no qual eventuais horas excedentes à jornada contratual poderão ser compensadas nos termos do acordo coletivo ou individual firmado, respeitando o prazo máximo de compensação previsto em lei.</p>
+            <p style="margin-top:10px">O saldo de horas será controlado mensalmente e disponibilizado ao colaborador mediante solicitação ao departamento de RH. Horas não compensadas dentro do prazo legal serão remuneradas conforme legislação.</p>
+            <h4>Política de Privacidade — LGPD</h4>
+            <p>Em conformidade com a Lei Geral de Proteção de Dados (Lei nº 13.709/2018), a empresa informa que os dados pessoais coletados neste processo serão utilizados exclusivamente para fins de gestão de recursos humanos, cumprimento de obrigações legais e trabalhistas, comunicações internas e endomarketing.</p>
+            <p style="margin-top:10px">Os dados serão armazenados de forma segura em ambiente Google Workspace e não serão compartilhados com terceiros sem consentimento expresso, exceto nos casos previstos em lei.</p>
+          </div>
+          <label class="terms-accept">
+            <input type="checkbox" id="adm-aceite"/>
+            <span>Li e concordo digitalmente com o Regimento Interno, Banco de Horas e Política de LGPD acima.</span>
+          </label>
+        </div>
+        <div class="section-tag">Upload de Documentos</div>
+        <div class="field"><label>RG (frente e verso)</label>
+          <div class="upload-area"><input type="file" id="upload-rg" accept="image/*,.pdf" onchange="onFileChange('rg')"/>
+            <div class="upload-icon">🪪</div><div class="upload-label">Toque para enviar</div>
+            <div class="upload-hint">JPG, PNG ou PDF · máx. 10MB</div><div class="upload-name" id="upload-rg-name"></div>
+          </div>
+        </div>
+        <div class="field"><label>CPF (documento)</label>
+          <div class="upload-area"><input type="file" id="upload-cpf" accept="image/*,.pdf" onchange="onFileChange('cpf')"/>
+            <div class="upload-icon">📄</div><div class="upload-label">Toque para enviar</div>
+            <div class="upload-hint">JPG, PNG ou PDF · máx. 10MB</div><div class="upload-name" id="upload-cpf-name"></div>
+          </div>
+        </div>
+        <div style="background:linear-gradient(135deg,#071D41 0%,#1351B4 100%);border-radius:10px;padding:16px 18px;margin-bottom:20px;color:white;">
+          <div style="font-size:10px;font-weight:800;letter-spacing:1.5px;opacity:0.7;margin-bottom:6px">PRÓXIMO PASSO OBRIGATÓRIO — VALIDADE JURÍDICA</div>
+          <div style="font-size:13px;font-weight:600;line-height:1.6">Após salvar, assine os documentos via <strong>GOV.BR (Prata ou Ouro)</strong>: Contrato, LGPD, Banco de Horas e Regimento Interno.</div>
+          <div style="font-size:12px;opacity:0.75;margin-top:6px">Acesse <strong>assinatura.iti.br</strong> e envie o PDF para o colaborador assinar.</div>
+        </div>
+      </div>
+
+      <div class="section-tag">Etapas do Processo</div>
+      <div class="checklist">
+        <div class="checklist-title">Marque o que foi concluído</div>
+        <label class="check-item"><input type="checkbox" id="adm-aso-agendado"/><span>ASO agendado e confirmado</span></label>
+        <label class="check-item"><input type="checkbox" id="adm-aso"/><span>Resultado do ASO recebido: APTO</span></label>
+        <label class="check-item"><input type="checkbox" id="adm-docs-contab"/><span>Documentação enviada à contabilidade</span></label>
+        <label class="check-item"><input type="checkbox" id="adm-ponto"/><span>Cadastrado no sistema de ponto</span></label>
+        <label class="check-item"><input type="checkbox" id="adm-vr"/><span>Cadastrado no sistema VR <span class="badge badge-opt">se houver</span></span></label>
+        <label class="check-item"><input type="checkbox" id="adm-vt"/><span>Cadastrado no sistema de transporte <span class="badge badge-opt">se houver</span></span></label>
+        <label class="check-item"><input type="checkbox" id="adm-odonto"/><span>Incluído no plano odontológico <span class="badge badge-opt">se houver</span></span></label>
+        <label class="check-item"><input type="checkbox" id="adm-saude"/><span>Incluído no plano de saúde <span class="badge badge-opt">se houver</span></span></label>
+        <label class="check-item"><input type="checkbox" id="adm-conta"/><span>Abertura de conta solicitada <span class="badge badge-opt">se necessário</span></span></label>
+        <label class="check-item"><input type="checkbox" id="adm-termos-imp"/><span>Termos impressos e assinados</span></label>
+        <label class="check-item"><input type="checkbox" id="adm-arquivado"/><span>Documentos digitalizados e arquivados</span></label>
+      </div>
+
+      <div class="field"><label>Observações</label><textarea id="adm-obs" placeholder="Informações adicionais…"></textarea></div>
+
+      <div class="loading" id="loading-adm"><div class="spinner"></div><div class="loading-txt">Processando admissão…</div></div>
+      <div class="toast" id="toast-adm"></div>
+      <button class="btn-primary" id="btn-adm" onclick="enviarAdmissao()">Confirmar Admissão</button>
+    </div>
+  </div>
+
+  <!-- ══ ATESTADO ══ -->
+  <div class="screen" id="screen-atestado">
+    <div class="form-header">
+      <button class="back-btn" onclick="goto('hub')"><svg fill="none" viewBox="0 0 24 24" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M19 12H5M12 19l-7-7 7-7"/></svg></button>
+      <div><div class="form-title">Atestado Médico</div><div class="form-step">Registro de afastamento</div></div>
+    </div>
+
+    <div class="field"><label>Nome do Colaborador</label><input type="text" id="at-nome" placeholder="Nome completo"/></div>
+
+    <div class="field">
+      <label>Empresa Cliente</label>
+      <select id="at-empresa" onchange="toggleNovo(this)">
+        <option value="">Selecione a empresa…</option>
+        <option value="__novo__">➕ Cadastrar nova empresa…</option>
+      </select>
+      <div class="novo-wrap" id="at-empresa-novo-wrap">
+        <input type="text" placeholder="Digite o nome da empresa…"/>
+      </div>
+    </div>
+
+    <div class="field"><label>Dias de Afastamento</label><input type="number" id="at-dias" placeholder="Ex: 3" min="1" inputmode="numeric"/></div>
+    <div class="field"><label>CID <span style="font-weight:400;text-transform:none;letter-spacing:0">(opcional)</span></label><input type="text" id="at-cid" placeholder="Ex: J00, Z00…"/></div>
+
+    <div class="field"><label>Atestado (imagem ou PDF)</label>
+      <div class="upload-area"><input type="file" id="upload-at" accept="image/*,.pdf" onchange="onFileChange('at')"/>
+        <div class="upload-icon">🏥</div><div class="upload-label">Toque para enviar</div>
+        <div class="upload-hint">JPG, PNG ou PDF · máx. 10MB</div><div class="upload-name" id="upload-at-name"></div>
+      </div>
+    </div>
+
+    <div class="section-tag">Encaminhamentos</div>
+    <div class="checklist">
+      <div class="checklist-title">Marque o que foi feito</div>
+      <label class="check-item"><input type="checkbox" id="at-contab"/><span>Encaminhado à contabilidade</span></label>
+      <label class="check-item"><input type="checkbox" id="at-sst"/><span>Encaminhado ao Protagon (SST) <span class="badge badge-opt">se houver</span></span></label>
+      <label class="check-item"><input type="checkbox" id="at-ponto"/><span>Lançado em afastamentos no sistema de ponto</span></label>
+      <label class="check-item"><input type="checkbox" id="at-lider"/><span>Sinalizado no grupo de líderes (WhatsApp)</span></label>
+      <label class="check-item"><input type="checkbox" id="at-inss"/><span>INSS comunicado — Auxílio-Doença B31 <span class="badge badge-opt">se &gt; 15 dias</span></span></label>
+      <label class="check-item"><input type="checkbox" id="at-aso-retorno"/><span>ASO de retorno agendado <span class="badge badge-opt">se &gt; 30 dias</span></span></label>
+    </div>
+
+    <div class="loading" id="loading-at"><div class="spinner"></div><div class="loading-txt">Salvando atestado…</div></div>
+    <div class="toast" id="toast-at"></div>
+    <button class="btn-primary" onclick="enviarAtestado()">Enviar Atestado</button>
+  </div>
+
+  <!-- ══ DESLIGAMENTO ══ -->
+  <div class="screen" id="screen-desligamento">
+    <div class="form-header">
+      <button class="back-btn" onclick="goto('hub')"><svg fill="none" viewBox="0 0 24 24" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M19 12H5M12 19l-7-7 7-7"/></svg></button>
+      <div><div class="form-title">Desligamento</div><div class="form-step">Saída de colaborador</div></div>
+    </div>
+
+    <div class="field"><label>Nome do Colaborador</label><input type="text" id="des-nome" placeholder="Nome completo"/></div>
+
+    <div class="field">
+      <label>Empresa Cliente</label>
+      <select id="des-empresa" onchange="toggleNovo(this)">
+        <option value="">Selecione a empresa…</option>
+        <option value="__novo__">➕ Cadastrar nova empresa…</option>
+      </select>
+      <div class="novo-wrap" id="des-empresa-novo-wrap">
+        <input type="text" placeholder="Digite o nome da empresa…"/>
+      </div>
+    </div>
+
+    <div class="field-row">
+      <div class="field"><label>Data do Desligamento</label><input type="date" id="des-data"/></div>
+      <div class="field">
+        <label>Tipo de Saída</label>
+        <select id="des-tipo" onchange="toggleNovo(this)">
+          <option value="">Selecione…</option>
+          <option>Pedido de demissão</option>
+          <option>Demissão sem justa causa</option>
+          <option>Demissão por justa causa</option>
+          <option>Acordo mútuo</option>
+          <option>Término de contrato</option>
+          <option value="__novo__">➕ Outro…</option>
+        </select>
+        <div class="novo-wrap" id="des-tipo-novo-wrap">
+          <input type="text" placeholder="Descreva o tipo de saída…"/>
+        </div>
+      </div>
+    </div>
+
+    <div class="field"><label>Informações para Rescisão</label>
+      <textarea id="des-obs" placeholder="Extras, faltas, descontos, observações para a contabilidade…"></textarea>
+    </div>
+    <div class="field"><label>Upload — Aviso / Documentos <span style="font-weight:400;text-transform:none;letter-spacing:0">(opcional)</span></label>
+      <div class="upload-area"><input type="file" id="upload-des" accept="image/*,.pdf" onchange="onFileChange('des')"/>
+        <div class="upload-icon">📎</div><div class="upload-label">Toque para enviar</div>
+        <div class="upload-hint">JPG, PNG ou PDF · máx. 10MB</div><div class="upload-name" id="upload-des-name"></div>
+      </div>
+    </div>
+
+    <div class="section-tag">Etapas do Processo</div>
+    <div class="checklist">
+      <div class="checklist-title">Marque o que foi concluído</div>
+      <label class="check-item"><input type="checkbox" id="des-aviso-contab"/><span>Aviso solicitado à contabilidade por e-mail</span></label>
+      <label class="check-item"><input type="checkbox" id="des-assin-gestor"/><span>Assinatura do gestor colhida no aviso</span></label>
+      <label class="check-item"><input type="checkbox" id="des-assin-func"/><span>Assinatura do colaborador colhida</span></label>
+      <label class="check-item"><input type="checkbox" id="des-aso"/><span>ASO de desligamento agendado e realizado</span></label>
+      <label class="check-item"><input type="checkbox" id="des-rescisao-contab"/><span>Informações de rescisão enviadas à contabilidade</span></label>
+      <label class="check-item"><input type="checkbox" id="des-acerto"/><span>Acerto da rescisão agendado com o colaborador</span></label>
+      <label class="check-item"><input type="checkbox" id="des-pgto"/><span>Pagamento solicitado ao gestor</span></label>
+      <label class="check-item"><input type="checkbox" id="des-rem-ponto"/><span>Removido do sistema de ponto</span></label>
+      <label class="check-item"><input type="checkbox" id="des-rem-vr"/><span>Removido do sistema VR <span class="badge badge-opt">se houver</span></span></label>
+      <label class="check-item"><input type="checkbox" id="des-rem-vt"/><span>Removido do sistema de transporte <span class="badge badge-opt">se houver</span></span></label>
+      <label class="check-item"><input type="checkbox" id="des-rem-saude"/><span>Removido do plano de saúde <span class="badge badge-opt">se houver</span></span></label>
+      <label class="check-item"><input type="checkbox" id="des-rem-odonto"/><span>Removido do plano odontológico <span class="badge badge-opt">se houver</span></span></label>
+      <label class="check-item"><input type="checkbox" id="des-rem-grupos"/><span>Removido dos grupos WhatsApp da empresa</span></label>
+      <label class="check-item"><input type="checkbox" id="des-esocial"/><span>Baixa no eSocial solicitada à contabilidade</span></label>
+      <label class="check-item"><input type="checkbox" id="des-entrevista"/><span>Entrevista de desligamento realizada <span class="badge badge-opt">boa prática</span></span></label>
+      <label class="check-item"><input type="checkbox" id="des-arquivado"/><span>Documentos digitalizados e arquivados</span></label>
+    </div>
+
+    <div class="loading" id="loading-des"><div class="spinner"></div><div class="loading-txt">Registrando desligamento…</div></div>
+    <div class="toast" id="toast-des"></div>
+    <button class="btn-primary btn-danger" id="btn-des" onclick="enviarDesligamento()">Registrar Desligamento</button>
+  </div>
+
+  <!-- ══ CADASTRAR EMPRESA ══ -->
+  <div class="screen" id="screen-cliente">
+    <div class="form-header">
+      <button class="back-btn" onclick="goto('hub')"><svg fill="none" viewBox="0 0 24 24" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M19 12H5M12 19l-7-7 7-7"/></svg></button>
+      <div><div class="form-title">Cadastrar Empresa</div><div class="form-step">Novo cliente / contrato</div></div>
+    </div>
+
+    <div class="section-tag">Dados da Empresa</div>
+    <div class="field"><label>Razão Social</label><input type="text" id="cli-nome" placeholder="Nome da empresa"/></div>
+    <div class="field"><label>CNPJ</label><input type="text" id="cli-cnpj" placeholder="00.000.000/0001-00" maxlength="18" inputmode="numeric"/></div>
+
+    <div class="section-tag">Contabilidade</div>
+    <div class="field">
+      <label>Escritório Responsável</label>
+      <select id="cli-contab" onchange="toggleNovo(this)">
+        <option value="">Selecione…</option>
+        <option>Ascon</option>
+        <option>Benevides</option>
+        <option>Counter Soluções</option>
+        <option>Servilha</option>
+        <option>Hd Acessoria</option>
+        <option>Ag Consultoria</option>
+        <option>Torres Fintech</option>
+        <option>Andrade Arruda</option>
+        <option>Lidera</option>
+        <option value="__novo__">➕ Adicionar novo escritório…</option>
+      </select>
+      <div class="novo-wrap" id="cli-contab-novo-wrap">
+        <input type="text" placeholder="Nome do novo escritório de contabilidade…"/>
+      </div>
+    </div>
+    <div class="field"><label>Contato da Contabilidade</label><input type="text" id="cli-contab-contato" placeholder="Nome e telefone/e-mail do responsável"/></div>
+
+    <div class="section-tag">Jornada de Trabalho</div>
+    <div class="field"><label>Horários Padrão</label><input type="text" id="cli-horario" placeholder="Ex: Seg–Sex 08h–18h, intervalo 12h–13h"/></div>
+
+    <div class="section-tag">Sistemas e Benefícios</div>
+    <div class="field">
+      <label>Sistema de Ponto</label>
+      <select id="cli-ponto" onchange="toggleNovo(this)">
+        <option value="">Selecione…</option>
+        <option>Secullum Ponto</option>
+        <option>RHiD</option>
+        <option>Nenhum (a implantar)</option>
+        <option value="__novo__">➕ Outro sistema…</option>
+      </select>
+      <div class="novo-wrap" id="cli-ponto-novo-wrap">
+        <input type="text" placeholder="Nome do sistema de ponto…"/>
+      </div>
+    </div>
+
+    <div class="field-row">
+      <div class="field">
+        <label>Vale-Refeição / VA</label>
+        <select id="cli-vr" onchange="toggleNovo(this)">
+          <option value="Não">Não</option>
+          <option value="Sim">Sim</option>
+          <option value="__novo__">➕ Outro…</option>
+        </select>
+        <div class="novo-wrap" id="cli-vr-novo-wrap">
+          <input type="text" placeholder="Descreva o benefício…"/>
+        </div>
+      </div>
+      <div class="field">
+        <label>Vale-Transporte</label>
+        <select id="cli-vt" onchange="toggleNovo(this)">
+          <option value="Não">Não</option>
+          <option value="Sim">Sim</option>
+          <option value="__novo__">➕ Outro…</option>
+        </select>
+        <div class="novo-wrap" id="cli-vt-novo-wrap">
+          <input type="text" placeholder="Descreva o benefício…"/>
+        </div>
+      </div>
+    </div>
+
+    <div class="field-row">
+      <div class="field">
+        <label>Plano de Saúde</label>
+        <select id="cli-saude" onchange="toggleNovo(this)">
+          <option value="Não">Não</option>
+          <option value="Sim">Sim</option>
+          <option value="__novo__">➕ Outro…</option>
+        </select>
+        <div class="novo-wrap" id="cli-saude-novo-wrap">
+          <input type="text" placeholder="Operadora / detalhes…"/>
+        </div>
+      </div>
+      <div class="field">
+        <label>Plano Odontológico</label>
+        <select id="cli-odonto" onchange="toggleNovo(this)">
+          <option value="Não">Não</option>
+          <option value="Sim">Sim</option>
+          <option value="__novo__">➕ Outro…</option>
+        </select>
+        <div class="novo-wrap" id="cli-odonto-novo-wrap">
+          <input type="text" placeholder="Operadora / detalhes…"/>
+        </div>
+      </div>
+    </div>
+
+    <div class="field">
+      <label>SST / Saúde e Segurança do Trabalho</label>
+      <select id="cli-sst" onchange="toggleNovo(this)">
+        <option value="Não">Não</option>
+        <option value="Sim — Protagon">Sim — Protagon</option>
+        <option value="__novo__">➕ Outro prestador…</option>
+      </select>
+      <div class="novo-wrap" id="cli-sst-novo-wrap">
+        <input type="text" placeholder="Nome do prestador de SST…"/>
+      </div>
+    </div>
+
+    <div class="section-tag">A Preencher</div>
+    <div class="placeholder-field">⏳ Relógio de ponto físico — modelo e número de série</div>
+    <div class="placeholder-field">⏳ Grupos WhatsApp — liderança e colaboradores (após criação)</div>
+
+    <div class="loading" id="loading-cli"><div class="spinner"></div><div class="loading-txt">Cadastrando empresa…</div></div>
+    <div class="toast" id="toast-cli"></div>
+    <button class="btn-primary" onclick="enviarCliente()">Cadastrar Empresa</button>
+  </div>
+
+  <!-- screen-vaga movida para Externo.html -->
+  <div class="screen" id="screen-vaga" style="display:none!important">
+    <div class="form-header">
+      <button class="back-btn" onclick="goto('hub')"><svg fill="none" viewBox="0 0 24 24" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M19 12H5M12 19l-7-7 7-7"/></svg></button>
+      <div><div class="form-title">Identificar Vaga</div><div class="form-step">Abertura de processo seletivo</div></div>
+    </div>
+
+    <div class="section-tag">Dados da Vaga</div>
+    <div class="field"><label>Título da Vaga</label><input type="text" id="vaga-titulo" placeholder="Ex: Auxiliar de Cozinha, Atendente…"/></div>
+
+    <div class="field">
+      <label>Empresa Cliente</label>
+      <select id="vaga-empresa" onchange="toggleNovo(this)">
+        <option value="">Selecione a empresa…</option>
+        <option value="__novo__">➕ Cadastrar nova empresa…</option>
+      </select>
+      <div class="novo-wrap" id="vaga-empresa-novo-wrap">
+        <input type="text" placeholder="Digite o nome da empresa…"/>
+      </div>
+    </div>
+
+    <div class="field-row">
+      <div class="field">
+        <label>Área / Departamento</label>
+        <select id="vaga-area" onchange="toggleNovo(this)">
+          <option value="">Selecione…</option>
+          <option>Administrativo</option>
+          <option>Atendimento / Recepção</option>
+          <option>Cozinha / Produção</option>
+          <option>Vendas / Comercial</option>
+          <option>Limpeza / Higienização</option>
+          <option>Estoque / Logística</option>
+          <option>Financeiro</option>
+          <option>RH / Departamento Pessoal</option>
+          <option>Segurança</option>
+          <option>TI</option>
+          <option value="__novo__">➕ Outra área…</option>
+        </select>
+        <div class="novo-wrap" id="vaga-area-novo-wrap">
+          <input type="text" placeholder="Nome da área…"/>
+        </div>
+      </div>
+      <div class="field">
+        <label>Nível da Vaga</label>
+        <select id="vaga-nivel" onchange="toggleNovo(this)">
+          <option value="">Selecione…</option>
+          <option>Aprendiz</option>
+          <option>Auxiliar / Operacional</option>
+          <option>Assistente</option>
+          <option>Analista / Técnico</option>
+          <option>Supervisor</option>
+          <option>Coordenador</option>
+          <option>Gerente</option>
+          <option value="__novo__">➕ Outro nível…</option>
+        </select>
+        <div class="novo-wrap" id="vaga-nivel-novo-wrap">
+          <input type="text" placeholder="Nível da vaga…"/>
+        </div>
+      </div>
+    </div>
+
+    <div class="field-row">
+      <div class="field">
+        <label>Tipo de Contrato</label>
+        <select id="vaga-contrato" onchange="toggleNovo(this)">
+          <option value="">Selecione…</option>
+          <option>CLT — Efetivo</option>
+          <option>CLT — Temporário</option>
+          <option>Aprendiz (menor)</option>
+          <option>Estágio</option>
+          <option>PJ</option>
+          <option value="__novo__">➕ Outro…</option>
+        </select>
+        <div class="novo-wrap" id="vaga-contrato-novo-wrap">
+          <input type="text" placeholder="Tipo de contrato…"/>
+        </div>
+      </div>
+      <div class="field">
+        <label>Modalidade</label>
+        <select id="vaga-modalidade">
+          <option>Presencial</option>
+          <option>Híbrido</option>
+          <option>Remoto</option>
+        </select>
+      </div>
+    </div>
+
+    <div class="field-row">
+      <div class="field"><label>Quantidade de Vagas</label><input type="number" id="vaga-qtd" placeholder="1" min="1" value="1" inputmode="numeric"/></div>
+      <div class="field">
+        <label>Motivo da Abertura</label>
+        <select id="vaga-motivo">
+          <option>Novo cargo</option>
+          <option>Substituição</option>
+          <option>Expansão</option>
+          <option>Sazonalidade</option>
+        </select>
+      </div>
+    </div>
+
+    <div class="field-row">
+      <div class="field"><label>Cidade</label><input type="text" id="vaga-cidade" placeholder="Ex: João Pessoa"/></div>
+      <div class="field"><label>Estado</label>
+        <select id="vaga-estado">
+          <option value="">UF…</option>
+          <option>AC</option><option>AL</option><option>AP</option><option>AM</option>
+          <option>BA</option><option>CE</option><option>DF</option><option>ES</option>
+          <option>GO</option><option>MA</option><option>MT</option><option>MS</option>
+          <option>MG</option><option>PA</option><option>PB</option><option>PR</option>
+          <option>PE</option><option>PI</option><option>RJ</option><option>RN</option>
+          <option>RS</option><option>RO</option><option>RR</option><option>SC</option>
+          <option selected>SE</option><option>SP</option><option>TO</option>
+        </select>
+      </div>
+    </div>
+
+    <div class="section-tag">Remuneração e Benefícios</div>
+    <div class="field-row">
+      <div class="field"><label>Salário De (R$)</label><input type="text" id="vaga-sal-de" placeholder="Ex: 1.412,00" inputmode="decimal"/></div>
+      <div class="field"><label>Salário Até (R$)</label><input type="text" id="vaga-sal-ate" placeholder="Ex: 1.800,00" inputmode="decimal"/></div>
+    </div>
+    <label class="terms-accept" style="margin-bottom:20px;border-radius:10px;border:1.5px solid var(--border)">
+      <input type="checkbox" id="vaga-a-combinar"/>
+      <span>Salário a combinar (não divulgar valor)</span>
+    </label>
+
+    <div class="field"><label>Benefícios Oferecidos</label>
+      <div class="checklist">
+        <div class="checklist-title">Marque os que se aplicam</div>
+        <label class="check-item"><input type="checkbox" id="vb-vr"/><span>Vale-Refeição / Alimentação</span></label>
+        <label class="check-item"><input type="checkbox" id="vb-vt"/><span>Vale-Transporte</span></label>
+        <label class="check-item"><input type="checkbox" id="vb-saude"/><span>Plano de Saúde</span></label>
+        <label class="check-item"><input type="checkbox" id="vb-odonto"/><span>Plano Odontológico</span></label>
+        <label class="check-item"><input type="checkbox" id="vb-bonus"/><span>Bônus / Comissão</span></label>
+        <label class="check-item"><input type="checkbox" id="vb-uniforme"/><span>Uniforme fornecido</span></label>
+        <label class="check-item"><input type="checkbox" id="vb-refeicao-local"/><span>Refeição no local</span></label>
+      </div>
+    </div>
+
+    <div class="section-tag">Requisitos da Vaga</div>
+    <div class="field-row">
+      <div class="field">
+        <label>Escolaridade Mínima</label>
+        <select id="vaga-escolaridade">
+          <option value="">Selecione…</option>
+          <option>Sem exigência</option>
+          <option>Ensino Fundamental incompleto</option>
+          <option>Ensino Fundamental completo</option>
+          <option>Ensino Médio incompleto</option>
+          <option>Ensino Médio completo</option>
+          <option>Ensino Técnico</option>
+          <option>Superior incompleto</option>
+          <option>Superior completo</option>
+          <option>Pós-graduação</option>
+        </select>
+      </div>
+      <div class="field">
+        <label>Experiência Mínima</label>
+        <select id="vaga-experiencia">
+          <option value="">Selecione…</option>
+          <option>Sem experiência</option>
+          <option>Menos de 6 meses</option>
+          <option>6 meses a 1 ano</option>
+          <option>1 a 2 anos</option>
+          <option>2 a 3 anos</option>
+          <option>Mais de 3 anos</option>
+        </select>
+      </div>
+    </div>
+
+    <div class="field"><label>Descrição da Vaga</label>
+      <textarea id="vaga-descricao" placeholder="Descreva as principais responsabilidades e o dia a dia da função…"></textarea>
+    </div>
+    <div class="field"><label>Requisitos Obrigatórios</label>
+      <textarea id="vaga-requisitos" placeholder="Ex: CNH categoria B, experiência com atendimento ao público, disponibilidade de horário…"></textarea>
+    </div>
+    <div class="field"><label>Diferenciais (opcional)</label>
+      <textarea id="vaga-diferenciais" placeholder="Conhecimentos ou habilidades que serão valorizados mas não são obrigatórios…"></textarea>
+    </div>
+
+    <div class="section-tag">Processo Seletivo</div>
+    <div class="field"><label>Gestor Responsável pela Aprovação</label>
+      <input type="text" id="vaga-gestor" placeholder="Nome do gestor que aprova a contratação"/>
+    </div>
+    <div class="field-row">
+      <div class="field"><label>Data Limite para Contratar</label><input type="date" id="vaga-data-limite"/></div>
+      <div class="field">
+        <label>Divulgar no InfoJobs?</label>
+        <select id="vaga-infojobs">
+          <option value="Sim">Sim</option>
+          <option value="Não">Não (apenas interno)</option>
+        </select>
+      </div>
+    </div>
+    <label class="terms-accept" style="margin-bottom:8px;border-radius:10px;border:1.5px solid var(--border)">
+      <input type="checkbox" id="vaga-aprovada"/>
+      <span>Vaga aprovada pelo gestor e autorizada para divulgação</span>
+    </label>
+
+    <div class="loading" id="loading-vaga"><div class="spinner"></div><div class="loading-txt">Registrando vaga…</div></div>
+    <div class="toast" id="toast-vaga"></div>
+    <button class="btn-primary" id="btn-vaga" onclick="enviarVaga()">Abrir Vaga</button>
+  </div>
+
+  <!-- ══ DIAGNÓSTICO DE EMPRESA ══ -->
+  <div class="screen" id="screen-diagnostico">
+    <div class="form-header">
+      <button class="back-btn" onclick="goto('hub')"><svg fill="none" viewBox="0 0 24 24" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M19 12H5M12 19l-7-7 7-7"/></svg></button>
+      <div><div class="form-title">Diagnóstico de Empresa</div><div class="form-step">Avaliação de compliance RH</div></div>
+    </div>
+
+    <div class="section-tag">Empresa Nova</div>
+    <div class="field"><label>Nome da Empresa</label><input type="text" id="diag-empresa" placeholder="Razão social ou nome fantasia"/></div>
+    <div class="field"><label>CNPJ <span style="font-weight:400;text-transform:none;letter-spacing:0">(opcional)</span></label><input type="text" id="diag-cnpj" placeholder="00.000.000/0001-00" maxlength="18" inputmode="numeric"/></div>
+    <div class="field-row">
+      <div class="field"><label>Nº de Colaboradores</label><input type="number" id="diag-colaboradores" placeholder="Ex: 12" min="1" inputmode="numeric"/></div>
+      <div class="field"><label>Ramo de Atividade</label><input type="text" id="diag-ramo" placeholder="Ex: Alimentação"/></div>
+    </div>
+    <div class="field-row">
+      <div class="field"><label>Responsável pelo Diagnóstico</label><input type="text" id="diag-responsavel" placeholder="Nome do responsável pelo diagnóstico"/></div>
+      <div class="field"><label>Data</label><input type="date" id="diag-data"/></div>
+    </div>
+
+    <div class="section-tag">Score de Compliance</div>
+    <div style="background:var(--surface);border:1.5px solid var(--border);border-radius:10px;padding:16px;margin-bottom:20px;">
+      <div style="display:flex;justify-content:space-between;align-items:center;">
+        <span style="font-size:11px;font-weight:700;letter-spacing:1px;text-transform:uppercase;color:var(--txt-2)">Score Geral</span>
+        <span id="diag-score-pct" style="font-size:22px;font-weight:800;color:var(--graphite)">0%</span>
+      </div>
+      <div class="score-bar-track"><div class="score-bar-fill" id="diag-score-bar"></div></div>
+      <div id="diag-score-nivel" style="font-size:12px;color:var(--txt-3)">Responda as questões abaixo</div>
+    </div>
+
+    <div class="section-tag">1 — Estrutura e Documentação</div>
+    <div class="diag-q"><div class="diag-q-cat">Estrutura</div><div class="diag-q-text">A empresa possui organograma formalizado?</div><div class="diag-q-opts"><input type="radio" name="q1" id="q1-s" value="SIM" class="diag-r" onchange="diagUpdateScore()"/><label for="q1-s" class="diag-lbl diag-sim">SIM</label><input type="radio" name="q1" id="q1-n" value="NÃO" class="diag-r" onchange="diagUpdateScore()"/><label for="q1-n" class="diag-lbl diag-nao">NÃO</label></div></div>
+    <div class="diag-q"><div class="diag-q-cat">Estrutura</div><div class="diag-q-text">Existem descrições de cargo por função?</div><div class="diag-q-opts"><input type="radio" name="q2" id="q2-s" value="SIM" class="diag-r" onchange="diagUpdateScore()"/><label for="q2-s" class="diag-lbl diag-sim">SIM</label><input type="radio" name="q2" id="q2-n" value="NÃO" class="diag-r" onchange="diagUpdateScore()"/><label for="q2-n" class="diag-lbl diag-nao">NÃO</label></div></div>
+    <div class="diag-q"><div class="diag-q-cat">Estrutura</div><div class="diag-q-text">Todos os colaboradores têm CTPS registrada (sem trabalhadores informais)?</div><div class="diag-q-opts"><input type="radio" name="q3" id="q3-s" value="SIM" class="diag-r" onchange="diagUpdateScore()"/><label for="q3-s" class="diag-lbl diag-sim">SIM</label><input type="radio" name="q3" id="q3-n" value="NÃO" class="diag-r" onchange="diagUpdateScore()"/><label for="q3-n" class="diag-lbl diag-nao">NÃO</label></div></div>
+    <div class="diag-q"><div class="diag-q-cat">Estrutura</div><div class="diag-q-text">Existe regimento interno escrito e assinado pelos colaboradores?</div><div class="diag-q-opts"><input type="radio" name="q4" id="q4-s" value="SIM" class="diag-r" onchange="diagUpdateScore()"/><label for="q4-s" class="diag-lbl diag-sim">SIM</label><input type="radio" name="q4" id="q4-n" value="NÃO" class="diag-r" onchange="diagUpdateScore()"/><label for="q4-n" class="diag-lbl diag-nao">NÃO</label></div></div>
+    <div class="diag-q"><div class="diag-q-cat">Estrutura</div><div class="diag-q-text">Os colaboradores foram sensibilizados sobre as normas internas?</div><div class="diag-q-opts"><input type="radio" name="q5" id="q5-s" value="SIM" class="diag-r" onchange="diagUpdateScore()"/><label for="q5-s" class="diag-lbl diag-sim">SIM</label><input type="radio" name="q5" id="q5-n" value="NÃO" class="diag-r" onchange="diagUpdateScore()"/><label for="q5-n" class="diag-lbl diag-nao">NÃO</label></div></div>
+    <div class="diag-q"><div class="diag-q-cat">Estrutura</div><div class="diag-q-text">Existe canal de denúncias ou ouvidoria?</div><div class="diag-q-opts"><input type="radio" name="q6" id="q6-s" value="SIM" class="diag-r" onchange="diagUpdateScore()"/><label for="q6-s" class="diag-lbl diag-sim">SIM</label><input type="radio" name="q6" id="q6-n" value="NÃO" class="diag-r" onchange="diagUpdateScore()"/><label for="q6-n" class="diag-lbl diag-nao">NÃO</label></div></div>
+
+    <div class="section-tag">2 — Saúde e Segurança (SST)</div>
+    <div class="diag-q"><div class="diag-q-cat">SST</div><div class="diag-q-text">A empresa possui PCMSO (Programa de Controle Médico de Saúde Ocupacional)?</div><div class="diag-q-opts"><input type="radio" name="q7" id="q7-s" value="SIM" class="diag-r" onchange="diagUpdateScore()"/><label for="q7-s" class="diag-lbl diag-sim">SIM</label><input type="radio" name="q7" id="q7-n" value="NÃO" class="diag-r" onchange="diagUpdateScore()"/><label for="q7-n" class="diag-lbl diag-nao">NÃO</label></div></div>
+    <div class="diag-q"><div class="diag-q-cat">SST</div><div class="diag-q-text">A empresa possui PGR (Programa de Gerenciamento de Riscos)?</div><div class="diag-q-opts"><input type="radio" name="q8" id="q8-s" value="SIM" class="diag-r" onchange="diagUpdateScore()"/><label for="q8-s" class="diag-lbl diag-sim">SIM</label><input type="radio" name="q8" id="q8-n" value="NÃO" class="diag-r" onchange="diagUpdateScore()"/><label for="q8-n" class="diag-lbl diag-nao">NÃO</label></div></div>
+    <div class="diag-q"><div class="diag-q-cat">SST</div><div class="diag-q-text">Existe controle de distribuição e uso de EPIs?</div><div class="diag-q-opts"><input type="radio" name="q9" id="q9-s" value="SIM" class="diag-r" onchange="diagUpdateScore()"/><label for="q9-s" class="diag-lbl diag-sim">SIM</label><input type="radio" name="q9" id="q9-n" value="NÃO" class="diag-r" onchange="diagUpdateScore()"/><label for="q9-n" class="diag-lbl diag-nao">NÃO</label></div></div>
+    <div class="diag-q"><div class="diag-q-cat">SST</div><div class="diag-q-text">Os ASOs (admissional, periódico, demissional) estão todos em dia?</div><div class="diag-q-opts"><input type="radio" name="q10" id="q10-s" value="SIM" class="diag-r" onchange="diagUpdateScore()"/><label for="q10-s" class="diag-lbl diag-sim">SIM</label><input type="radio" name="q10" id="q10-n" value="NÃO" class="diag-r" onchange="diagUpdateScore()"/><label for="q10-n" class="diag-lbl diag-nao">NÃO</label></div></div>
+
+    <div class="section-tag">3 — Controles Operacionais</div>
+    <div class="diag-q"><div class="diag-q-cat">Controles</div><div class="diag-q-text">Os colaboradores possuem fichas funcionais individuais?</div><div class="diag-q-opts"><input type="radio" name="q11" id="q11-s" value="SIM" class="diag-r" onchange="diagUpdateScore()"/><label for="q11-s" class="diag-lbl diag-sim">SIM</label><input type="radio" name="q11" id="q11-n" value="NÃO" class="diag-r" onchange="diagUpdateScore()"/><label for="q11-n" class="diag-lbl diag-nao">NÃO</label></div></div>
+    <div class="diag-q"><div class="diag-q-cat">Controles</div><div class="diag-q-text">A empresa utiliza sistema de controle de ponto?</div><div class="diag-q-opts"><input type="radio" name="q12" id="q12-s" value="SIM" class="diag-r" onchange="diagUpdateScore()"/><label for="q12-s" class="diag-lbl diag-sim">SIM</label><input type="radio" name="q12" id="q12-n" value="NÃO" class="diag-r" onchange="diagUpdateScore()"/><label for="q12-n" class="diag-lbl diag-nao">NÃO</label></div></div>
+    <div class="diag-q"><div class="diag-q-cat">Controles</div><div class="diag-q-text">O banco de horas é controlado digitalmente?</div><div class="diag-q-opts"><input type="radio" name="q13" id="q13-s" value="SIM" class="diag-r" onchange="diagUpdateScore()"/><label for="q13-s" class="diag-lbl diag-sim">SIM</label><input type="radio" name="q13" id="q13-n" value="NÃO" class="diag-r" onchange="diagUpdateScore()"/><label for="q13-n" class="diag-lbl diag-nao">NÃO</label></div></div>
+    <div class="diag-q"><div class="diag-q-cat">Controles</div><div class="diag-q-text">Os intervalos intrajornada são registrados?</div><div class="diag-q-opts"><input type="radio" name="q14" id="q14-s" value="SIM" class="diag-r" onchange="diagUpdateScore()"/><label for="q14-s" class="diag-lbl diag-sim">SIM</label><input type="radio" name="q14" id="q14-n" value="NÃO" class="diag-r" onchange="diagUpdateScore()"/><label for="q14-n" class="diag-lbl diag-nao">NÃO</label></div></div>
+    <div class="diag-q"><div class="diag-q-cat">Controles</div><div class="diag-q-text">Existe controle ativo de férias com escala programada?</div><div class="diag-q-opts"><input type="radio" name="q15" id="q15-s" value="SIM" class="diag-r" onchange="diagUpdateScore()"/><label for="q15-s" class="diag-lbl diag-sim">SIM</label><input type="radio" name="q15" id="q15-n" value="NÃO" class="diag-r" onchange="diagUpdateScore()"/><label for="q15-n" class="diag-lbl diag-nao">NÃO</label></div></div>
+    <div class="diag-q"><div class="diag-q-cat">Controles</div><div class="diag-q-text">Atestados médicos são arquivados organizadamente?</div><div class="diag-q-opts"><input type="radio" name="q16" id="q16-s" value="SIM" class="diag-r" onchange="diagUpdateScore()"/><label for="q16-s" class="diag-lbl diag-sim">SIM</label><input type="radio" name="q16" id="q16-n" value="NÃO" class="diag-r" onchange="diagUpdateScore()"/><label for="q16-n" class="diag-lbl diag-nao">NÃO</label></div></div>
+
+    <div class="section-tag">4 — Contratos e LGPD</div>
+    <div class="diag-q"><div class="diag-q-cat">Contratos</div><div class="diag-q-text">Os contracheques são assinados pelos colaboradores?</div><div class="diag-q-opts"><input type="radio" name="q17" id="q17-s" value="SIM" class="diag-r" onchange="diagUpdateScore()"/><label for="q17-s" class="diag-lbl diag-sim">SIM</label><input type="radio" name="q17" id="q17-n" value="NÃO" class="diag-r" onchange="diagUpdateScore()"/><label for="q17-n" class="diag-lbl diag-nao">NÃO</label></div></div>
+    <div class="diag-q"><div class="diag-q-cat">Contratos</div><div class="diag-q-text">Todos os colaboradores possuem contrato de trabalho escrito e assinado?</div><div class="diag-q-opts"><input type="radio" name="q18" id="q18-s" value="SIM" class="diag-r" onchange="diagUpdateScore()"/><label for="q18-s" class="diag-lbl diag-sim">SIM</label><input type="radio" name="q18" id="q18-n" value="NÃO" class="diag-r" onchange="diagUpdateScore()"/><label for="q18-n" class="diag-lbl diag-nao">NÃO</label></div></div>
+    <div class="diag-q"><div class="diag-q-cat">LGPD</div><div class="diag-q-text">O termo de LGPD / consentimento de dados foi assinado por todos?</div><div class="diag-q-opts"><input type="radio" name="q19" id="q19-s" value="SIM" class="diag-r" onchange="diagUpdateScore()"/><label for="q19-s" class="diag-lbl diag-sim">SIM</label><input type="radio" name="q19" id="q19-n" value="NÃO" class="diag-r" onchange="diagUpdateScore()"/><label for="q19-n" class="diag-lbl diag-nao">NÃO</label></div></div>
+    <div class="diag-q"><div class="diag-q-cat">Contratos</div><div class="diag-q-text">Existe acordo de banco de horas formalmente assinado?</div><div class="diag-q-opts"><input type="radio" name="q20" id="q20-s" value="SIM" class="diag-r" onchange="diagUpdateScore()"/><label for="q20-s" class="diag-lbl diag-sim">SIM</label><input type="radio" name="q20" id="q20-n" value="NÃO" class="diag-r" onchange="diagUpdateScore()"/><label for="q20-n" class="diag-lbl diag-nao">NÃO</label></div></div>
+
+    <div class="section-tag">5 — Engajamento e Cultura</div>
+    <div class="diag-q"><div class="diag-q-cat">Engajamento</div><div class="diag-q-text">Existe programa de reconhecimento ou premiação de colaboradores?</div><div class="diag-q-opts"><input type="radio" name="q21" id="q21-s" value="SIM" class="diag-r" onchange="diagUpdateScore()"/><label for="q21-s" class="diag-lbl diag-sim">SIM</label><input type="radio" name="q21" id="q21-n" value="NÃO" class="diag-r" onchange="diagUpdateScore()"/><label for="q21-n" class="diag-lbl diag-nao">NÃO</label></div></div>
+    <div class="diag-q"><div class="diag-q-cat">Engajamento</div><div class="diag-q-text">Há rotina de feedback entre gestores e colaboradores?</div><div class="diag-q-opts"><input type="radio" name="q22" id="q22-s" value="SIM" class="diag-r" onchange="diagUpdateScore()"/><label for="q22-s" class="diag-lbl diag-sim">SIM</label><input type="radio" name="q22" id="q22-n" value="NÃO" class="diag-r" onchange="diagUpdateScore()"/><label for="q22-n" class="diag-lbl diag-nao">NÃO</label></div></div>
+    <div class="diag-q"><div class="diag-q-cat">Engajamento</div><div class="diag-q-text">A empresa realiza reuniões periódicas de equipe?</div><div class="diag-q-opts"><input type="radio" name="q23" id="q23-s" value="SIM" class="diag-r" onchange="diagUpdateScore()"/><label for="q23-s" class="diag-lbl diag-sim">SIM</label><input type="radio" name="q23" id="q23-n" value="NÃO" class="diag-r" onchange="diagUpdateScore()"/><label for="q23-n" class="diag-lbl diag-nao">NÃO</label></div></div>
+
+    <div class="field" style="margin-top:20px"><label>Observações e Contexto</label>
+      <textarea id="diag-obs" placeholder="Impressões gerais, urgências identificadas, próximos passos…" style="min-height:100px"></textarea>
+    </div>
+
+    <div class="loading" id="loading-diag"><div class="spinner"></div><div class="loading-txt">Salvando diagnóstico…</div></div>
+    <div class="toast" id="toast-diag"></div>
+    <button class="btn-primary" id="btn-diag" onclick="enviarDiagnostico()">Salvar Diagnóstico</button>
+  </div>
+
+</div><!-- /app -->
+
+<script>
+var SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbzYHX6Ce_TfFJkjkLbINAVBdLyys2Gk9kuHajYMHZD1HDGegcp29B9cchMMuFlWqbcBPw/exec';
+
+// ── Navegação ──
+function goto(id) {
+  document.querySelectorAll('.screen').forEach(function(s) { s.classList.remove('active'); });
+  var t = document.getElementById('screen-' + id);
+  if (t) { t.classList.add('active'); window.scrollTo({ top: 0, behavior: 'smooth' }); }
+  limparToasts();
+}
+function limparToasts() {
+  document.querySelectorAll('.toast').forEach(function(t) { t.className = 'toast'; t.innerHTML = ''; });
+}
+
+// ── Toggle "Adicionar novo" nos selects ──
+function toggleNovo(sel) {
+  // Empresa: redireciona para cadastrar empresa
+  if ((sel.id === 'adm-empresa' || sel.id === 'at-empresa' || sel.id === 'des-empresa' || sel.id === 'vaga-empresa') && sel.value === '__novo__') {
+    sel.value = '';
+    goto('cliente');
+    return;
+  }
+  var wrap = document.getElementById(sel.id + '-novo-wrap');
+  if (!wrap) return;
+  if (sel.value === '__novo__') {
+    wrap.style.display = 'block';
+    wrap.querySelector('input').focus();
+  } else {
+    wrap.style.display = 'none';
+    wrap.querySelector('input').value = '';
+  }
+}
+
+// Retorna o valor real de um select (resolve "__novo__" para o texto digitado)
+function getSelectVal(id) {
+  var sel = document.getElementById(id);
+  if (!sel) return '';
+  if (sel.value === '__novo__') {
+    var wrap = document.getElementById(id + '-novo-wrap');
+    if (wrap) return wrap.querySelector('input').value.trim();
+    return '';
+  }
+  return sel.value;
+}
+
+// ── API ──
+function apiGet(action, callback) {
+  fetch(SCRIPT_URL + '?action=' + action, { redirect: 'follow' })
+    .then(function(r) { return r.json(); })
+    .then(callback)
+    .catch(function(e) { console.warn('GET err:', e); });
+}
+function apiPost(action, dados, onOk, onErr) {
+  fetch(SCRIPT_URL, {
+    method: 'POST',
+    body: JSON.stringify({ action: action, dados: dados }),
+    redirect: 'follow'
+  })
+    .then(function(r) { return r.json(); })
+    .then(onOk)
+    .catch(onErr || function(e) { console.warn('POST err:', e); });
+}
+
+// ── Carteira de clientes (fixa) ──
+var PORTFOLIO_EMPRESAS = [
+  'Chez Vous','Albanisa','Espetinho da Liberdade','Marpeças',
+  'Ca Serviços','Chez Vous Café','Delicias Do Cariri','Planeta Essência',
+  'Edione','Imperial Pizza','Mix Bolos','Kroc Pastéis',
+  'Kroc Lanches','Kroc Salgados','Panificadora Pastiannes',
+  'Pastyanne Restaurante','Vip Dog'
+];
+
+// ── Carregar empresas nos dropdowns ──
+function carregarEmpresas() {
+  var selIds = ['adm-empresa','at-empresa','des-empresa'];
+
+  selIds.forEach(function(id) {
+    var sel = document.getElementById(id);
+    // Remove opções do meio (mantém índice 0 = blank e último = __novo__)
+    while (sel.options.length > 2) sel.remove(1);
+    // Insere carteira fixa antes do __novo__ (que está em options[1])
+    var refNovo = sel.options[sel.options.length - 1];
+    PORTFOLIO_EMPRESAS.forEach(function(nome) {
+      var o = document.createElement('option');
+      o.value = o.textContent = nome;
+      sel.insertBefore(o, refNovo);
+    });
+  });
+
+  // Adiciona empresas cadastradas no sistema que não estejam na carteira fixa
+  apiGet('getEmpresas', function(lista) {
+    selIds.forEach(function(id) {
+      var sel = document.getElementById(id);
+      var refNovo = sel.options[sel.options.length - 1];
+      var existentes = [];
+      for (var k = 1; k < sel.options.length - 1; k++) {
+        existentes.push(sel.options[k].value.toLowerCase().trim());
+      }
+      lista.forEach(function(e) {
+        var nome = e.razaoSocial.trim();
+        if (existentes.indexOf(nome.toLowerCase()) === -1) {
+          var o = document.createElement('option');
+          o.value = o.textContent = nome;
+          sel.insertBefore(o, refNovo);
+        }
+      });
+    });
+  });
+}
+
+// ── Toggle Digital/Físico ──
+function toggleTipo() {
+  var tipo  = document.querySelector('input[name="adm-tipo"]:checked');
+  var bloco = document.getElementById('bloco-digital');
+  if (tipo && tipo.value === 'digital') bloco.classList.add('show');
+  else bloco.classList.remove('show');
+}
+
+// ── Upload ──
+var arquivos = {};
+function onFileChange(key) {
+  var input  = document.getElementById('upload-' + key);
+  var nameEl = document.getElementById('upload-' + key + '-name');
+  var file   = input.files[0];
+  if (!file) return;
+  if (file.size > 10 * 1024 * 1024) { alert('Arquivo muito grande. Máximo 10MB.'); input.value = ''; return; }
+  if (nameEl) { nameEl.textContent = '✓ ' + file.name; nameEl.style.display = 'block'; }
+  var reader = new FileReader();
+  reader.onload = function(e) { arquivos[key] = { base64: e.target.result, mime: file.type }; };
+  reader.readAsDataURL(file);
+}
+
+// ── Máscaras ──
+document.getElementById('adm-cpf').addEventListener('input', function(e) {
+  var v = e.target.value.replace(/\D/g,'').slice(0,11);
+  v = v.replace(/(\d{3})(\d)/,'$1.$2').replace(/(\d{3})\.(\d{3})(\d)/,'$1.$2.$3').replace(/\.(\d{3})(\d)/,'.$1-$2');
+  e.target.value = v;
+});
+document.getElementById('cli-cnpj').addEventListener('input', function(e) {
+  var v = e.target.value.replace(/\D/g,'').slice(0,14);
+  v = v.replace(/(\d{2})(\d)/,'$1.$2').replace(/\.(\d{3})(\d)/,'.$1.$2').replace(/\.(\d{3})(\d)/,'.$1/$2').replace(/\/(\d{4})(\d)/,'/$1-$2');
+  e.target.value = v;
+});
+
+// ── Helpers ──
+function showLoading(id, show) {
+  var el = document.getElementById('loading-' + id);
+  if (show) el.classList.add('show'); else el.classList.remove('show');
+}
+function showToast(id, ok, msg, link) {
+  var el = document.getElementById('toast-' + id);
+  el.className = 'toast ' + (ok ? 'ok' : 'err');
+  el.innerHTML = msg + (link ? '<a class="toast-link" href="' + link + '" target="_blank">Abrir no Drive →</a>' : '');
+}
+function validar(campos) {
+  for (var i = 0; i < campos.length; i++) {
+    var val = '';
+    var el  = document.getElementById(campos[i][0]);
+    if (el && el.tagName === 'SELECT') val = getSelectVal(campos[i][0]);
+    else if (el) val = el.value.trim();
+    if (!val) { alert('Preencha o campo: ' + campos[i][1]); if (el) el.focus(); return false; }
+  }
+  return true;
+}
+function checkboxVal(id) { var el = document.getElementById(id); return el && el.checked ? 'SIM' : 'NÃO'; }
+
+// ── ENVIAR ADMISSÃO ──
+function enviarAdmissao() {
+  if (!validar([['adm-nome','Nome'],['adm-cpf','CPF'],['adm-nasc','Data de Nascimento'],['adm-tel','Telefone'],['adm-empresa','Empresa']])) return;
+  var tipo = document.querySelector('input[name="adm-tipo"]:checked');
+  if (!tipo) { alert('Selecione o Tipo de Processo.'); return; }
+  if (tipo.value === 'digital') {
+    if (!document.getElementById('adm-aceite').checked) { alert('É necessário concordar com os termos.'); return; }
+    if (!arquivos.rg)  { alert('Anexe o documento RG.'); return; }
+    if (!arquivos.cpf) { alert('Anexe o documento CPF.'); return; }
+  }
+
+  var dados = {
+    nome: document.getElementById('adm-nome').value.trim(),
+    cpf:  document.getElementById('adm-cpf').value.trim(),
+    nascimento: document.getElementById('adm-nasc').value,
+    telefone:   document.getElementById('adm-tel').value.trim(),
+    empresa:    getSelectVal('adm-empresa'),
+    cargo:      document.getElementById('adm-cargo').value.trim(),
+    dataAdm:    document.getElementById('adm-data').value,
+    salario:    document.getElementById('adm-salario').value.trim(),
+    tipo:       tipo.value,
+    aceite:     tipo.value === 'digital' ? document.getElementById('adm-aceite').checked : false,
+    rgBase64:   arquivos.rg  ? arquivos.rg.base64  : null,
+    rgMime:     arquivos.rg  ? arquivos.rg.mime    : null,
+    cpfBase64:  arquivos.cpf ? arquivos.cpf.base64 : null,
+    cpfMime:    arquivos.cpf ? arquivos.cpf.mime   : null,
+    asoData: document.getElementById('adm-aso-data').value,
+    etapas: {
+      asoAgendado: checkboxVal('adm-aso-agendado'), aso: checkboxVal('adm-aso'), docsContab: checkboxVal('adm-docs-contab'),
+      ponto: checkboxVal('adm-ponto'), vr: checkboxVal('adm-vr'),
+      vt: checkboxVal('adm-vt'), odonto: checkboxVal('adm-odonto'),
+      saude: checkboxVal('adm-saude'), conta: checkboxVal('adm-conta'),
+      termosImp: checkboxVal('adm-termos-imp'), arquivado: checkboxVal('adm-arquivado')
+    },
+    obs: document.getElementById('adm-obs').value.trim()
+  };
+
+  document.getElementById('btn-adm').disabled = true;
+  showLoading('adm', true);
+
+  apiPost('processAdmissao', dados, function(res) {
+    showLoading('adm', false);
+    document.getElementById('btn-adm').disabled = false;
+    if (res.ok) showToast('adm', true, dados.tipo === 'digital' ? '✓ Admissão registrada! Documentos salvos no Drive.' : '✓ Admissão registrada! Documento gerado para impressão.', res.link);
+    else showToast('adm', false, '✗ Erro: ' + res.erro);
+  }, function(err) {
+    showLoading('adm', false);
+    document.getElementById('btn-adm').disabled = false;
+    showToast('adm', false, '✗ Erro de conexão: ' + err.message);
+  });
+}
+
+// ── ENVIAR ATESTADO ──
+function enviarAtestado() {
+  if (!validar([['at-nome','Nome'],['at-empresa','Empresa'],['at-dias','Dias']])) return;
+  if (!arquivos.at) { alert('Anexe o atestado médico.'); return; }
+
+  var dados = {
+    nome: document.getElementById('at-nome').value.trim(),
+    empresa: getSelectVal('at-empresa'),
+    dias: document.getElementById('at-dias').value,
+    cid:  document.getElementById('at-cid').value.trim(),
+    arquivoBase64: arquivos.at.base64, arquivoMime: arquivos.at.mime,
+    encContab: checkboxVal('at-contab'), encSST: checkboxVal('at-sst'),
+    encPonto: checkboxVal('at-ponto'), encLider: checkboxVal('at-lider'),
+    inss: checkboxVal('at-inss'), asoRetorno: checkboxVal('at-aso-retorno')
+  };
+
+  showLoading('at', true);
+  apiPost('processAtestado', dados, function(res) {
+    showLoading('at', false);
+    if (res.ok) {
+      showToast('at', true, '✓ Atestado salvo no Drive.', res.link);
+      document.getElementById('at-nome').value = '';
+      document.getElementById('at-empresa').value = '';
+      document.getElementById('at-dias').value = '';
+      document.getElementById('at-cid').value = '';
+      document.getElementById('upload-at-name').style.display = 'none';
+      arquivos.at = null;
+    } else showToast('at', false, '✗ Erro: ' + res.erro);
+  }, function(err) { showLoading('at', false); showToast('at', false, '✗ Erro: ' + err.message); });
+}
+
+// ── ENVIAR DESLIGAMENTO ──
+function enviarDesligamento() {
+  if (!validar([['des-nome','Nome'],['des-empresa','Empresa'],['des-data','Data do Desligamento'],['des-tipo','Tipo de Saída']])) return;
+
+  var dados = {
+    nome:    document.getElementById('des-nome').value.trim(),
+    empresa: getSelectVal('des-empresa'),
+    data:    document.getElementById('des-data').value,
+    tipo:    getSelectVal('des-tipo'),
+    obs:     document.getElementById('des-obs').value.trim(),
+    arquivoBase64: arquivos.des ? arquivos.des.base64 : null,
+    arquivoMime:   arquivos.des ? arquivos.des.mime   : null,
+    etapas: {
+      avisoContab: checkboxVal('des-aviso-contab'), assinGestor: checkboxVal('des-assin-gestor'),
+      assinFunc: checkboxVal('des-assin-func'), aso: checkboxVal('des-aso'),
+      rescisaoContab: checkboxVal('des-rescisao-contab'), acerto: checkboxVal('des-acerto'),
+      pagamento: checkboxVal('des-pgto'), remPonto: checkboxVal('des-rem-ponto'),
+      remVR: checkboxVal('des-rem-vr'), remVT: checkboxVal('des-rem-vt'),
+      remSaude: checkboxVal('des-rem-saude'), remOdonto: checkboxVal('des-rem-odonto'),
+      remGrupos: checkboxVal('des-rem-grupos'), esocial: checkboxVal('des-esocial'),
+      entrevista: checkboxVal('des-entrevista'), arquivado: checkboxVal('des-arquivado')
+    }
+  };
+
+  document.getElementById('btn-des').disabled = true;
+  showLoading('des', true);
+  apiPost('processDesligamento', dados, function(res) {
+    showLoading('des', false);
+    document.getElementById('btn-des').disabled = false;
+    if (res.ok) showToast('des', true, '✓ Desligamento registrado com sucesso.', res.link);
+    else showToast('des', false, '✗ Erro: ' + res.erro);
+  }, function(err) {
+    showLoading('des', false);
+    document.getElementById('btn-des').disabled = false;
+    showToast('des', false, '✗ Erro de conexão: ' + err.message);
+  });
+}
+
+// ── CADASTRAR EMPRESA ──
+function enviarCliente() {
+  if (!validar([['cli-nome','Razão Social'],['cli-cnpj','CNPJ'],['cli-contab','Contabilidade'],['cli-horario','Horários'],['cli-ponto','Sistema de Ponto']])) return;
+
+  var dados = {
+    razaoSocial:   document.getElementById('cli-nome').value.trim(),
+    cnpj:          document.getElementById('cli-cnpj').value.trim(),
+    contabilidade: getSelectVal('cli-contab'),
+    contabContato: document.getElementById('cli-contab-contato').value.trim(),
+    horario:       document.getElementById('cli-horario').value.trim(),
+    sistemaPonto:  getSelectVal('cli-ponto'),
+    vr:            getSelectVal('cli-vr'),
+    vt:            getSelectVal('cli-vt'),
+    saude:         getSelectVal('cli-saude'),
+    odonto:        getSelectVal('cli-odonto'),
+    sst:           getSelectVal('cli-sst')
+  };
+
+  showLoading('cli', true);
+  apiPost('processCadastroCliente', dados, function(res) {
+    showLoading('cli', false);
+    if (res.ok) {
+      showToast('cli', true, '✓ Empresa cadastrada! Pasta criada no Drive.');
+      document.getElementById('cli-nome').value = '';
+      document.getElementById('cli-cnpj').value = '';
+      document.getElementById('cli-contab').value = '';
+      document.getElementById('cli-contab-contato').value = '';
+      document.getElementById('cli-horario').value = '';
+      document.getElementById('cli-ponto').value = '';
+      carregarEmpresas();
+    } else showToast('cli', false, '✗ Erro: ' + res.erro);
+  }, function(err) { showLoading('cli', false); showToast('cli', false, '✗ Erro: ' + err.message); });
+}
+
+// ── ABRIR VAGA ──
+function enviarVaga() {
+  if (!validar([['vaga-titulo','Título da Vaga'],['vaga-empresa','Empresa'],['vaga-area','Área'],['vaga-nivel','Nível'],['vaga-contrato','Tipo de Contrato']])) return;
+
+  var beneficios = [];
+  if (document.getElementById('vb-vr').checked)          beneficios.push('Vale-Refeição/VA');
+  if (document.getElementById('vb-vt').checked)          beneficios.push('Vale-Transporte');
+  if (document.getElementById('vb-saude').checked)       beneficios.push('Plano de Saúde');
+  if (document.getElementById('vb-odonto').checked)      beneficios.push('Plano Odontológico');
+  if (document.getElementById('vb-bonus').checked)       beneficios.push('Bônus/Comissão');
+  if (document.getElementById('vb-uniforme').checked)    beneficios.push('Uniforme');
+  if (document.getElementById('vb-refeicao-local').checked) beneficios.push('Refeição no local');
+
+  var dados = {
+    titulo:       document.getElementById('vaga-titulo').value.trim(),
+    empresa:      getSelectVal('vaga-empresa'),
+    area:         getSelectVal('vaga-area'),
+    nivel:        getSelectVal('vaga-nivel'),
+    tipoContrato: getSelectVal('vaga-contrato'),
+    modalidade:   document.getElementById('vaga-modalidade').value,
+    qtdVagas:     document.getElementById('vaga-qtd').value,
+    motivo:       document.getElementById('vaga-motivo').value,
+    cidade:       document.getElementById('vaga-cidade').value.trim(),
+    estado:       document.getElementById('vaga-estado').value,
+    salarioDe:    document.getElementById('vaga-sal-de').value.trim(),
+    salarioAte:   document.getElementById('vaga-sal-ate').value.trim(),
+    aCombinar:    document.getElementById('vaga-a-combinar').checked,
+    beneficios:   beneficios.join(' | '),
+    escolaridade: document.getElementById('vaga-escolaridade').value,
+    experiencia:  document.getElementById('vaga-experiencia').value,
+    descricao:    document.getElementById('vaga-descricao').value.trim(),
+    requisitos:   document.getElementById('vaga-requisitos').value.trim(),
+    diferenciais: document.getElementById('vaga-diferenciais').value.trim(),
+    gestor:       document.getElementById('vaga-gestor').value.trim(),
+    dataLimite:   document.getElementById('vaga-data-limite').value,
+    infojobs:     document.getElementById('vaga-infojobs').value,
+    aprovada:     document.getElementById('vaga-aprovada').checked
+  };
+
+  document.getElementById('btn-vaga').disabled = true;
+  showLoading('vaga', true);
+
+  apiPost('processVaga', dados, function(res) {
+    showLoading('vaga', false);
+    document.getElementById('btn-vaga').disabled = false;
+    if (res.ok) {
+      showToast('vaga', true, '✓ Vaga registrada! Processo seletivo aberto para: ' + dados.titulo + ' — ' + dados.empresa);
+    } else {
+      showToast('vaga', false, '✗ Erro: ' + res.erro);
+    }
+  }, function(err) {
+    showLoading('vaga', false);
+    document.getElementById('btn-vaga').disabled = false;
+    showToast('vaga', false, '✗ Erro de conexão: ' + err.message);
+  });
+}
+
+// ── DIAGNÓSTICO — Score ao vivo ──
+function diagUpdateScore() {
+  var total = 0; var answered = 0;
+  for (var i = 1; i <= 23; i++) {
+    var radios = document.querySelectorAll('input[name="q' + i + '"]');
+    for (var j = 0; j < radios.length; j++) {
+      if (radios[j].checked) { answered++; if (radios[j].value === 'SIM') total++; break; }
+    }
+  }
+  var pct = answered > 0 ? Math.round((total / 23) * 100) : 0;
+  document.getElementById('diag-score-pct').textContent = pct + '%';
+  var bar = document.getElementById('diag-score-bar');
+  bar.style.width = pct + '%';
+  var nivel = document.getElementById('diag-score-nivel');
+  if (answered === 0) { bar.style.background = 'var(--graphite)'; nivel.textContent = 'Responda as questões abaixo'; nivel.style.color = 'var(--txt-3)'; return; }
+  if (pct >= 78) { bar.style.background = 'var(--ok)'; nivel.textContent = 'Excelente · ' + total + '/23 itens OK · ' + answered + ' respondidas'; nivel.style.color = 'var(--ok)'; }
+  else if (pct >= 60) { bar.style.background = '#2B4C6F'; nivel.textContent = 'Bom · ' + total + '/23 itens OK · ' + answered + ' respondidas'; nivel.style.color = '#2B4C6F'; }
+  else if (pct >= 39) { bar.style.background = 'var(--warn)'; nivel.textContent = 'Médio · ' + total + '/23 itens OK · ' + answered + ' respondidas'; nivel.style.color = 'var(--warn)'; }
+  else { bar.style.background = 'var(--err)'; nivel.textContent = 'Crítico · ' + total + '/23 itens OK · ' + answered + ' respondidas'; nivel.style.color = 'var(--err)'; }
+}
+
+// ── SALVAR DIAGNÓSTICO ──
+function enviarDiagnostico() {
+  var empresa = document.getElementById('diag-empresa').value.trim();
+  if (!empresa) { alert('Informe o nome da empresa.'); document.getElementById('diag-empresa').focus(); return; }
+  var respostas = {};
+  var total = 0; var answered = 0;
+  for (var i = 1; i <= 23; i++) {
+    var radios = document.querySelectorAll('input[name="q' + i + '"]');
+    respostas['q' + i] = '';
+    for (var j = 0; j < radios.length; j++) {
+      if (radios[j].checked) { respostas['q' + i] = radios[j].value; answered++; if (radios[j].value === 'SIM') total++; break; }
+    }
+  }
+  if (answered < 23) { if (!confirm('Há ' + (23 - answered) + ' questão(ões) sem resposta. Deseja salvar mesmo assim?')) return; }
+  var pct = Math.round((total / 23) * 100);
+  var nivel = pct >= 78 ? 'Excelente' : pct >= 60 ? 'Bom' : pct >= 39 ? 'Médio' : 'Crítico';
+  var dados = {
+    empresa: empresa,
+    cnpj: document.getElementById('diag-cnpj').value.trim(),
+    colaboradores: document.getElementById('diag-colaboradores').value,
+    ramo: document.getElementById('diag-ramo').value.trim(),
+    responsavel: document.getElementById('diag-responsavel').value.trim(),
+    data: document.getElementById('diag-data').value,
+    scoreTotal: pct, nivel: nivel,
+    respostas: respostas,
+    obs: document.getElementById('diag-obs').value.trim()
+  };
+  document.getElementById('btn-diag').disabled = true;
+  showLoading('diag', true);
+  apiPost('processDiagnostico', dados, function(res) {
+    showLoading('diag', false);
+    document.getElementById('btn-diag').disabled = false;
+    if (res.ok) showToast('diag', true, '✓ Diagnóstico salvo! Score: ' + pct + '% — Nível: ' + nivel + '. Os resultados estão na planilha Base_Diagnosticos.');
+    else showToast('diag', false, '✗ Erro: ' + res.erro);
+  }, function(err) {
+    showLoading('diag', false);
+    document.getElementById('btn-diag').disabled = false;
+    showToast('diag', false, '✗ Erro de conexão: ' + err.message);
+  });
+}
+
+// ── Data padrão para o diagnóstico ──
+(function() {
+  var hoje = new Date().toISOString().split('T')[0];
+  var el = document.getElementById('diag-data');
+  if (el) el.value = hoje;
+})();
+
+window.addEventListener('load', carregarEmpresas);
+</script>
+</body>
+</html>
