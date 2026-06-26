@@ -43,24 +43,42 @@ html, body { height: 100%; background: var(--bg); font-family: 'Outfit', sans-se
 .screen { display: none; padding: 0 20px; }
 .screen.active { display: block; }
 
-/* HUB */
-.hub { padding: 0 20px; }
-.hub-card {
-  display: flex; align-items: center; gap: 20px;
-  background: var(--surface); border: 1px solid var(--border);
-  border-radius: var(--radius); padding: 24px 22px; margin-bottom: 14px;
+/* DASHBOARD HUB */
+.hub { }
+.dash-featured {
+  display: flex; align-items: center; gap: 16px;
+  background: var(--graphite); border-radius: 16px; padding: 22px 24px; margin: 0 20px 14px;
+  cursor: pointer; transition: opacity .2s, transform .15s; -webkit-tap-highlight-color: transparent;
+}
+.dash-featured:active { transform: scale(0.98); opacity: 0.88; }
+.dash-feat-icon { width: 52px; height: 52px; border-radius: 14px; background: rgba(255,255,255,0.12); display: flex; align-items: center; justify-content: center; flex-shrink: 0; }
+.dash-feat-icon svg { width: 26px; height: 26px; stroke: #fff; }
+.dash-feat-label { font-size: 16px; font-weight: 700; color: #fff; }
+.dash-feat-desc { font-size: 12px; color: rgba(255,255,255,0.6); margin-top: 3px; line-height: 1.4; }
+.dashboard-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; padding: 0 20px; }
+.dash-card {
+  background: var(--surface); border: 1px solid var(--border); border-radius: 16px;
+  padding: 24px 16px 20px; display: flex; flex-direction: column; align-items: center; gap: 12px;
   cursor: pointer; transition: box-shadow .2s, border-color .2s, transform .15s;
   -webkit-tap-highlight-color: transparent;
 }
-.hub-card:active { transform: scale(0.98); }
-.hub-card:hover  { box-shadow: var(--shadow-m); border-color: var(--border-s); }
-.hub-card.danger .hub-icon { background: var(--err-l); }
-.hub-card.danger .hub-icon svg { stroke: var(--err); }
-.hub-icon { width: 48px; height: 48px; border-radius: 12px; background: var(--gold-l); display: flex; align-items: center; justify-content: center; flex-shrink: 0; }
-.hub-icon svg { width: 22px; height: 22px; stroke: var(--gold); }
-.hub-label { font-size: 15px; font-weight: 600; color: var(--graphite); line-height: 1.2; }
-.hub-desc  { font-size: 12px; color: var(--txt-3); margin-top: 3px; }
-.hub-arrow { margin-left: auto; color: var(--border-s); }
+.dash-card:active { transform: scale(0.96); }
+.dash-card:hover  { box-shadow: var(--shadow-m); border-color: var(--border-s); }
+.dash-icon { width: 56px; height: 56px; border-radius: 16px; background: var(--gold-l); display: flex; align-items: center; justify-content: center; }
+.dash-icon svg { width: 26px; height: 26px; stroke: var(--gold); }
+.dash-label { font-size: 13px; font-weight: 700; color: var(--graphite); text-align: center; line-height: 1.3; }
+.dash-secondary {
+  display: flex; align-items: center; gap: 14px; background: var(--surface);
+  border: 1px solid var(--border); border-radius: 12px; padding: 18px 20px; margin: 12px 20px 0;
+  cursor: pointer; transition: box-shadow .2s, border-color .2s, transform .15s; -webkit-tap-highlight-color: transparent;
+}
+.dash-secondary:active { transform: scale(0.98); }
+.dash-secondary:hover { box-shadow: var(--shadow); border-color: var(--border-s); }
+.dash-sec-icon { width: 40px; height: 40px; border-radius: 10px; background: var(--gold-l); display: flex; align-items: center; justify-content: center; flex-shrink: 0; }
+.dash-sec-icon svg { width: 18px; height: 18px; stroke: var(--gold); }
+.dash-sec-label { font-size: 14px; font-weight: 600; color: var(--graphite); }
+.dash-sec-desc  { font-size: 11px; color: var(--txt-3); margin-top: 2px; }
+.dash-sec-arrow { margin-left: auto; color: var(--border-s); }
 
 /* FORMS */
 .form-header { display: flex; align-items: center; gap: 14px; margin-bottom: 32px; }
@@ -133,10 +151,14 @@ html, body { height: 100%; background: var(--bg); font-family: 'Outfit', sans-se
 /* CHECKLIST */
 .checklist { background: var(--surface); border: 1.5px solid var(--border); border-radius: 10px; overflow: hidden; margin-bottom: 20px; }
 .checklist-title { font-size: 11px; font-weight: 700; letter-spacing: 1.5px; text-transform: uppercase; color: var(--txt-2); padding: 14px 16px 10px; border-bottom: 1px solid var(--border); }
-.check-item { display: flex; align-items: center; gap: 12px; padding: 12px 16px; border-bottom: 1px solid var(--border); cursor: pointer; }
+.check-item { display: flex; align-items: center; gap: 12px; padding: 12px 16px; border-bottom: 1px solid var(--border); cursor: pointer; transition: background 0.2s; }
 .check-item:last-child { border-bottom: none; }
-.check-item input[type="checkbox"] { width: 18px; height: 18px; accent-color: var(--graphite); flex-shrink: 0; cursor: pointer; }
-.check-item span { font-size: 13px; color: var(--txt); font-weight: 500; }
+.check-item input[type="checkbox"] { width: 18px; height: 18px; accent-color: #16a34a; flex-shrink: 0; cursor: pointer; }
+.check-item span { font-size: 13px; color: var(--txt); font-weight: 500; transition: color 0.2s; }
+.check-item:has(input:checked) { background: #f0fdf4; }
+.check-item:has(input:checked) > span { color: #15803d; }
+.check-item:has(input:not(:checked)) { background: #fff5f5; }
+.check-item:has(input:not(:checked)) > span { color: #b91c1c; }
 .check-item .badge { margin-left: auto; font-size: 10px; font-weight: 700; padding: 3px 8px; border-radius: 20px; flex-shrink: 0; }
 .badge-opt { background: var(--gold-l); color: var(--gold); }
 
@@ -153,6 +175,42 @@ html, body { height: 100%; background: var(--bg); font-family: 'Outfit', sans-se
 .btn-primary:active { transform: scale(0.98); opacity: 0.85; }
 .btn-primary:disabled { opacity: 0.45; cursor: not-allowed; transform: none; }
 .btn-danger { background: var(--err); }
+
+/* GERADOR — CHECKLIST */
+.ger-check-list { display: flex; flex-direction: column; gap: 4px; margin-bottom: 8px; }
+.ger-check-item { display: flex; align-items: center; gap: 10px; padding: 11px 14px; background: var(--surface); border: 1.5px solid var(--border); border-radius: 10px; font-size: 13px; font-weight: 500; color: var(--txt-1); cursor: pointer; transition: border-color .15s; }
+.ger-check-item:has(input:checked) { border-color: var(--graphite); background: #f7f6f3; }
+.ger-check-item input[type=checkbox] { width: 16px; height: 16px; flex-shrink: 0; accent-color: var(--graphite); cursor: pointer; }
+.rating-group { display:flex; gap:6px; margin-top:4px; }
+.rating-btn { width:44px; height:44px; border-radius:8px; border:1.5px solid var(--border); background:var(--surface); font-size:15px; font-weight:700; cursor:pointer; transition:all .15s; color:var(--txt-2); font-family:'Outfit',sans-serif; }
+.rating-btn.active { background:var(--graphite); color:#fff; border-color:var(--graphite); }
+.radio-group { display:flex; gap:8px; flex-wrap:wrap; margin-top:4px; }
+.radio-item { display:flex; align-items:center; gap:6px; padding:11px 16px; border:1.5px solid var(--border); border-radius:10px; cursor:pointer; font-size:13px; font-weight:500; transition:all .15s; }
+.radio-item:has(input:checked) { border-color:var(--graphite); background:var(--graphite); color:#fff; }
+.radio-item input[type=radio] { display:none; }
+
+/* DESLIGAMENTO — LEMBRETE ROWS */
+.des-lem-row { display:flex; align-items:center; gap:10px; padding:11px 14px; background:var(--surface); border:1.5px solid var(--border); border-radius:10px; cursor:pointer; transition:border-color .15s; }
+.des-lem-row:has(.des-lem-cb:checked) { border-color:var(--graphite); background:#f7f6f3; }
+.des-lem-cb { width:16px; height:16px; flex-shrink:0; accent-color:var(--graphite); cursor:pointer; }
+.des-lem-label { flex:1; font-size:13px; font-weight:500; color:var(--txt-1); }
+.des-lem-dias { font-size:12px; color:var(--txt-3); display:flex; align-items:center; gap:4px; white-space:nowrap; }
+.des-lem-num { width:40px; padding:4px 6px; border:1.5px solid var(--border); border-radius:6px; font-size:12px; font-family:'Outfit',sans-serif; text-align:center; background:var(--bg); color:var(--txt-1); }
+
+/* LEMBRETES */
+.lem-list { display:flex; flex-direction:column; gap:8px; margin-bottom:16px; }
+.lem-item { display:flex; align-items:flex-start; gap:12px; padding:14px 16px; background:var(--surface); border:1.5px solid var(--border); border-radius:12px; }
+.lem-item-icon { width:36px; height:36px; border-radius:8px; display:flex; align-items:center; justify-content:center; flex-shrink:0; }
+.lem-item-body { flex:1; min-width:0; }
+.lem-item-title { font-size:14px; font-weight:600; color:var(--txt-1); margin-bottom:2px; }
+.lem-item-meta { font-size:12px; color:var(--txt-3); }
+.lem-item-badge { font-size:11px; font-weight:600; padding:3px 8px; border-radius:20px; white-space:nowrap; }
+.lem-item.lem-urgente { border-color:#ef4444; }
+.lem-item.lem-urgente .lem-item-icon { background:#fee2e2; }
+.lem-item.lem-hoje { border-color:#f59e0b; }
+.lem-item.lem-hoje .lem-item-icon { background:#fef3c7; }
+.lem-item.lem-futuro .lem-item-icon { background:#e0e7ff; }
+.lem-empty { text-align:center; padding:32px 16px; color:var(--txt-3); font-size:14px; }
 
 /* LOADING */
 .loading { display: none; flex-direction: column; align-items: center; justify-content: center; padding: 48px 0; gap: 16px; }
@@ -177,6 +235,86 @@ html, body { height: 100%; background: var(--bg); font-family: 'Outfit', sans-se
   padding: 14px 16px; font-size: 13px; color: var(--warn); font-weight: 500;
   margin-bottom: 20px; display: flex; align-items: center; gap: 8px;
 }
+
+/* AGENDA */
+.dash-feat-badge {
+  display: none; background: #E53935; color: #fff;
+  font-size: 10px; font-weight: 700; padding: 3px 9px;
+  border-radius: 20px; margin-left: auto; flex-shrink: 0; letter-spacing: 0.3px;
+}
+
+/* JORNADA */
+.jornada-doc { font-family: 'Outfit', sans-serif; background: #fff; padding: 4px 0; }
+.jornada-titulo-principal { font-size: 14px; font-weight: 800; text-align: center; color: var(--graphite); text-transform: uppercase; letter-spacing: 1px; margin-bottom: 18px; }
+.jornada-header-field { font-size: 13px; color: var(--graphite); margin-bottom: 4px; line-height: 1.5; }
+.jornada-header-field strong { font-weight: 700; }
+.jornada-hr { border: none; border-top: 1.5px solid #ccc; margin: 20px 0; }
+.jornada-mes-titulo { font-size: 14px; font-weight: 800; text-align: center; color: var(--graphite); text-transform: uppercase; letter-spacing: 1px; margin: 24px 0 16px; }
+.jornada-secao-label { font-size: 13px; color: var(--graphite); margin: 14px 0 6px; line-height: 1.5; }
+.jornada-secao-label strong { font-weight: 700; }
+.jornada-list { list-style: disc; padding-left: 22px; margin: 0 0 10px; }
+.jornada-list li { font-size: 13px; color: var(--graphite); margin-bottom: 5px; line-height: 1.6; }
+.jornada-red { color: #c0392b; font-weight: 700; }
+.jornada-ok-txt { font-size: 13px; color: var(--txt-2); margin: 4px 0 10px 22px; }
+.jornada-analise { margin-top: 28px; padding-top: 16px; border-top: 1.5px solid #ccc; }
+.jornada-analise-titulo { font-size: 14px; font-weight: 800; text-align: center; text-transform: uppercase; letter-spacing: 1px; color: var(--graphite); margin-bottom: 16px; }
+.jornada-assinatura { text-align: center; margin-top: 48px; font-size: 14px; color: var(--graphite); line-height: 1.8; }
+.jornada-assinatura strong { font-weight: 800; font-size: 15px; }
+@media print {
+  .app > .header, .form-header, #jornada-botoes,
+  .field, .info-card, .section-tag, .upload-area { display: none !important; }
+  .screen { display: block !important; padding: 0 !important; }
+  #screen-jornada > *:not(#jornada-resultado) { display: none !important; }
+  .jornada-doc { padding: 0; }
+  .jornada-list li { font-size: 11px; }
+  .jornada-header-field { font-size: 11px; }
+}
+
+/* CALENDÁRIO CUSTOMIZADO */
+.cal-wrapper { background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius); overflow: hidden; margin-bottom: 20px; }
+.cal-nav { display: flex; align-items: center; justify-content: space-between; padding: 18px 20px; }
+.cal-nav-btn { width: 42px; height: 42px; border-radius: 8px; background: #0891b2; border: none; color: #fff; font-size: 20px; cursor: pointer; display: flex; align-items: center; justify-content: center; flex-shrink: 0; transition: opacity .15s; }
+.cal-nav-btn:active { opacity: 0.8; }
+.cal-nav-btn svg { width: 20px; height: 20px; stroke: #fff; }
+.cal-title { font-size: 20px; font-weight: 700; color: var(--graphite); text-align: center; }
+.cal-legend { display: flex; align-items: center; gap: 8px; padding: 8px 14px; border-top: 1px solid var(--border); border-bottom: 1px solid var(--border); background: #f8f9fa; font-size: 11px; color: var(--txt-2); }
+.cal-leg-label { font-weight: 600; flex-shrink: 0; }
+.cal-leg-new  { flex: 1; text-align: center; background: #fde8e8; color: #8B3A3A; padding: 5px 8px; border-radius: 5px; font-weight: 600; }
+.cal-leg-seen { flex: 1; text-align: center; background: #dbeafe; color: #1e4d8c; padding: 5px 8px; border-radius: 5px; font-weight: 600; }
+.cal-grid { display: grid; grid-template-columns: repeat(7, 1fr); }
+.cal-head { text-align: center; padding: 10px 2px; font-size: 12px; font-weight: 700; color: #0891b2; background: #f3f4f6; border-bottom: 1px solid var(--border); }
+.cal-cell { text-align: center; padding: 13px 2px; font-size: 13px; color: var(--txt); border-top: 1px solid #f0f0f0; cursor: pointer; transition: background .15s; min-height: 44px; }
+.cal-cell.cal-row-alt { background: #f9fafb; }
+.cal-cell.cal-empty { cursor: default; }
+.cal-cell.cal-today { border: 2px solid #0891b2; border-radius: 4px; font-weight: 700; color: #0891b2; }
+.cal-cell.cal-has-new  { background: #fde8e8 !important; color: #8B3A3A; font-weight: 700; }
+.cal-cell.cal-has-seen { background: #dbeafe !important; color: #1e4d8c; font-weight: 600; }
+.cal-cell:not(.cal-empty):not(.cal-has-new):not(.cal-has-seen):hover { background: var(--gold-l); }
+.cal-lembretes { margin-bottom: 20px; }
+.cal-lembrete-item { display: flex; align-items: center; justify-content: space-between; background: #f3f4f6; border: 1px solid var(--border); border-radius: 10px; padding: 14px 18px; margin-bottom: 8px; }
+.cal-lembrete-nome { font-size: 13px; font-weight: 700; color: var(--graphite); letter-spacing: 0.5px; text-transform: uppercase; }
+.cal-lembrete-icon { font-size: 18px; color: #e53e3e; }
+.semana-item { display: flex; align-items: flex-start; gap: 8px; background: var(--surface); border: 1px solid var(--border); border-radius: 8px; padding: 10px 10px; margin-bottom: 8px; }
+.semana-dot { width: 8px; height: 8px; border-radius: 50%; flex-shrink: 0; margin-top: 4px; }
+.semana-dot.ok   { background: var(--ok); }
+.semana-dot.warn { background: var(--warn); }
+.semana-dot.err  { background: var(--err); }
+.semana-dot.gold { background: var(--gold); }
+.semana-tipo { font-size: 9px; font-weight: 700; letter-spacing: 0.8px; text-transform: uppercase; color: var(--txt-3); }
+.semana-nome { font-size: 12px; font-weight: 600; color: var(--graphite); margin-top: 2px; line-height: 1.3; word-break: break-word; }
+.semana-empresa { font-size: 11px; color: var(--txt-2); margin-top: 1px; }
+.semana-vazio { font-size: 12px; color: var(--txt-3); text-align: center; padding: 20px 0; }
+.ativ-item { display: flex; align-items: flex-start; gap: 12px; background: var(--surface); border: 1px solid var(--border); border-radius: 10px; padding: 14px 16px; margin-bottom: 10px; }
+.ativ-dot { width: 10px; height: 10px; border-radius: 50%; flex-shrink: 0; margin-top: 5px; }
+.ativ-dot.ok   { background: var(--ok); }
+.ativ-dot.warn { background: var(--warn); }
+.ativ-dot.err  { background: var(--err); }
+.ativ-dot.gold { background: var(--gold); }
+.ativ-tipo  { font-size: 10px; font-weight: 700; letter-spacing: 1px; text-transform: uppercase; color: var(--txt-3); }
+.ativ-nome  { font-size: 14px; font-weight: 600; color: var(--graphite); margin-top: 2px; }
+.ativ-empresa { font-size: 12px; color: var(--txt-2); margin-top: 1px; }
+.ativ-data  { margin-left: auto; font-size: 11px; color: var(--txt-3); flex-shrink: 0; text-align: right; padding-left: 8px; }
+.ativ-vazio { text-align: center; color: var(--txt-3); font-size: 13px; padding: 32px 0; }
 
 /* DIAGNÓSTICO */
 .diag-q { background: var(--surface); border: 1.5px solid var(--border); border-radius: 10px; padding: 14px 16px; margin-bottom: 10px; }
@@ -204,213 +342,94 @@ html, body { height: 100%; background: var(--bg); font-family: 'Outfit', sans-se
   <!-- ══ HUB ══ -->
   <div class="hub screen active" id="screen-hub">
 
-    <div class="hub-card" onclick="goto('admissao')">
-      <div class="hub-icon">
+    <!-- Destaque: Agenda -->
+    <div class="dash-featured" onclick="goto('agenda'); carregarAtividades(); carregarLembretes(); var b=document.getElementById('agenda-badge'); if(b) b.style.display='none';">
+      <div class="dash-feat-icon">
         <svg fill="none" viewBox="0 0 24 24" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
-          <path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/>
-          <line x1="19" y1="8" x2="19" y2="14"/><line x1="22" y1="11" x2="16" y2="11"/>
+          <rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/>
         </svg>
       </div>
-      <div><div class="hub-label">Nova Admissão</div><div class="hub-desc">Cadastrar colaborador e documentos</div></div>
-      <div class="hub-arrow"><svg width="18" height="18" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor"><path d="M9 18l6-6-6-6"/></svg></div>
-    </div>
-
-    <div class="hub-card" onclick="goto('atestado')">
-      <div class="hub-icon">
-        <svg fill="none" viewBox="0 0 24 24" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
-          <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/>
-          <polyline points="14 2 14 8 20 8"/>
-          <line x1="12" y1="18" x2="12" y2="12"/><line x1="9" y1="15" x2="15" y2="15"/>
-        </svg>
+      <div>
+        <div class="dash-feat-label">Agenda & Atividades</div>
+        <div class="dash-feat-desc">Calendário da semana e lançamentos recentes</div>
       </div>
-      <div><div class="hub-label">Enviar Atestado</div><div class="hub-desc">Registrar afastamento médico</div></div>
-      <div class="hub-arrow"><svg width="18" height="18" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor"><path d="M9 18l6-6-6-6"/></svg></div>
+      <div id="agenda-badge" class="dash-feat-badge"></div>
     </div>
 
-    <div class="hub-card danger" onclick="goto('desligamento')">
-      <div class="hub-icon">
-        <svg fill="none" viewBox="0 0 24 24" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
-          <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/>
-          <line x1="23" y1="11" x2="17" y2="11"/>
-        </svg>
+    <!-- Grid de ações (4 ícones, 2x2) -->
+    <div class="dashboard-grid">
+
+      <div class="dash-card" onclick="goto('desligamento')">
+        <div class="dash-icon" style="background:var(--err-l)">
+          <svg fill="none" viewBox="0 0 24 24" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" style="stroke:var(--err)">
+            <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/>
+            <line x1="23" y1="11" x2="17" y2="11"/>
+          </svg>
+        </div>
+        <div class="dash-label">Desligamento</div>
       </div>
-      <div><div class="hub-label">Desligamento</div><div class="hub-desc">Registrar saída de colaborador</div></div>
-      <div class="hub-arrow"><svg width="18" height="18" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor"><path d="M9 18l6-6-6-6"/></svg></div>
-    </div>
 
-
-    <div class="hub-card" onclick="goto('diagnostico')">
-      <div class="hub-icon">
-        <svg fill="none" viewBox="0 0 24 24" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
-          <path d="M9 11l3 3L22 4"/><path d="M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11"/>
-        </svg>
+      <div class="dash-card" onclick="goto('diagnostico')">
+        <div class="dash-icon">
+          <svg fill="none" viewBox="0 0 24 24" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M9 11l3 3L22 4"/><path d="M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11"/>
+          </svg>
+        </div>
+        <div class="dash-label">Diagnóstico</div>
       </div>
-      <div><div class="hub-label">Diagnóstico de Empresa</div><div class="hub-desc">Avaliação inicial de compliance RH</div></div>
-      <div class="hub-arrow"><svg width="18" height="18" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor"><path d="M9 18l6-6-6-6"/></svg></div>
+
+      <div class="dash-card" onclick="goto('jornada'); carregarEmpresasJornada()">
+        <div class="dash-icon" style="background:var(--warn-l)">
+          <svg fill="none" viewBox="0 0 24 24" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" style="stroke:var(--warn)">
+            <circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/>
+          </svg>
+        </div>
+        <div class="dash-label">Análise de Jornada</div>
+      </div>
+
+      <div class="dash-card" onclick="goto('gerador')">
+        <div class="dash-icon" style="background:#ede9fe">
+          <svg fill="none" viewBox="0 0 24 24" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" style="stroke:#7c3aed">
+            <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/>
+            <polyline points="14 2 14 8 20 8"/>
+            <line x1="12" y1="18" x2="12" y2="12"/><line x1="9" y1="15" x2="15" y2="15"/>
+          </svg>
+        </div>
+        <div class="dash-label">Gerar Documentos</div>
+      </div>
+
     </div>
 
-    <div class="hub-card" onclick="goto('cliente')">
-      <div class="hub-icon">
+    <!-- Secundário -->
+    <div class="dash-secondary" onclick="goto('cliente')">
+      <div class="dash-sec-icon">
         <svg fill="none" viewBox="0 0 24 24" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
           <rect x="2" y="7" width="20" height="14" rx="2"/>
           <path d="M16 7V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v2"/>
         </svg>
       </div>
-      <div><div class="hub-label">Cadastrar Empresa</div><div class="hub-desc">Registrar novo cliente / contrato</div></div>
-      <div class="hub-arrow"><svg width="18" height="18" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor"><path d="M9 18l6-6-6-6"/></svg></div>
+      <div>
+        <div class="dash-sec-label">Cadastrar Empresa</div>
+        <div class="dash-sec-desc">Registrar novo cliente / contrato</div>
+      </div>
+      <div class="dash-sec-arrow"><svg width="16" height="16" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor"><path d="M9 18l6-6-6-6"/></svg></div>
+    </div>
+
+    <div class="dash-secondary" onclick="goto('entrevista-des')">
+      <div class="dash-sec-icon" style="background:var(--err-l)">
+        <svg fill="none" viewBox="0 0 24 24" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" style="stroke:var(--err)">
+          <path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/>
+        </svg>
+      </div>
+      <div>
+        <div class="dash-sec-label">Entrevista de Desligamento</div>
+        <div class="dash-sec-desc">Registrar conversa de saída do colaborador</div>
+      </div>
+      <div class="dash-sec-arrow"><svg width="16" height="16" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor"><path d="M9 18l6-6-6-6"/></svg></div>
     </div>
 
   </div>
 
-  <!-- ══ ADMISSÃO ══ -->
-  <div class="screen" id="screen-admissao">
-    <div class="form-header">
-      <button class="back-btn" onclick="goto('hub')"><svg fill="none" viewBox="0 0 24 24" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M19 12H5M12 19l-7-7 7-7"/></svg></button>
-      <div><div class="form-title">Nova Admissão</div><div class="form-step">Dados do colaborador</div></div>
-    </div>
-
-    <div id="form-admissao-wrap">
-      <div class="field"><label>Nome Completo</label><input type="text" id="adm-nome" placeholder="Nome do colaborador" autocomplete="name"/></div>
-      <div class="field"><label>CPF</label><input type="text" id="adm-cpf" placeholder="000.000.000-00" maxlength="14" inputmode="numeric"/></div>
-      <div class="field-row">
-        <div class="field"><label>Data de Nascimento</label><input type="date" id="adm-nasc"/></div>
-        <div class="field"><label>Telefone / WhatsApp</label><input type="tel" id="adm-tel" placeholder="(83) 99999-9999"/></div>
-      </div>
-
-      <div class="field">
-        <label>Empresa Cliente</label>
-        <select id="adm-empresa" onchange="toggleNovo(this)">
-          <option value="">Selecione a empresa…</option>
-          <option value="__novo__">➕ Cadastrar nova empresa…</option>
-        </select>
-        <div class="novo-wrap" id="adm-empresa-novo-wrap">
-          <input type="text" placeholder="Digite o nome da empresa…"/>
-        </div>
-      </div>
-
-      <div class="field"><label>Função / Cargo</label><input type="text" id="adm-cargo" placeholder="Ex: Auxiliar de Cozinha"/></div>
-      <div class="field-row">
-        <div class="field"><label>Data de Admissão</label><input type="date" id="adm-data"/></div>
-        <div class="field"><label>Salário</label><input type="text" id="adm-salario" placeholder="R$ 0,00" inputmode="decimal"/></div>
-      </div>
-      <div class="field"><label>Data do ASO <span style="font-weight:400;text-transform:none;letter-spacing:0">(Atestado de Saúde Ocupacional)</span></label><input type="date" id="adm-aso-data"/></div>
-
-      <div class="section-tag">Tipo de Processo</div>
-      <div class="toggle-group">
-        <input type="radio" name="adm-tipo" id="tipo-digital" value="digital" class="toggle-opt" onchange="toggleTipo()"/>
-        <label for="tipo-digital" class="toggle-lbl">⚡ Digital</label>
-        <input type="radio" name="adm-tipo" id="tipo-fisico" value="fisico" class="toggle-opt" onchange="toggleTipo()"/>
-        <label for="tipo-fisico" class="toggle-lbl">📋 Físico</label>
-      </div>
-
-      <div class="cond-digital" id="bloco-digital">
-        <div class="section-tag">Termos e Documentos</div>
-        <div class="terms-box">
-          <div class="terms-scroll">
-            <h4>Regimento Interno</h4>
-            <p>O colaborador se compromete a cumprir integralmente as normas internas da empresa, incluindo horários de trabalho estabelecidos em contrato, uso adequado de equipamentos e ferramentas fornecidos, postura profissional no ambiente de trabalho e respeito à hierarquia e aos colegas.</p>
-            <p style="margin-top:10px">Qualquer descumprimento das normas poderá acarretar medidas disciplinares previstas na legislação trabalhista vigente, incluindo advertência verbal, advertência escrita, suspensão e demissão por justa causa, conforme a gravidade da infração.</p>
-            <h4>Banco de Horas</h4>
-            <p>O colaborador declara estar ciente do regime de Banco de Horas adotado pela empresa, no qual eventuais horas excedentes à jornada contratual poderão ser compensadas nos termos do acordo coletivo ou individual firmado, respeitando o prazo máximo de compensação previsto em lei.</p>
-            <p style="margin-top:10px">O saldo de horas será controlado mensalmente e disponibilizado ao colaborador mediante solicitação ao departamento de RH. Horas não compensadas dentro do prazo legal serão remuneradas conforme legislação.</p>
-            <h4>Política de Privacidade — LGPD</h4>
-            <p>Em conformidade com a Lei Geral de Proteção de Dados (Lei nº 13.709/2018), a empresa informa que os dados pessoais coletados neste processo serão utilizados exclusivamente para fins de gestão de recursos humanos, cumprimento de obrigações legais e trabalhistas, comunicações internas e endomarketing.</p>
-            <p style="margin-top:10px">Os dados serão armazenados de forma segura em ambiente Google Workspace e não serão compartilhados com terceiros sem consentimento expresso, exceto nos casos previstos em lei.</p>
-          </div>
-          <label class="terms-accept">
-            <input type="checkbox" id="adm-aceite"/>
-            <span>Li e concordo digitalmente com o Regimento Interno, Banco de Horas e Política de LGPD acima.</span>
-          </label>
-        </div>
-        <div class="section-tag">Upload de Documentos</div>
-        <div class="field"><label>RG (frente e verso)</label>
-          <div class="upload-area"><input type="file" id="upload-rg" accept="image/*,.pdf" onchange="onFileChange('rg')"/>
-            <div class="upload-icon">🪪</div><div class="upload-label">Toque para enviar</div>
-            <div class="upload-hint">JPG, PNG ou PDF · máx. 10MB</div><div class="upload-name" id="upload-rg-name"></div>
-          </div>
-        </div>
-        <div class="field"><label>CPF (documento)</label>
-          <div class="upload-area"><input type="file" id="upload-cpf" accept="image/*,.pdf" onchange="onFileChange('cpf')"/>
-            <div class="upload-icon">📄</div><div class="upload-label">Toque para enviar</div>
-            <div class="upload-hint">JPG, PNG ou PDF · máx. 10MB</div><div class="upload-name" id="upload-cpf-name"></div>
-          </div>
-        </div>
-        <div style="background:linear-gradient(135deg,#071D41 0%,#1351B4 100%);border-radius:10px;padding:16px 18px;margin-bottom:20px;color:white;">
-          <div style="font-size:10px;font-weight:800;letter-spacing:1.5px;opacity:0.7;margin-bottom:6px">PRÓXIMO PASSO OBRIGATÓRIO — VALIDADE JURÍDICA</div>
-          <div style="font-size:13px;font-weight:600;line-height:1.6">Após salvar, assine os documentos via <strong>GOV.BR (Prata ou Ouro)</strong>: Contrato, LGPD, Banco de Horas e Regimento Interno.</div>
-          <div style="font-size:12px;opacity:0.75;margin-top:6px">Acesse <strong>assinatura.iti.br</strong> e envie o PDF para o colaborador assinar.</div>
-        </div>
-      </div>
-
-      <div class="section-tag">Etapas do Processo</div>
-      <div class="checklist">
-        <div class="checklist-title">Marque o que foi concluído</div>
-        <label class="check-item"><input type="checkbox" id="adm-aso-agendado"/><span>ASO agendado e confirmado</span></label>
-        <label class="check-item"><input type="checkbox" id="adm-aso"/><span>Resultado do ASO recebido: APTO</span></label>
-        <label class="check-item"><input type="checkbox" id="adm-docs-contab"/><span>Documentação enviada à contabilidade</span></label>
-        <label class="check-item"><input type="checkbox" id="adm-ponto"/><span>Cadastrado no sistema de ponto</span></label>
-        <label class="check-item"><input type="checkbox" id="adm-vr"/><span>Cadastrado no sistema VR <span class="badge badge-opt">se houver</span></span></label>
-        <label class="check-item"><input type="checkbox" id="adm-vt"/><span>Cadastrado no sistema de transporte <span class="badge badge-opt">se houver</span></span></label>
-        <label class="check-item"><input type="checkbox" id="adm-odonto"/><span>Incluído no plano odontológico <span class="badge badge-opt">se houver</span></span></label>
-        <label class="check-item"><input type="checkbox" id="adm-saude"/><span>Incluído no plano de saúde <span class="badge badge-opt">se houver</span></span></label>
-        <label class="check-item"><input type="checkbox" id="adm-conta"/><span>Abertura de conta solicitada <span class="badge badge-opt">se necessário</span></span></label>
-        <label class="check-item"><input type="checkbox" id="adm-termos-imp"/><span>Termos impressos e assinados</span></label>
-        <label class="check-item"><input type="checkbox" id="adm-arquivado"/><span>Documentos digitalizados e arquivados</span></label>
-      </div>
-
-      <div class="field"><label>Observações</label><textarea id="adm-obs" placeholder="Informações adicionais…"></textarea></div>
-
-      <div class="loading" id="loading-adm"><div class="spinner"></div><div class="loading-txt">Processando admissão…</div></div>
-      <div class="toast" id="toast-adm"></div>
-      <button class="btn-primary" id="btn-adm" onclick="enviarAdmissao()">Confirmar Admissão</button>
-    </div>
-  </div>
-
-  <!-- ══ ATESTADO ══ -->
-  <div class="screen" id="screen-atestado">
-    <div class="form-header">
-      <button class="back-btn" onclick="goto('hub')"><svg fill="none" viewBox="0 0 24 24" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M19 12H5M12 19l-7-7 7-7"/></svg></button>
-      <div><div class="form-title">Atestado Médico</div><div class="form-step">Registro de afastamento</div></div>
-    </div>
-
-    <div class="field"><label>Nome do Colaborador</label><input type="text" id="at-nome" placeholder="Nome completo"/></div>
-
-    <div class="field">
-      <label>Empresa Cliente</label>
-      <select id="at-empresa" onchange="toggleNovo(this)">
-        <option value="">Selecione a empresa…</option>
-        <option value="__novo__">➕ Cadastrar nova empresa…</option>
-      </select>
-      <div class="novo-wrap" id="at-empresa-novo-wrap">
-        <input type="text" placeholder="Digite o nome da empresa…"/>
-      </div>
-    </div>
-
-    <div class="field"><label>Dias de Afastamento</label><input type="number" id="at-dias" placeholder="Ex: 3" min="1" inputmode="numeric"/></div>
-    <div class="field"><label>CID <span style="font-weight:400;text-transform:none;letter-spacing:0">(opcional)</span></label><input type="text" id="at-cid" placeholder="Ex: J00, Z00…"/></div>
-
-    <div class="field"><label>Atestado (imagem ou PDF)</label>
-      <div class="upload-area"><input type="file" id="upload-at" accept="image/*,.pdf" onchange="onFileChange('at')"/>
-        <div class="upload-icon">🏥</div><div class="upload-label">Toque para enviar</div>
-        <div class="upload-hint">JPG, PNG ou PDF · máx. 10MB</div><div class="upload-name" id="upload-at-name"></div>
-      </div>
-    </div>
-
-    <div class="section-tag">Encaminhamentos</div>
-    <div class="checklist">
-      <div class="checklist-title">Marque o que foi feito</div>
-      <label class="check-item"><input type="checkbox" id="at-contab"/><span>Encaminhado à contabilidade</span></label>
-      <label class="check-item"><input type="checkbox" id="at-sst"/><span>Encaminhado ao Protagon (SST) <span class="badge badge-opt">se houver</span></span></label>
-      <label class="check-item"><input type="checkbox" id="at-ponto"/><span>Lançado em afastamentos no sistema de ponto</span></label>
-      <label class="check-item"><input type="checkbox" id="at-lider"/><span>Sinalizado no grupo de líderes (WhatsApp)</span></label>
-      <label class="check-item"><input type="checkbox" id="at-inss"/><span>INSS comunicado — Auxílio-Doença B31 <span class="badge badge-opt">se &gt; 15 dias</span></span></label>
-      <label class="check-item"><input type="checkbox" id="at-aso-retorno"/><span>ASO de retorno agendado <span class="badge badge-opt">se &gt; 30 dias</span></span></label>
-    </div>
-
-    <div class="loading" id="loading-at"><div class="spinner"></div><div class="loading-txt">Salvando atestado…</div></div>
-    <div class="toast" id="toast-at"></div>
-    <button class="btn-primary" onclick="enviarAtestado()">Enviar Atestado</button>
-  </div>
 
   <!-- ══ DESLIGAMENTO ══ -->
   <div class="screen" id="screen-desligamento">
@@ -419,17 +438,24 @@ html, body { height: 100%; background: var(--bg); font-family: 'Outfit', sans-se
       <div><div class="form-title">Desligamento</div><div class="form-step">Saída de colaborador</div></div>
     </div>
 
-    <div class="field"><label>Nome do Colaborador</label><input type="text" id="des-nome" placeholder="Nome completo"/></div>
-
     <div class="field">
       <label>Empresa Cliente</label>
-      <select id="des-empresa" onchange="toggleNovo(this)">
+      <select id="des-empresa" onchange="carregarColaboradoresDesligamento()">
         <option value="">Selecione a empresa…</option>
         <option value="__novo__">➕ Cadastrar nova empresa…</option>
       </select>
-      <div class="novo-wrap" id="des-empresa-novo-wrap">
-        <input type="text" placeholder="Digite o nome da empresa…"/>
-      </div>
+    </div>
+
+    <div class="field" id="des-colab-wrap" style="display:none">
+      <label>Colaborador</label>
+      <select id="des-colaborador" onchange="preencherNomeDesligamento()">
+        <option value="">Selecione o colaborador…</option>
+      </select>
+    </div>
+
+    <div class="field" id="des-nome-wrap" style="display:none">
+      <label>Nome do Colaborador</label>
+      <input type="text" id="des-nome" placeholder="Nome completo"/>
     </div>
 
     <div class="field-row">
@@ -461,30 +487,143 @@ html, body { height: 100%; background: var(--bg); font-family: 'Outfit', sans-se
       </div>
     </div>
 
-    <div class="section-tag">Etapas do Processo</div>
-    <div class="checklist">
-      <div class="checklist-title">Marque o que foi concluído</div>
-      <label class="check-item"><input type="checkbox" id="des-aviso-contab"/><span>Aviso solicitado à contabilidade por e-mail</span></label>
-      <label class="check-item"><input type="checkbox" id="des-assin-gestor"/><span>Assinatura do gestor colhida no aviso</span></label>
-      <label class="check-item"><input type="checkbox" id="des-assin-func"/><span>Assinatura do colaborador colhida</span></label>
-      <label class="check-item"><input type="checkbox" id="des-aso"/><span>ASO de desligamento agendado e realizado</span></label>
-      <label class="check-item"><input type="checkbox" id="des-rescisao-contab"/><span>Informações de rescisão enviadas à contabilidade</span></label>
-      <label class="check-item"><input type="checkbox" id="des-acerto"/><span>Acerto da rescisão agendado com o colaborador</span></label>
-      <label class="check-item"><input type="checkbox" id="des-pgto"/><span>Pagamento solicitado ao gestor</span></label>
-      <label class="check-item"><input type="checkbox" id="des-rem-ponto"/><span>Removido do sistema de ponto</span></label>
-      <label class="check-item"><input type="checkbox" id="des-rem-vr"/><span>Removido do sistema VR <span class="badge badge-opt">se houver</span></span></label>
-      <label class="check-item"><input type="checkbox" id="des-rem-vt"/><span>Removido do sistema de transporte <span class="badge badge-opt">se houver</span></span></label>
-      <label class="check-item"><input type="checkbox" id="des-rem-saude"/><span>Removido do plano de saúde <span class="badge badge-opt">se houver</span></span></label>
-      <label class="check-item"><input type="checkbox" id="des-rem-odonto"/><span>Removido do plano odontológico <span class="badge badge-opt">se houver</span></span></label>
-      <label class="check-item"><input type="checkbox" id="des-rem-grupos"/><span>Removido dos grupos WhatsApp da empresa</span></label>
-      <label class="check-item"><input type="checkbox" id="des-esocial"/><span>Baixa no eSocial solicitada à contabilidade</span></label>
-      <label class="check-item"><input type="checkbox" id="des-entrevista"/><span>Entrevista de desligamento realizada <span class="badge badge-opt">boa prática</span></span></label>
-      <label class="check-item"><input type="checkbox" id="des-arquivado"/><span>Documentos digitalizados e arquivados</span></label>
+    <div class="section-tag">Lembretes de Acompanhamento</div>
+    <div style="font-size:13px;color:var(--txt-3);margin-bottom:10px">Selecione as etapas para criar lembretes automáticos a partir da data de desligamento.</div>
+    <div style="display:flex;flex-direction:column;gap:6px;margin-bottom:4px">
+      <label class="des-lem-row"><input type="checkbox" class="des-lem-cb" data-titulo="Aviso à contabilidade"/><span class="des-lem-label">Aviso à contabilidade</span><span class="des-lem-dias">em <input type="number" class="des-lem-num" value="1" min="0" max="90"/>d</span></label>
+      <label class="des-lem-row"><input type="checkbox" class="des-lem-cb" data-titulo="ASO Demissional"/><span class="des-lem-label">ASO Demissional</span><span class="des-lem-dias">em <input type="number" class="des-lem-num" value="3" min="0" max="90"/>d</span></label>
+      <label class="des-lem-row"><input type="checkbox" class="des-lem-cb" data-titulo="Rescisão à contabilidade"/><span class="des-lem-label">Rescisão à contabilidade</span><span class="des-lem-dias">em <input type="number" class="des-lem-num" value="3" min="0" max="90"/>d</span></label>
+      <label class="des-lem-row"><input type="checkbox" class="des-lem-cb" data-titulo="Acerto rescisório com colaborador"/><span class="des-lem-label">Acerto rescisório</span><span class="des-lem-dias">em <input type="number" class="des-lem-num" value="10" min="0" max="90"/>d</span></label>
+      <label class="des-lem-row"><input type="checkbox" class="des-lem-cb" data-titulo="Pagamento do acerto"/><span class="des-lem-label">Pagamento do acerto</span><span class="des-lem-dias">em <input type="number" class="des-lem-num" value="10" min="0" max="90"/>d</span></label>
+      <label class="des-lem-row"><input type="checkbox" class="des-lem-cb" data-titulo="Baixa no eSocial"/><span class="des-lem-label">Baixa no eSocial</span><span class="des-lem-dias">em <input type="number" class="des-lem-num" value="7" min="0" max="90"/>d</span></label>
+      <label class="des-lem-row"><input type="checkbox" class="des-lem-cb" data-titulo="Entrevista de desligamento"/><span class="des-lem-label">Entrevista de desligamento</span><span class="des-lem-dias">em <input type="number" class="des-lem-num" value="5" min="0" max="90"/>d</span></label>
     </div>
 
+    <div class="section-tag">Gerar Documentos de Rescisão</div>
+    <div class="ger-check-list" style="margin-bottom:12px">
+      <label class="ger-check-item"><input type="checkbox" id="des-doc-aviso"> <div><div style="font-weight:600">Aviso Prévio</div><div style="font-size:12px;color:var(--txt-3);margin-top:2px">Comunicado formal de dispensa — empresa ao colaborador</div></div></label>
+      <label class="ger-check-item"><input type="checkbox" id="des-doc-pedido"> <div><div style="font-weight:600">Pedido de Demissão</div><div style="font-size:12px;color:var(--txt-3);margin-top:2px">Quando a saída é por iniciativa do colaborador</div></div></label>
+      <label class="ger-check-item"><input type="checkbox" id="des-doc-aso"> <div><div style="font-weight:600">Encaminhamento ASO Demissional</div><div style="font-size:12px;color:var(--txt-3);margin-top:2px">Solicitação para exame médico de desligamento</div></div></label>
+    </div>
     <div class="loading" id="loading-des"><div class="spinner"></div><div class="loading-txt">Registrando desligamento…</div></div>
     <div class="toast" id="toast-des"></div>
+    <div id="des-docs-result" style="display:none;margin-bottom:16px;background:var(--ok-l);border:1px solid var(--ok);border-radius:12px;padding:16px">
+      <div style="font-size:12px;font-weight:700;color:var(--ok);margin-bottom:10px">Documentos gerados</div>
+      <div id="des-docs-links" style="font-size:13px;line-height:1.9"></div>
+    </div>
     <button class="btn-primary btn-danger" id="btn-des" onclick="enviarDesligamento()">Registrar Desligamento</button>
+  </div>
+
+  <!-- ══ ENTREVISTA DE DESLIGAMENTO ══ -->
+  <div class="screen" id="screen-entrevista-des">
+    <div class="form-header">
+      <button class="back-btn" onclick="goto('hub')"><svg fill="none" viewBox="0 0 24 24" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M19 12H5M12 19l-7-7 7-7"/></svg></button>
+      <div><div class="form-title">Entrevista de Desligamento</div><div class="form-step">Registro da conversa de saída</div></div>
+    </div>
+
+    <div class="field">
+      <label>Empresa Cliente</label>
+      <select id="ent-empresa" onchange="carregarColaboradoresEntrevista()">
+        <option value="">Selecione a empresa…</option>
+        <option value="__novo__">➕ Cadastrar nova empresa…</option>
+      </select>
+    </div>
+    <div class="field" id="ent-colab-wrap" style="display:none">
+      <label>Colaborador</label>
+      <select id="ent-colaborador" onchange="preencherDadosEntrevista()">
+        <option value="">Selecione o colaborador…</option>
+      </select>
+    </div>
+    <div class="field" id="ent-nome-wrap" style="display:none">
+      <label>Nome do Colaborador</label>
+      <input type="text" id="ent-nome" placeholder="Nome completo"/>
+    </div>
+
+    <div class="field-row">
+      <div class="field"><label>Data da Entrevista</label><input type="date" id="ent-data"/></div>
+      <div class="field">
+        <label>Tipo de Saída</label>
+        <select id="ent-tipo">
+          <option value="">Selecione…</option>
+          <option>Pedido de demissão</option>
+          <option>Demissão sem justa causa</option>
+          <option>Demissão por justa causa</option>
+          <option>Acordo mútuo</option>
+          <option>Término de contrato</option>
+        </select>
+      </div>
+    </div>
+
+    <div class="section-tag">Perguntas da Entrevista</div>
+
+    <div class="field">
+      <label>1. Motivo principal da saída</label>
+      <select id="ent-motivo">
+        <option value="">Selecione…</option>
+        <option>Proposta com melhor remuneração</option>
+        <option>Ambiente de trabalho</option>
+        <option>Relação com a liderança</option>
+        <option>Questões pessoais / familiares</option>
+        <option>Falta de oportunidade de crescimento</option>
+        <option>Mudança de área ou carreira</option>
+        <option>Saúde</option>
+        <option>Outro</option>
+      </select>
+    </div>
+
+    <div class="field">
+      <label>2. Como avalia o ambiente de trabalho? <span style="font-weight:400;text-transform:none;letter-spacing:0">(1 = ruim · 5 = excelente)</span></label>
+      <div class="rating-group" id="ent-amb-group">
+        <button type="button" class="rating-btn" onclick="setRating('ent-amb',1)">1</button>
+        <button type="button" class="rating-btn" onclick="setRating('ent-amb',2)">2</button>
+        <button type="button" class="rating-btn" onclick="setRating('ent-amb',3)">3</button>
+        <button type="button" class="rating-btn" onclick="setRating('ent-amb',4)">4</button>
+        <button type="button" class="rating-btn" onclick="setRating('ent-amb',5)">5</button>
+      </div>
+      <input type="hidden" id="ent-amb"/>
+    </div>
+
+    <div class="field">
+      <label>3. Como avalia a relação com a liderança? <span style="font-weight:400;text-transform:none;letter-spacing:0">(1 = ruim · 5 = excelente)</span></label>
+      <div class="rating-group" id="ent-lid-group">
+        <button type="button" class="rating-btn" onclick="setRating('ent-lid',1)">1</button>
+        <button type="button" class="rating-btn" onclick="setRating('ent-lid',2)">2</button>
+        <button type="button" class="rating-btn" onclick="setRating('ent-lid',3)">3</button>
+        <button type="button" class="rating-btn" onclick="setRating('ent-lid',4)">4</button>
+        <button type="button" class="rating-btn" onclick="setRating('ent-lid',5)">5</button>
+      </div>
+      <input type="hidden" id="ent-lid"/>
+    </div>
+
+    <div class="field">
+      <label>4. Sentiu oportunidades de crescimento na empresa?</label>
+      <div class="radio-group">
+        <label class="radio-item"><input type="radio" name="ent-crescimento" value="Sim"/>Sim</label>
+        <label class="radio-item"><input type="radio" name="ent-crescimento" value="Não"/>Não</label>
+        <label class="radio-item"><input type="radio" name="ent-crescimento" value="Parcialmente"/>Parcialmente</label>
+      </div>
+    </div>
+
+    <div class="field">
+      <label>5. Recomendaria a empresa como local de trabalho?</label>
+      <div class="radio-group">
+        <label class="radio-item"><input type="radio" name="ent-recomenda" value="Sim"/>Sim</label>
+        <label class="radio-item"><input type="radio" name="ent-recomenda" value="Não"/>Não</label>
+        <label class="radio-item"><input type="radio" name="ent-recomenda" value="Talvez"/>Talvez</label>
+      </div>
+    </div>
+
+    <div class="field"><label>6. O que poderia ter sido diferente?</label>
+      <textarea id="ent-mudanca" placeholder="Relato do colaborador sobre o que poderia ter sido diferente…"></textarea>
+    </div>
+
+    <div class="field"><label>7. Observações do RH</label>
+      <textarea id="ent-obs" placeholder="Impressões, contexto e análise da consultora…"></textarea>
+    </div>
+
+    <div class="loading" id="loading-ent"><div class="spinner"></div><div class="loading-txt">Salvando entrevista…</div></div>
+    <div class="toast" id="toast-ent"></div>
+    <button class="btn-primary" id="btn-ent" onclick="salvarEntrevistaDesligamento()">Salvar e Gerar Documento</button>
   </div>
 
   <!-- ══ CADASTRAR EMPRESA ══ -->
@@ -495,7 +634,8 @@ html, body { height: 100%; background: var(--bg); font-family: 'Outfit', sans-se
     </div>
 
     <div class="section-tag">Dados da Empresa</div>
-    <div class="field"><label>Razão Social</label><input type="text" id="cli-nome" placeholder="Nome da empresa"/></div>
+    <div class="field"><label>Nome Fantasia <span style="font-weight:400;text-transform:none;letter-spacing:0">aparece nos menus e pastas</span></label><input type="text" id="cli-fantasia" placeholder="Ex: Vi Dog"/></div>
+    <div class="field"><label>Razão Social <span style="font-weight:400;text-transform:none;letter-spacing:0">nome jurídico completo</span></label><input type="text" id="cli-nome" placeholder="Ex: Vi Dog Comércio e Serviços Ltda"/></div>
     <div class="field"><label>CNPJ</label><input type="text" id="cli-cnpj" placeholder="00.000.000/0001-00" maxlength="18" inputmode="numeric"/></div>
 
     <div class="section-tag">Contabilidade</div>
@@ -600,218 +740,32 @@ html, body { height: 100%; background: var(--bg); font-family: 'Outfit', sans-se
       </div>
     </div>
 
-    <div class="section-tag">A Preencher</div>
-    <div class="placeholder-field">⏳ Relógio de ponto físico — modelo e número de série</div>
-    <div class="placeholder-field">⏳ Grupos WhatsApp — liderança e colaboradores (após criação)</div>
+    <div class="section-tag">Controle de Ponto Físico</div>
+    <div class="field-row">
+      <div class="field"><label>Modelo do Relógio</label><input type="text" id="cli-relogio-modelo" placeholder="Ex: Henry Prox, Control iD…"/></div>
+      <div class="field"><label>Número de Série</label><input type="text" id="cli-relogio-serie" placeholder="Ex: 00123456"/></div>
+    </div>
+
+    <div class="section-tag">Grupos WhatsApp</div>
+    <div class="field"><label>Grupo Liderança</label><input type="text" id="cli-whats-lideranca" placeholder="Nome ou link do grupo de líderes"/></div>
+    <div class="field"><label>Grupo Equipe</label><input type="text" id="cli-whats-equipe" placeholder="Nome ou link do grupo geral de colaboradores"/></div>
 
     <div class="loading" id="loading-cli"><div class="spinner"></div><div class="loading-txt">Cadastrando empresa…</div></div>
     <div class="toast" id="toast-cli"></div>
     <button class="btn-primary" onclick="enviarCliente()">Cadastrar Empresa</button>
+
+    <div id="cli-onboarding-aviso" style="display:none;margin-top:16px;background:#f0fdf4;border:1.5px solid #86efac;border-radius:12px;padding:16px">
+      <div style="font-size:13px;font-weight:700;color:#16a34a;margin-bottom:6px">Empresa cadastrada com sucesso!</div>
+      <div style="font-size:13px;color:#15803d;line-height:1.6">Envie o <strong>Guia do Gestor</strong> para o responsável da empresa. O guia explica como utilizar o portal externo da Crescer para admissões, atestados e vagas.</div>
+      <div style="margin-top:10px">
+        <a href="../onboarding/index.html" target="_blank" style="display:inline-flex;align-items:center;gap:6px;background:#16a34a;color:#fff;padding:10px 16px;border-radius:8px;font-size:13px;font-weight:600;text-decoration:none">
+          <svg fill="none" viewBox="0 0 24 24" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="width:15px;height:15px;stroke:#fff"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg>
+          Abrir Guia do Gestor
+        </a>
+      </div>
+    </div>
   </div>
 
-  <!-- screen-vaga movida para Externo.html -->
-  <div class="screen" id="screen-vaga" style="display:none!important">
-    <div class="form-header">
-      <button class="back-btn" onclick="goto('hub')"><svg fill="none" viewBox="0 0 24 24" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M19 12H5M12 19l-7-7 7-7"/></svg></button>
-      <div><div class="form-title">Identificar Vaga</div><div class="form-step">Abertura de processo seletivo</div></div>
-    </div>
-
-    <div class="section-tag">Dados da Vaga</div>
-    <div class="field"><label>Título da Vaga</label><input type="text" id="vaga-titulo" placeholder="Ex: Auxiliar de Cozinha, Atendente…"/></div>
-
-    <div class="field">
-      <label>Empresa Cliente</label>
-      <select id="vaga-empresa" onchange="toggleNovo(this)">
-        <option value="">Selecione a empresa…</option>
-        <option value="__novo__">➕ Cadastrar nova empresa…</option>
-      </select>
-      <div class="novo-wrap" id="vaga-empresa-novo-wrap">
-        <input type="text" placeholder="Digite o nome da empresa…"/>
-      </div>
-    </div>
-
-    <div class="field-row">
-      <div class="field">
-        <label>Área / Departamento</label>
-        <select id="vaga-area" onchange="toggleNovo(this)">
-          <option value="">Selecione…</option>
-          <option>Administrativo</option>
-          <option>Atendimento / Recepção</option>
-          <option>Cozinha / Produção</option>
-          <option>Vendas / Comercial</option>
-          <option>Limpeza / Higienização</option>
-          <option>Estoque / Logística</option>
-          <option>Financeiro</option>
-          <option>RH / Departamento Pessoal</option>
-          <option>Segurança</option>
-          <option>TI</option>
-          <option value="__novo__">➕ Outra área…</option>
-        </select>
-        <div class="novo-wrap" id="vaga-area-novo-wrap">
-          <input type="text" placeholder="Nome da área…"/>
-        </div>
-      </div>
-      <div class="field">
-        <label>Nível da Vaga</label>
-        <select id="vaga-nivel" onchange="toggleNovo(this)">
-          <option value="">Selecione…</option>
-          <option>Aprendiz</option>
-          <option>Auxiliar / Operacional</option>
-          <option>Assistente</option>
-          <option>Analista / Técnico</option>
-          <option>Supervisor</option>
-          <option>Coordenador</option>
-          <option>Gerente</option>
-          <option value="__novo__">➕ Outro nível…</option>
-        </select>
-        <div class="novo-wrap" id="vaga-nivel-novo-wrap">
-          <input type="text" placeholder="Nível da vaga…"/>
-        </div>
-      </div>
-    </div>
-
-    <div class="field-row">
-      <div class="field">
-        <label>Tipo de Contrato</label>
-        <select id="vaga-contrato" onchange="toggleNovo(this)">
-          <option value="">Selecione…</option>
-          <option>CLT — Efetivo</option>
-          <option>CLT — Temporário</option>
-          <option>Aprendiz (menor)</option>
-          <option>Estágio</option>
-          <option>PJ</option>
-          <option value="__novo__">➕ Outro…</option>
-        </select>
-        <div class="novo-wrap" id="vaga-contrato-novo-wrap">
-          <input type="text" placeholder="Tipo de contrato…"/>
-        </div>
-      </div>
-      <div class="field">
-        <label>Modalidade</label>
-        <select id="vaga-modalidade">
-          <option>Presencial</option>
-          <option>Híbrido</option>
-          <option>Remoto</option>
-        </select>
-      </div>
-    </div>
-
-    <div class="field-row">
-      <div class="field"><label>Quantidade de Vagas</label><input type="number" id="vaga-qtd" placeholder="1" min="1" value="1" inputmode="numeric"/></div>
-      <div class="field">
-        <label>Motivo da Abertura</label>
-        <select id="vaga-motivo">
-          <option>Novo cargo</option>
-          <option>Substituição</option>
-          <option>Expansão</option>
-          <option>Sazonalidade</option>
-        </select>
-      </div>
-    </div>
-
-    <div class="field-row">
-      <div class="field"><label>Cidade</label><input type="text" id="vaga-cidade" placeholder="Ex: João Pessoa"/></div>
-      <div class="field"><label>Estado</label>
-        <select id="vaga-estado">
-          <option value="">UF…</option>
-          <option>AC</option><option>AL</option><option>AP</option><option>AM</option>
-          <option>BA</option><option>CE</option><option>DF</option><option>ES</option>
-          <option>GO</option><option>MA</option><option>MT</option><option>MS</option>
-          <option>MG</option><option>PA</option><option>PB</option><option>PR</option>
-          <option>PE</option><option>PI</option><option>RJ</option><option>RN</option>
-          <option>RS</option><option>RO</option><option>RR</option><option>SC</option>
-          <option selected>SE</option><option>SP</option><option>TO</option>
-        </select>
-      </div>
-    </div>
-
-    <div class="section-tag">Remuneração e Benefícios</div>
-    <div class="field-row">
-      <div class="field"><label>Salário De (R$)</label><input type="text" id="vaga-sal-de" placeholder="Ex: 1.412,00" inputmode="decimal"/></div>
-      <div class="field"><label>Salário Até (R$)</label><input type="text" id="vaga-sal-ate" placeholder="Ex: 1.800,00" inputmode="decimal"/></div>
-    </div>
-    <label class="terms-accept" style="margin-bottom:20px;border-radius:10px;border:1.5px solid var(--border)">
-      <input type="checkbox" id="vaga-a-combinar"/>
-      <span>Salário a combinar (não divulgar valor)</span>
-    </label>
-
-    <div class="field"><label>Benefícios Oferecidos</label>
-      <div class="checklist">
-        <div class="checklist-title">Marque os que se aplicam</div>
-        <label class="check-item"><input type="checkbox" id="vb-vr"/><span>Vale-Refeição / Alimentação</span></label>
-        <label class="check-item"><input type="checkbox" id="vb-vt"/><span>Vale-Transporte</span></label>
-        <label class="check-item"><input type="checkbox" id="vb-saude"/><span>Plano de Saúde</span></label>
-        <label class="check-item"><input type="checkbox" id="vb-odonto"/><span>Plano Odontológico</span></label>
-        <label class="check-item"><input type="checkbox" id="vb-bonus"/><span>Bônus / Comissão</span></label>
-        <label class="check-item"><input type="checkbox" id="vb-uniforme"/><span>Uniforme fornecido</span></label>
-        <label class="check-item"><input type="checkbox" id="vb-refeicao-local"/><span>Refeição no local</span></label>
-      </div>
-    </div>
-
-    <div class="section-tag">Requisitos da Vaga</div>
-    <div class="field-row">
-      <div class="field">
-        <label>Escolaridade Mínima</label>
-        <select id="vaga-escolaridade">
-          <option value="">Selecione…</option>
-          <option>Sem exigência</option>
-          <option>Ensino Fundamental incompleto</option>
-          <option>Ensino Fundamental completo</option>
-          <option>Ensino Médio incompleto</option>
-          <option>Ensino Médio completo</option>
-          <option>Ensino Técnico</option>
-          <option>Superior incompleto</option>
-          <option>Superior completo</option>
-          <option>Pós-graduação</option>
-        </select>
-      </div>
-      <div class="field">
-        <label>Experiência Mínima</label>
-        <select id="vaga-experiencia">
-          <option value="">Selecione…</option>
-          <option>Sem experiência</option>
-          <option>Menos de 6 meses</option>
-          <option>6 meses a 1 ano</option>
-          <option>1 a 2 anos</option>
-          <option>2 a 3 anos</option>
-          <option>Mais de 3 anos</option>
-        </select>
-      </div>
-    </div>
-
-    <div class="field"><label>Descrição da Vaga</label>
-      <textarea id="vaga-descricao" placeholder="Descreva as principais responsabilidades e o dia a dia da função…"></textarea>
-    </div>
-    <div class="field"><label>Requisitos Obrigatórios</label>
-      <textarea id="vaga-requisitos" placeholder="Ex: CNH categoria B, experiência com atendimento ao público, disponibilidade de horário…"></textarea>
-    </div>
-    <div class="field"><label>Diferenciais (opcional)</label>
-      <textarea id="vaga-diferenciais" placeholder="Conhecimentos ou habilidades que serão valorizados mas não são obrigatórios…"></textarea>
-    </div>
-
-    <div class="section-tag">Processo Seletivo</div>
-    <div class="field"><label>Gestor Responsável pela Aprovação</label>
-      <input type="text" id="vaga-gestor" placeholder="Nome do gestor que aprova a contratação"/>
-    </div>
-    <div class="field-row">
-      <div class="field"><label>Data Limite para Contratar</label><input type="date" id="vaga-data-limite"/></div>
-      <div class="field">
-        <label>Divulgar no InfoJobs?</label>
-        <select id="vaga-infojobs">
-          <option value="Sim">Sim</option>
-          <option value="Não">Não (apenas interno)</option>
-        </select>
-      </div>
-    </div>
-    <label class="terms-accept" style="margin-bottom:8px;border-radius:10px;border:1.5px solid var(--border)">
-      <input type="checkbox" id="vaga-aprovada"/>
-      <span>Vaga aprovada pelo gestor e autorizada para divulgação</span>
-    </label>
-
-    <div class="loading" id="loading-vaga"><div class="spinner"></div><div class="loading-txt">Registrando vaga…</div></div>
-    <div class="toast" id="toast-vaga"></div>
-    <button class="btn-primary" id="btn-vaga" onclick="enviarVaga()">Abrir Vaga</button>
-  </div>
 
   <!-- ══ DIAGNÓSTICO DE EMPRESA ══ -->
   <div class="screen" id="screen-diagnostico">
@@ -884,7 +838,260 @@ html, body { height: 100%; background: var(--bg); font-family: 'Outfit', sans-se
     <button class="btn-primary" id="btn-diag" onclick="enviarDiagnostico()">Salvar Diagnóstico</button>
   </div>
 
+  <!-- ══ JORNADA ══ -->
+  <div class="screen" id="screen-jornada">
+    <div class="form-header">
+      <button class="back-btn" onclick="goto('hub')"><svg fill="none" viewBox="0 0 24 24" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M19 12H5M12 19l-7-7 7-7"/></svg></button>
+      <div><div class="form-title">Análise de Jornada</div><div class="form-step">Processamento CSV — Secullum Ponto</div></div>
+    </div>
+
+    <div style="background:var(--gold-l);border:1.5px solid var(--gold);border-radius:10px;padding:14px 16px;margin-bottom:20px;font-size:13px;color:var(--graphite);line-height:1.6">
+      <strong>Como usar:</strong> preencha os campos abaixo e importe o arquivo CSV gerado pelo Secullum Ponto. O sistema analisa automaticamente os atrasos de entrada e descumprimentos de intervalo, e gera o relatório oficial.
+    </div>
+
+    <div class="field">
+      <label>Nome do Colaborador</label>
+      <input type="text" id="jornada-nome" placeholder="Nome completo — aparece no relatório"/>
+    </div>
+
+    <div class="field">
+      <label>Empresa / Cliente</label>
+      <input type="text" id="jornada-empresa" placeholder="Digite ou selecione a empresa..." list="jornada-empresa-list" autocomplete="off"/>
+      <datalist id="jornada-empresa-list"></datalist>
+    </div>
+
+    <div class="field">
+      <label>Período do Relatório</label>
+      <div style="display:flex;align-items:center;gap:10px">
+        <input type="text" id="jornada-periodo-ini" placeholder="DD/MM/AAAA" style="flex:1"/>
+        <span style="color:var(--txt-2);white-space:nowrap;font-size:13px">até</span>
+        <input type="text" id="jornada-periodo-fim" placeholder="DD/MM/AAAA" style="flex:1"/>
+      </div>
+      <div style="font-size:11px;color:var(--txt-3);margin-top:6px">Informe o período que o CSV cobre — será exibido no cabeçalho do relatório.</div>
+    </div>
+
+    <div class="field">
+      <label>Duração do Intervalo de Almoço <span style="font-weight:400;text-transform:none;letter-spacing:0">(em minutos)</span></label>
+      <input type="number" id="jornada-intervalo" value="90" min="30" max="180" style="max-width:140px"/>
+      <div style="font-size:11px;color:var(--txt-3);margin-top:6px">Quantos minutos o colaborador tem de intervalo conforme contrato. Ex: <strong>60</strong> = 1 hora · <strong>90</strong> = 1h30 · <strong>120</strong> = 2 horas. O sistema vai apontar os dias em que ele saiu antes ou demorou mais do que esse tempo.</div>
+    </div>
+
+    <div class="field">
+      <label>Arquivo CSV — Secullum Ponto</label>
+      <div class="upload-area">
+        <input type="file" id="csv-jornada" accept=".csv,.txt" onchange="handleCSVJornada(this)"/>
+        <div class="upload-icon">📊</div>
+        <div class="upload-label">Toque para selecionar o arquivo</div>
+        <div class="upload-hint">Arquivo .CSV exportado do Secullum Ponto</div>
+        <div class="upload-name" id="csv-jornada-name"></div>
+      </div>
+    </div>
+
+    <div id="jornada-resultado" style="display:none">
+      <div id="jornada-botoes" style="margin-bottom:20px">
+        <button class="btn-primary" onclick="window.print()" style="margin-top:0">Imprimir / Salvar PDF</button>
+      </div>
+      <div id="jornada-output"></div>
+
+      <div class="field" style="margin-top:28px">
+        <label>Observações / Análise da Consultora</label>
+        <textarea id="jornada-obs" placeholder="Adicione aqui sua análise, contexto adicional e recomendações para o colaborador..."></textarea>
+      </div>
+      <button class="btn-primary" id="btn-enviar-jornada" onclick="enviarJornada()" style="background:var(--graphite);margin-top:0">Enviar e Criar Documento no Google Docs</button>
+
+      <div id="jornada-doc-link-wrap" style="display:none;margin-top:16px;padding:16px;background:var(--surface);border-radius:12px;border:1.5px solid var(--border)">
+        <div style="font-size:11px;font-weight:700;letter-spacing:1.5px;text-transform:uppercase;color:var(--txt-2);margin-bottom:8px">Documento criado com sucesso</div>
+        <a id="jornada-doc-link" href="#" target="_blank" style="color:var(--graphite);font-weight:700;font-size:14px;text-decoration:none">Abrir no Google Docs →</a>
+      </div>
+    </div>
+  </div>
+
+  <!-- ══ GERADOR DE DOCUMENTOS ══ -->
+  <div class="screen" id="screen-gerador">
+    <div class="form-header">
+      <button class="back-btn" onclick="goto('hub')"><svg fill="none" viewBox="0 0 24 24" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M19 12H5M12 19l-7-7 7-7"/></svg></button>
+      <div><div class="form-title">Gerador de Documentos</div><div class="form-step">Preencha os dados e selecione os documentos</div></div>
+    </div>
+
+    <div class="field">
+      <label>Empresa / Cliente</label>
+      <select id="ger-empresa" onchange="carregarColaboradoresGerador()">
+        <option value="">Selecione a empresa…</option>
+      </select>
+    </div>
+
+    <div class="field">
+      <label>Colaborador</label>
+      <select id="ger-colaborador" onchange="preencherDadosGerador()" disabled>
+        <option value="">Selecione o colaborador…</option>
+      </select>
+    </div>
+
+    <div id="ger-dados-wrap">
+      <div class="section-tag">Dados do Colaborador <span style="font-weight:400;font-size:10px;text-transform:none;letter-spacing:0">(edite se necessário)</span></div>
+      <div class="field"><label>Nome Completo</label><input type="text" id="ger-nome"/></div>
+      <div class="field-row">
+        <div class="field"><label>CPF</label><input type="text" id="ger-cpf" placeholder="000.000.000-00" maxlength="14" inputmode="numeric"/></div>
+        <div class="field"><label>CTPS</label><input type="text" id="ger-ctps" placeholder="1234567/0001" maxlength="12" inputmode="numeric"/></div>
+      </div>
+      <div class="field-row">
+        <div class="field"><label>Cargo / Função</label><input type="text" id="ger-cargo"/></div>
+        <div class="field"><label>Data de Admissão</label><input type="date" id="ger-adm"/></div>
+      </div>
+
+      <div class="section-tag" style="margin-top:24px">Documentos a Gerar</div>
+      <div class="ger-check-list">
+        <label class="ger-check-item"><input type="checkbox" value="lgpd-imagem" onchange="toggleGerExtras()"> Termo de Consentimento — LGPD e Uso de Imagem</label>
+        <label class="ger-check-item"><input type="checkbox" value="banco-horas" onchange="toggleGerExtras()"> Termo de Ciência — Banco de Horas</label>
+        <label class="ger-check-item"><input type="checkbox" value="aso" onchange="toggleGerExtras()"> Encaminhamento para ASO</label>
+        <label class="ger-check-item"><input type="checkbox" value="regulamento" onchange="toggleGerExtras()"> Recibo de Entrega — Regulamento Interno</label>
+        <label class="ger-check-item"><input type="checkbox" value="recebimento-etica" onchange="toggleGerExtras()"> Termo de Recebimento — Código de Ética e Regimento Interno</label>
+        <label class="ger-check-item"><input type="checkbox" value="declaracao-transporte" onchange="toggleGerExtras()"> Declaração e Ciência — Ajuda de Custo Transporte</label>
+      </div>
+
+      <div id="ger-extras-aso" style="display:none">
+        <div class="section-tag">Detalhes do ASO</div>
+        <div class="field">
+          <label>Tipo de Exame</label>
+          <select id="ger-aso-tipo">
+            <option value="Admissional">Admissional</option>
+            <option value="Periódico">Periódico</option>
+            <option value="Demissional">Demissional</option>
+            <option value="Retorno ao Trabalho">Retorno ao Trabalho</option>
+            <option value="Mudança de Função">Mudança de Função</option>
+          </select>
+        </div>
+      </div>
+
+      <div id="ger-extras-transporte" style="display:none">
+        <div class="section-tag">Detalhes — Ajuda de Custo</div>
+        <div class="field-row">
+          <div class="field">
+            <label>Horário de Término</label>
+            <select id="ger-transp-horario">
+              <option value="18:00">18:00</option>
+              <option value="19:00">19:00</option>
+              <option value="20:00">20:00</option>
+              <option value="21:00">21:00</option>
+              <option value="22:00">22:00</option>
+              <option value="22:12">22:12</option>
+              <option value="22:30">22:30</option>
+              <option value="23:00">23:00</option>
+              <option value="23:30">23:30</option>
+              <option value="00:00">00:00</option>
+              <option value="01:00">01:00</option>
+              <option value="02:00">02:00</option>
+            </select>
+          </div>
+          <div class="field"><label>Valor (R$)</label><input type="text" id="ger-transp-valor" placeholder="Ex: 6,00"/></div>
+        </div>
+      </div>
+
+      <button class="btn-primary" id="btn-gerar-doc" onclick="gerarPacoteDocumentos()" style="margin-top:8px">Gerar Pacote de Documentos</button>
+    </div>
+
+    <div id="ger-resultado-wrap" style="display:none;margin-top:16px;padding:16px;background:var(--surface);border-radius:12px;border:1.5px solid var(--border)">
+      <div style="font-size:11px;font-weight:700;letter-spacing:1.5px;text-transform:uppercase;color:var(--txt-2);margin-bottom:12px">Pacote gerado com sucesso</div>
+      <a id="ger-pasta-link" href="#" target="_blank" style="display:block;color:var(--graphite);font-weight:700;font-size:14px;text-decoration:none;margin-bottom:12px">Abrir Pasta no Google Drive →</a>
+      <div id="ger-docs-lista" style="display:flex;flex-direction:column;gap:6px"></div>
+    </div>
+  </div>
+
+  <!-- ══ AGENDA & ATIVIDADES ══ -->
+  <div class="screen" id="screen-agenda">
+    <div class="form-header">
+      <button class="back-btn" onclick="goto('hub')"><svg fill="none" viewBox="0 0 24 24" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M19 12H5M12 19l-7-7 7-7"/></svg></button>
+      <div><div class="form-title">Agenda & Atividades</div><div class="form-step">Calendário da equipe RH Crescer</div></div>
+    </div>
+
+    <button onclick="toggleNovaAtividade()" style="display:flex;align-items:center;gap:8px;width:100%;padding:13px 16px;background:var(--surface);border:1.5px dashed var(--border);border-radius:12px;font-family:'Outfit',sans-serif;font-size:13px;font-weight:600;color:var(--txt-2);cursor:pointer;margin-bottom:12px">
+      <svg fill="none" viewBox="0 0 24 24" stroke-width="2.5" stroke-linecap="round" style="width:16px;height:16px;stroke:var(--txt-3)"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
+      Nova atividade
+    </button>
+
+    <div id="nova-ativ-form" style="display:none;background:var(--surface);border:1.5px solid var(--border);border-radius:12px;padding:16px;margin-bottom:16px">
+      <div class="field" style="margin-top:0"><label>Título</label><input type="text" id="ativ-titulo" placeholder="Ex: Ligar para empresa, entregar documento…"/></div>
+      <div class="field"><label>Data</label><input type="date" id="ativ-data"/></div>
+      <div class="field"><label>Observação <span style="font-weight:400;text-transform:none;letter-spacing:0">(opcional)</span></label><textarea id="ativ-obs" placeholder="Detalhes adicionais…" style="height:72px"></textarea></div>
+      <div style="display:flex;gap:8px;margin-top:4px">
+        <button class="btn-primary" onclick="salvarAtividade()" id="btn-salvar-ativ" style="flex:1;margin-top:0">Salvar Atividade</button>
+        <button onclick="toggleNovaAtividade()" style="padding:14px 18px;background:none;border:1.5px solid var(--border);border-radius:12px;font-family:'Outfit',sans-serif;font-size:13px;color:var(--txt-2);cursor:pointer">Cancelar</button>
+      </div>
+    </div>
+
+    <!-- Calendário customizado -->
+    <div class="cal-wrapper">
+      <div class="cal-nav">
+        <button class="cal-nav-btn" onclick="calPrev()">
+          <svg fill="none" viewBox="0 0 24 24" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M15 18l-6-6 6-6"/></svg>
+        </button>
+        <div class="cal-title" id="cal-title"></div>
+        <button class="cal-nav-btn" onclick="calNext()">
+          <svg fill="none" viewBox="0 0 24 24" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M9 18l6-6-6-6"/></svg>
+        </button>
+      </div>
+      <div class="cal-legend">
+        <span class="cal-leg-label">Legenda:</span>
+        <span class="cal-leg-new">Atividades novas</span>
+        <span class="cal-leg-seen">Atividades vistas</span>
+      </div>
+      <div class="cal-grid" id="cal-grid"></div>
+    </div>
+
+    <div class="section-tag">Esta Semana</div>
+    <div id="semana-lista">
+      <div class="loading show"><div class="spinner"></div></div>
+    </div>
+
+    <div class="section-tag">Lançamentos Recentes</div>
+    <div id="ativ-lista">
+      <div class="loading show" id="loading-agenda">
+        <div class="spinner"></div>
+        <div class="loading-txt">Carregando…</div>
+      </div>
+    </div>
+
+    <!-- Lembretes dentro da Agenda -->
+    <div class="section-tag" style="margin-top:24px">Lembretes & Aniversários</div>
+    <div id="lem-list-wrap"><div class="lem-empty">Carregando…</div></div>
+
+    <button onclick="toggleNovoLembrete()" style="display:flex;align-items:center;gap:8px;width:100%;padding:13px 16px;background:var(--surface);border:1.5px dashed var(--border);border-radius:12px;font-family:'Outfit',sans-serif;font-size:13px;font-weight:600;color:var(--txt-2);cursor:pointer;margin-top:12px">
+      <svg fill="none" viewBox="0 0 24 24" stroke-width="2.5" stroke-linecap="round" style="width:16px;height:16px;stroke:var(--txt-3)"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
+      Novo lembrete
+    </button>
+    <div id="novo-lem-form" style="display:none;background:var(--surface);border:1.5px solid var(--border);border-radius:12px;padding:16px;margin-top:8px;margin-bottom:16px">
+      <div class="field" style="margin-top:0">
+        <label>Empresa <span style="font-weight:400;text-transform:none;letter-spacing:0">(opcional)</span></label>
+        <select id="lem-empresa"><option value="">— Todos / Geral —</option></select>
+      </div>
+      <div class="field"><label>Título</label><input type="text" id="lem-titulo" placeholder="Ex: Enviar FGTS, Renovar contrato…"/></div>
+      <div class="field"><label>Data Alvo</label><input type="date" id="lem-data"/></div>
+      <div class="field">
+        <label>Antecedência</label>
+        <select id="lem-antec">
+          <option value="0">No dia</option>
+          <option value="1">1 dia antes</option>
+          <option value="3">3 dias antes</option>
+          <option value="7" selected>7 dias antes</option>
+          <option value="15">15 dias antes</option>
+          <option value="30">30 dias antes</option>
+        </select>
+      </div>
+      <div class="field"><label>Observação <span style="font-weight:400;text-transform:none;letter-spacing:0">(opcional)</span></label><textarea id="lem-obs" style="height:60px" placeholder="Detalhes…"></textarea></div>
+      <div style="display:flex;gap:8px;margin-top:4px">
+        <button class="btn-primary" onclick="criarLembrete()" id="btn-lem" style="flex:1;margin-top:0">Salvar Lembrete</button>
+        <button onclick="toggleNovoLembrete()" style="padding:14px 18px;background:none;border:1.5px solid var(--border);border-radius:12px;font-family:'Outfit',sans-serif;font-size:13px;color:var(--txt-2);cursor:pointer">Cancelar</button>
+      </div>
+      <div class="loading" id="loading-lem"><div class="spinner"></div><div class="loading-txt">Salvando…</div></div>
+      <div class="toast" id="toast-lem"></div>
+    </div>
+  </div>
+
 </div><!-- /app -->
+
+<div style="text-align:center;padding:18px 0 28px;font-size:11px;color:#9B9890;font-family:'Outfit',sans-serif;letter-spacing:1px">
+  Feito por <strong style="color:#6B6860">Domani Consultoria</strong>
+</div>
 
 <script>
 var SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbzYHX6Ce_TfFJkjkLbINAVBdLyys2Gk9kuHajYMHZD1HDGegcp29B9cchMMuFlWqbcBPw/exec';
@@ -902,12 +1109,6 @@ function limparToasts() {
 
 // ── Toggle "Adicionar novo" nos selects ──
 function toggleNovo(sel) {
-  // Empresa: redireciona para cadastrar empresa
-  if ((sel.id === 'adm-empresa' || sel.id === 'at-empresa' || sel.id === 'des-empresa' || sel.id === 'vaga-empresa') && sel.value === '__novo__') {
-    sel.value = '';
-    goto('cliente');
-    return;
-  }
   var wrap = document.getElementById(sel.id + '-novo-wrap');
   if (!wrap) return;
   if (sel.value === '__novo__') {
@@ -917,6 +1118,10 @@ function toggleNovo(sel) {
     wrap.style.display = 'none';
     wrap.querySelector('input').value = '';
   }
+}
+function toggleNovoLembrete() {
+  var f = document.getElementById('novo-lem-form');
+  f.style.display = f.style.display === 'none' ? 'block' : 'none';
 }
 
 // Retorna o valor real de um select (resolve "__novo__" para o texto digitado)
@@ -960,49 +1165,41 @@ var PORTFOLIO_EMPRESAS = [
 
 // ── Carregar empresas nos dropdowns ──
 function carregarEmpresas() {
-  var selIds = ['adm-empresa','at-empresa','des-empresa'];
+  var selIds = ['des-empresa','ger-empresa','ent-empresa','lem-empresa'];
 
-  selIds.forEach(function(id) {
-    var sel = document.getElementById(id);
-    // Remove opções do meio (mantém índice 0 = blank e último = __novo__)
-    while (sel.options.length > 2) sel.remove(1);
-    // Insere carteira fixa antes do __novo__ (que está em options[1])
-    var refNovo = sel.options[sel.options.length - 1];
-    PORTFOLIO_EMPRESAS.forEach(function(nome) {
-      var o = document.createElement('option');
-      o.value = o.textContent = nome;
-      sel.insertBefore(o, refNovo);
-    });
-  });
-
-  // Adiciona empresas cadastradas no sistema que não estejam na carteira fixa
-  apiGet('getEmpresas', function(lista) {
+  function _preencherSels(nomes) {
     selIds.forEach(function(id) {
       var sel = document.getElementById(id);
-      var refNovo = sel.options[sel.options.length - 1];
-      var existentes = [];
-      for (var k = 1; k < sel.options.length - 1; k++) {
-        existentes.push(sel.options[k].value.toLowerCase().trim());
-      }
-      lista.forEach(function(e) {
-        var nome = e.razaoSocial.trim();
-        if (existentes.indexOf(nome.toLowerCase()) === -1) {
-          var o = document.createElement('option');
-          o.value = o.textContent = nome;
-          sel.insertBefore(o, refNovo);
-        }
+      if (!sel) return;
+      var hasNovo = sel.options.length >= 2 && sel.options[sel.options.length - 1].value === '__novo__';
+      while (sel.options.length > (hasNovo ? 2 : 1)) sel.remove(1);
+      var refNovo = hasNovo ? sel.options[sel.options.length - 1] : null;
+      nomes.forEach(function(nome) {
+        var o = document.createElement('option');
+        o.value = o.textContent = nome;
+        if (refNovo) sel.insertBefore(o, refNovo); else sel.appendChild(o);
       });
     });
+    var dl = document.getElementById('jornada-empresa-list');
+    if (dl) {
+      dl.innerHTML = '';
+      nomes.forEach(function(nome) { var o = document.createElement('option'); o.value = nome; dl.appendChild(o); });
+    }
+  }
+
+  var nomes = PORTFOLIO_EMPRESAS.slice();
+  _preencherSels(nomes);
+
+  apiGet('getEmpresas', function(lista) {
+    (lista || []).forEach(function(e) {
+      var nome = e.nomeFantasia || e.razaoSocial;
+      if (nome && nomes.indexOf(nome) === -1) nomes.push(nome);
+    });
+    nomes.sort();
+    _preencherSels(nomes);
   });
 }
 
-// ── Toggle Digital/Físico ──
-function toggleTipo() {
-  var tipo  = document.querySelector('input[name="adm-tipo"]:checked');
-  var bloco = document.getElementById('bloco-digital');
-  if (tipo && tipo.value === 'digital') bloco.classList.add('show');
-  else bloco.classList.remove('show');
-}
 
 // ── Upload ──
 var arquivos = {};
@@ -1019,16 +1216,25 @@ function onFileChange(key) {
 }
 
 // ── Máscaras ──
-document.getElementById('adm-cpf').addEventListener('input', function(e) {
-  var v = e.target.value.replace(/\D/g,'').slice(0,11);
+function _maskCPF(el) {
+  var v = el.value.replace(/\D/g,'').slice(0,11);
   v = v.replace(/(\d{3})(\d)/,'$1.$2').replace(/(\d{3})\.(\d{3})(\d)/,'$1.$2.$3').replace(/\.(\d{3})(\d)/,'.$1-$2');
-  e.target.value = v;
-});
-document.getElementById('cli-cnpj').addEventListener('input', function(e) {
-  var v = e.target.value.replace(/\D/g,'').slice(0,14);
+  el.value = v;
+}
+function _maskCNPJ(el) {
+  var v = el.value.replace(/\D/g,'').slice(0,14);
   v = v.replace(/(\d{2})(\d)/,'$1.$2').replace(/\.(\d{3})(\d)/,'.$1.$2').replace(/\.(\d{3})(\d)/,'.$1/$2').replace(/\/(\d{4})(\d)/,'/$1-$2');
-  e.target.value = v;
-});
+  el.value = v;
+}
+function _maskCTPS(el) {
+  var v = el.value.replace(/\D/g,'').slice(0,11);
+  v = v.replace(/(\d{7})(\d)/,'$1/$2');
+  el.value = v;
+}
+document.getElementById('cli-cnpj').addEventListener('input', function(e) { _maskCNPJ(e.target); });
+document.getElementById('diag-cnpj').addEventListener('input',function(e) { _maskCNPJ(e.target); });
+document.getElementById('ger-cpf').addEventListener('input',  function(e) { _maskCPF(e.target); });
+document.getElementById('ger-ctps').addEventListener('input', function(e) { _maskCTPS(e.target); });
 
 // ── Helpers ──
 function showLoading(id, show) {
@@ -1052,87 +1258,50 @@ function validar(campos) {
 }
 function checkboxVal(id) { var el = document.getElementById(id); return el && el.checked ? 'SIM' : 'NÃO'; }
 
-// ── ENVIAR ADMISSÃO ──
-function enviarAdmissao() {
-  if (!validar([['adm-nome','Nome'],['adm-cpf','CPF'],['adm-nasc','Data de Nascimento'],['adm-tel','Telefone'],['adm-empresa','Empresa']])) return;
-  var tipo = document.querySelector('input[name="adm-tipo"]:checked');
-  if (!tipo) { alert('Selecione o Tipo de Processo.'); return; }
-  if (tipo.value === 'digital') {
-    if (!document.getElementById('adm-aceite').checked) { alert('É necessário concordar com os termos.'); return; }
-    if (!arquivos.rg)  { alert('Anexe o documento RG.'); return; }
-    if (!arquivos.cpf) { alert('Anexe o documento CPF.'); return; }
+
+// ── DESLIGAMENTO — carregar colaboradores ──
+var _desColabs = [];
+
+function carregarColaboradoresDesligamento() {
+  var empresa = document.getElementById('des-empresa').value;
+  if (empresa === '__novo__') {
+    document.getElementById('des-empresa').value = '';
+    goto('cliente');
+    return;
   }
-
-  var dados = {
-    nome: document.getElementById('adm-nome').value.trim(),
-    cpf:  document.getElementById('adm-cpf').value.trim(),
-    nascimento: document.getElementById('adm-nasc').value,
-    telefone:   document.getElementById('adm-tel').value.trim(),
-    empresa:    getSelectVal('adm-empresa'),
-    cargo:      document.getElementById('adm-cargo').value.trim(),
-    dataAdm:    document.getElementById('adm-data').value,
-    salario:    document.getElementById('adm-salario').value.trim(),
-    tipo:       tipo.value,
-    aceite:     tipo.value === 'digital' ? document.getElementById('adm-aceite').checked : false,
-    rgBase64:   arquivos.rg  ? arquivos.rg.base64  : null,
-    rgMime:     arquivos.rg  ? arquivos.rg.mime    : null,
-    cpfBase64:  arquivos.cpf ? arquivos.cpf.base64 : null,
-    cpfMime:    arquivos.cpf ? arquivos.cpf.mime   : null,
-    asoData: document.getElementById('adm-aso-data').value,
-    etapas: {
-      asoAgendado: checkboxVal('adm-aso-agendado'), aso: checkboxVal('adm-aso'), docsContab: checkboxVal('adm-docs-contab'),
-      ponto: checkboxVal('adm-ponto'), vr: checkboxVal('adm-vr'),
-      vt: checkboxVal('adm-vt'), odonto: checkboxVal('adm-odonto'),
-      saude: checkboxVal('adm-saude'), conta: checkboxVal('adm-conta'),
-      termosImp: checkboxVal('adm-termos-imp'), arquivado: checkboxVal('adm-arquivado')
-    },
-    obs: document.getElementById('adm-obs').value.trim()
-  };
-
-  document.getElementById('btn-adm').disabled = true;
-  showLoading('adm', true);
-
-  apiPost('processAdmissao', dados, function(res) {
-    showLoading('adm', false);
-    document.getElementById('btn-adm').disabled = false;
-    if (res.ok) showToast('adm', true, dados.tipo === 'digital' ? '✓ Admissão registrada! Documentos salvos no Drive.' : '✓ Admissão registrada! Documento gerado para impressão.', res.link);
-    else showToast('adm', false, '✗ Erro: ' + res.erro);
-  }, function(err) {
-    showLoading('adm', false);
-    document.getElementById('btn-adm').disabled = false;
-    showToast('adm', false, '✗ Erro de conexão: ' + err.message);
+  var colabWrap = document.getElementById('des-colab-wrap');
+  var nomeWrap  = document.getElementById('des-nome-wrap');
+  document.getElementById('des-nome').value = '';
+  colabWrap.style.display = 'none';
+  nomeWrap.style.display  = 'none';
+  if (!empresa) return;
+  var sel = document.getElementById('des-colaborador');
+  sel.innerHTML = '<option value="">Carregando…</option>';
+  colabWrap.style.display = 'block';
+  apiGet('getColaboradores&empresa=' + encodeURIComponent(empresa), function(lista) {
+    _desColabs = lista || [];
+    sel.innerHTML = '<option value="">Selecione o colaborador…</option>';
+    _desColabs.forEach(function(c, i) {
+      var o = document.createElement('option'); o.value = i; o.textContent = c.nome; sel.appendChild(o);
+    });
+    var oSep = document.createElement('option'); oSep.disabled = true; oSep.textContent = '──────────────────'; sel.appendChild(oSep);
+    var oMan = document.createElement('option'); oMan.value = '__manual__'; oMan.textContent = '✏️ Preencher manualmente…'; sel.appendChild(oMan);
   });
 }
 
-// ── ENVIAR ATESTADO ──
-function enviarAtestado() {
-  if (!validar([['at-nome','Nome'],['at-empresa','Empresa'],['at-dias','Dias']])) return;
-  if (!arquivos.at) { alert('Anexe o atestado médico.'); return; }
-
-  var dados = {
-    nome: document.getElementById('at-nome').value.trim(),
-    empresa: getSelectVal('at-empresa'),
-    dias: document.getElementById('at-dias').value,
-    cid:  document.getElementById('at-cid').value.trim(),
-    arquivoBase64: arquivos.at.base64, arquivoMime: arquivos.at.mime,
-    encContab: checkboxVal('at-contab'), encSST: checkboxVal('at-sst'),
-    encPonto: checkboxVal('at-ponto'), encLider: checkboxVal('at-lider'),
-    inss: checkboxVal('at-inss'), asoRetorno: checkboxVal('at-aso-retorno')
-  };
-
-  showLoading('at', true);
-  apiPost('processAtestado', dados, function(res) {
-    showLoading('at', false);
-    if (res.ok) {
-      showToast('at', true, '✓ Atestado salvo no Drive.', res.link);
-      document.getElementById('at-nome').value = '';
-      document.getElementById('at-empresa').value = '';
-      document.getElementById('at-dias').value = '';
-      document.getElementById('at-cid').value = '';
-      document.getElementById('upload-at-name').style.display = 'none';
-      arquivos.at = null;
-    } else showToast('at', false, '✗ Erro: ' + res.erro);
-  }, function(err) { showLoading('at', false); showToast('at', false, '✗ Erro: ' + err.message); });
+function preencherNomeDesligamento() {
+  var idx      = document.getElementById('des-colaborador').value;
+  var nomeWrap = document.getElementById('des-nome-wrap');
+  var nomeInput = document.getElementById('des-nome');
+  if (idx === '__manual__') {
+    nomeInput.value = '';
+    nomeWrap.style.display = 'block';
+    nomeInput.focus();
+    return;
+  }
+  if (idx === '' || !_desColabs[parseInt(idx)]) { nomeWrap.style.display = 'none'; return; }
+  nomeInput.value = _desColabs[parseInt(idx)].nome || '';
+  nomeWrap.style.display = 'block';
 }
 
 // ── ENVIAR DESLIGAMENTO ──
@@ -1146,26 +1315,69 @@ function enviarDesligamento() {
     tipo:    getSelectVal('des-tipo'),
     obs:     document.getElementById('des-obs').value.trim(),
     arquivoBase64: arquivos.des ? arquivos.des.base64 : null,
-    arquivoMime:   arquivos.des ? arquivos.des.mime   : null,
-    etapas: {
-      avisoContab: checkboxVal('des-aviso-contab'), assinGestor: checkboxVal('des-assin-gestor'),
-      assinFunc: checkboxVal('des-assin-func'), aso: checkboxVal('des-aso'),
-      rescisaoContab: checkboxVal('des-rescisao-contab'), acerto: checkboxVal('des-acerto'),
-      pagamento: checkboxVal('des-pgto'), remPonto: checkboxVal('des-rem-ponto'),
-      remVR: checkboxVal('des-rem-vr'), remVT: checkboxVal('des-rem-vt'),
-      remSaude: checkboxVal('des-rem-saude'), remOdonto: checkboxVal('des-rem-odonto'),
-      remGrupos: checkboxVal('des-rem-grupos'), esocial: checkboxVal('des-esocial'),
-      entrevista: checkboxVal('des-entrevista'), arquivado: checkboxVal('des-arquivado')
-    }
+    arquivoMime:   arquivos.des ? arquivos.des.mime   : null
   };
 
+  // Coletar lembretes selecionados
+  var lembretesSelecionados = [];
+  var dataBase = dados.data ? new Date(dados.data + 'T00:00:00') : new Date();
+  document.querySelectorAll('.des-lem-cb:checked').forEach(function(cb) {
+    var row = cb.closest('.des-lem-row');
+    var dias = parseInt(row.querySelector('.des-lem-num').value, 10) || 0;
+    var alvo = new Date(dataBase);
+    alvo.setDate(alvo.getDate() + dias);
+    var fmtAlvo = alvo.getFullYear() + '-' + String(alvo.getMonth()+1).padStart(2,'0') + '-' + String(alvo.getDate()).padStart(2,'0');
+    lembretesSelecionados.push({ titulo: cb.dataset.titulo, empresa: dados.empresa, dataAlvo: fmtAlvo, antecedencia: 0, obs: 'Desligamento — ' + dados.nome });
+  });
+
+  var docsParaGerar = [];
+  if (document.getElementById('des-doc-aviso').checked)  docsParaGerar.push('aviso-previo');
+  if (document.getElementById('des-doc-pedido').checked) docsParaGerar.push('pedido-demissao');
+  if (document.getElementById('des-doc-aso').checked)    docsParaGerar.push('aso-demissional');
+
+  var loadTxt = document.querySelector('#loading-des .loading-txt');
   document.getElementById('btn-des').disabled = true;
+  document.getElementById('des-docs-result').style.display = 'none';
+  if (loadTxt) loadTxt.textContent = 'Registrando desligamento…';
   showLoading('des', true);
+
   apiPost('processDesligamento', dados, function(res) {
-    showLoading('des', false);
-    document.getElementById('btn-des').disabled = false;
-    if (res.ok) showToast('des', true, '✓ Desligamento registrado com sucesso.', res.link);
-    else showToast('des', false, '✗ Erro: ' + res.erro);
+    if (!res.ok) {
+      showLoading('des', false);
+      document.getElementById('btn-des').disabled = false;
+      showToast('des', false, '✗ Erro: ' + res.erro);
+      return;
+    }
+    // Criar lembretes selecionados em background
+    lembretesSelecionados.forEach(function(l) { apiPost('salvarLembrete', l); });
+
+    if (!docsParaGerar.length) {
+      showLoading('des', false);
+      document.getElementById('btn-des').disabled = false;
+      showToast('des', true, '✓ Desligamento registrado.' + (lembretesSelecionados.length ? ' ' + lembretesSelecionados.length + ' lembrete(s) criado(s).' : ''), res.link);
+      return;
+    }
+    if (loadTxt) loadTxt.textContent = 'Gerando documentos…';
+    apiPost('gerarPacoteDes', {
+      empresa: dados.empresa, nome: dados.nome, data: dados.data, tipo: dados.tipo, documentos: docsParaGerar
+    }, function(res2) {
+      showLoading('des', false);
+      document.getElementById('btn-des').disabled = false;
+      showToast('des', true, '✓ Desligamento registrado com sucesso.');
+      if (res2.ok) {
+        var html = '';
+        if (res2.pasta) html += '<div style="margin-bottom:8px"><a href="' + res2.pasta + '" target="_blank" style="font-weight:700;color:var(--ok)">Abrir Pasta no Drive</a></div>';
+        (res2.documentos || []).forEach(function(d) {
+          html += '<div><a href="' + d.url + '" target="_blank" style="color:var(--ok)">' + d.nome + '</a></div>';
+        });
+        document.getElementById('des-docs-links').innerHTML = html;
+        document.getElementById('des-docs-result').style.display = 'block';
+      }
+    }, function() {
+      showLoading('des', false);
+      document.getElementById('btn-des').disabled = false;
+      showToast('des', true, '✓ Desligamento registrado. Erro ao gerar documentos — tente novamente.');
+    });
   }, function(err) {
     showLoading('des', false);
     document.getElementById('btn-des').disabled = false;
@@ -1175,93 +1387,46 @@ function enviarDesligamento() {
 
 // ── CADASTRAR EMPRESA ──
 function enviarCliente() {
-  if (!validar([['cli-nome','Razão Social'],['cli-cnpj','CNPJ'],['cli-contab','Contabilidade'],['cli-horario','Horários'],['cli-ponto','Sistema de Ponto']])) return;
+  if (!validar([['cli-fantasia','Nome Fantasia'],['cli-nome','Razão Social'],['cli-cnpj','CNPJ'],['cli-contab','Contabilidade'],['cli-horario','Horários'],['cli-ponto','Sistema de Ponto']])) return;
 
   var dados = {
-    razaoSocial:   document.getElementById('cli-nome').value.trim(),
-    cnpj:          document.getElementById('cli-cnpj').value.trim(),
-    contabilidade: getSelectVal('cli-contab'),
-    contabContato: document.getElementById('cli-contab-contato').value.trim(),
-    horario:       document.getElementById('cli-horario').value.trim(),
-    sistemaPonto:  getSelectVal('cli-ponto'),
-    vr:            getSelectVal('cli-vr'),
-    vt:            getSelectVal('cli-vt'),
-    saude:         getSelectVal('cli-saude'),
-    odonto:        getSelectVal('cli-odonto'),
-    sst:           getSelectVal('cli-sst')
+    nomeFantasia:    document.getElementById('cli-fantasia').value.trim(),
+    razaoSocial:     document.getElementById('cli-nome').value.trim(),
+    cnpj:            document.getElementById('cli-cnpj').value.trim(),
+    contabilidade:   getSelectVal('cli-contab'),
+    contabContato:   document.getElementById('cli-contab-contato').value.trim(),
+    horario:         document.getElementById('cli-horario').value.trim(),
+    sistemaPonto:    getSelectVal('cli-ponto'),
+    vr:              getSelectVal('cli-vr'),
+    vt:              getSelectVal('cli-vt'),
+    saude:           getSelectVal('cli-saude'),
+    odonto:          getSelectVal('cli-odonto'),
+    sst:             getSelectVal('cli-sst'),
+    relogioModelo:   document.getElementById('cli-relogio-modelo').value.trim(),
+    relogioSerie:    document.getElementById('cli-relogio-serie').value.trim(),
+    whatsLideranca:  document.getElementById('cli-whats-lideranca').value.trim(),
+    whatsEquipe:     document.getElementById('cli-whats-equipe').value.trim()
   };
 
   showLoading('cli', true);
   apiPost('processCadastroCliente', dados, function(res) {
     showLoading('cli', false);
     if (res.ok) {
-      showToast('cli', true, '✓ Empresa cadastrada! Pasta criada no Drive.');
+      document.getElementById('cli-fantasia').value = '';
       document.getElementById('cli-nome').value = '';
       document.getElementById('cli-cnpj').value = '';
       document.getElementById('cli-contab').value = '';
       document.getElementById('cli-contab-contato').value = '';
       document.getElementById('cli-horario').value = '';
       document.getElementById('cli-ponto').value = '';
+      document.getElementById('cli-relogio-modelo').value = '';
+      document.getElementById('cli-relogio-serie').value = '';
+      document.getElementById('cli-whats-lideranca').value = '';
+      document.getElementById('cli-whats-equipe').value = '';
+      document.getElementById('cli-onboarding-aviso').style.display = 'block';
       carregarEmpresas();
     } else showToast('cli', false, '✗ Erro: ' + res.erro);
   }, function(err) { showLoading('cli', false); showToast('cli', false, '✗ Erro: ' + err.message); });
-}
-
-// ── ABRIR VAGA ──
-function enviarVaga() {
-  if (!validar([['vaga-titulo','Título da Vaga'],['vaga-empresa','Empresa'],['vaga-area','Área'],['vaga-nivel','Nível'],['vaga-contrato','Tipo de Contrato']])) return;
-
-  var beneficios = [];
-  if (document.getElementById('vb-vr').checked)          beneficios.push('Vale-Refeição/VA');
-  if (document.getElementById('vb-vt').checked)          beneficios.push('Vale-Transporte');
-  if (document.getElementById('vb-saude').checked)       beneficios.push('Plano de Saúde');
-  if (document.getElementById('vb-odonto').checked)      beneficios.push('Plano Odontológico');
-  if (document.getElementById('vb-bonus').checked)       beneficios.push('Bônus/Comissão');
-  if (document.getElementById('vb-uniforme').checked)    beneficios.push('Uniforme');
-  if (document.getElementById('vb-refeicao-local').checked) beneficios.push('Refeição no local');
-
-  var dados = {
-    titulo:       document.getElementById('vaga-titulo').value.trim(),
-    empresa:      getSelectVal('vaga-empresa'),
-    area:         getSelectVal('vaga-area'),
-    nivel:        getSelectVal('vaga-nivel'),
-    tipoContrato: getSelectVal('vaga-contrato'),
-    modalidade:   document.getElementById('vaga-modalidade').value,
-    qtdVagas:     document.getElementById('vaga-qtd').value,
-    motivo:       document.getElementById('vaga-motivo').value,
-    cidade:       document.getElementById('vaga-cidade').value.trim(),
-    estado:       document.getElementById('vaga-estado').value,
-    salarioDe:    document.getElementById('vaga-sal-de').value.trim(),
-    salarioAte:   document.getElementById('vaga-sal-ate').value.trim(),
-    aCombinar:    document.getElementById('vaga-a-combinar').checked,
-    beneficios:   beneficios.join(' | '),
-    escolaridade: document.getElementById('vaga-escolaridade').value,
-    experiencia:  document.getElementById('vaga-experiencia').value,
-    descricao:    document.getElementById('vaga-descricao').value.trim(),
-    requisitos:   document.getElementById('vaga-requisitos').value.trim(),
-    diferenciais: document.getElementById('vaga-diferenciais').value.trim(),
-    gestor:       document.getElementById('vaga-gestor').value.trim(),
-    dataLimite:   document.getElementById('vaga-data-limite').value,
-    infojobs:     document.getElementById('vaga-infojobs').value,
-    aprovada:     document.getElementById('vaga-aprovada').checked
-  };
-
-  document.getElementById('btn-vaga').disabled = true;
-  showLoading('vaga', true);
-
-  apiPost('processVaga', dados, function(res) {
-    showLoading('vaga', false);
-    document.getElementById('btn-vaga').disabled = false;
-    if (res.ok) {
-      showToast('vaga', true, '✓ Vaga registrada! Processo seletivo aberto para: ' + dados.titulo + ' — ' + dados.empresa);
-    } else {
-      showToast('vaga', false, '✗ Erro: ' + res.erro);
-    }
-  }, function(err) {
-    showLoading('vaga', false);
-    document.getElementById('btn-vaga').disabled = false;
-    showToast('vaga', false, '✗ Erro de conexão: ' + err.message);
-  });
 }
 
 // ── DIAGNÓSTICO — Score ao vivo ──
@@ -1317,7 +1482,7 @@ function enviarDiagnostico() {
   apiPost('processDiagnostico', dados, function(res) {
     showLoading('diag', false);
     document.getElementById('btn-diag').disabled = false;
-    if (res.ok) showToast('diag', true, '✓ Diagnóstico salvo! Score: ' + pct + '% — Nível: ' + nivel + '. Os resultados estão na planilha Base_Diagnosticos.');
+    if (res.ok) showToast('diag', true, '✓ Diagnóstico salvo! Score: ' + pct + '% — Nível: ' + nivel + '.' + (res.url ? ' <a href="' + res.url + '" target="_blank" style="color:inherit;font-weight:700">Ver Avaliação de Compliance</a>' : ''));
     else showToast('diag', false, '✗ Erro: ' + res.erro);
   }, function(err) {
     showLoading('diag', false);
@@ -1333,7 +1498,888 @@ function enviarDiagnostico() {
   if (el) el.value = hoje;
 })();
 
-window.addEventListener('load', carregarEmpresas);
+// ── ANÁLISE DE JORNADA ──
+var INTERVALO_PADRAO_MIN = 90; // 01:30
+var _jornadaArr = null;
+var _jornadaTotais = null;
+
+function handleCSVJornada(input) {
+  var file = input.files[0];
+  if (!file) return;
+  document.getElementById('csv-jornada-name').textContent = '✓ ' + file.name;
+  document.getElementById('csv-jornada-name').style.display = 'block';
+  var reader = new FileReader();
+  reader.onload = function(e) { processarJornada(e.target.result); };
+  reader.readAsText(file, 'windows-1252');
+}
+
+function _parseHHMM(str) {
+  if (!str || !str.trim()) return null;
+  var m = str.trim().match(/^(\d{1,2}):(\d{2})/);
+  if (!m) return null;
+  return parseInt(m[1]) * 60 + parseInt(m[2]);
+}
+
+function _minToStr(min) {
+  var h = Math.floor(Math.abs(min) / 60), m = Math.abs(min) % 60;
+  return (h < 10 ? '0' : '') + h + ':' + (m < 10 ? '0' : '') + m;
+}
+
+// Verifica se um valor de célula é um horário real.
+// Não depende de palavras específicas — qualquer valor sem padrão HH:MM é descartado.
+function _isValidTime(str) {
+  return _parseHHMM(str) !== null;
+}
+
+function _previstoInicio(str) {
+  if (!str || !str.trim()) return null;
+  var m = str.match(/(\d{1,2}:\d{2})/);
+  return m ? _parseHHMM(m[1]) : null;
+}
+
+function _previstoFim(str) {
+  if (!str || !str.trim()) return null;
+  var matches = str.match(/(\d{1,2}:\d{2})/g);
+  if (!matches || matches.length < 2) return null;
+  return _parseHHMM(matches[matches.length - 1]);
+}
+
+function _detectSep(line) {
+  var sc = (line.match(/;/g)||[]).length, cc = (line.match(/,/g)||[]).length, tc = (line.match(/\t/g)||[]).length;
+  if (sc >= cc && sc >= tc) return ';';
+  if (tc >= cc) return '\t';
+  return ',';
+}
+
+function _findCol(headers, cands) {
+  var hl = headers.map(function(h) { return h.toLowerCase().trim(); });
+  for (var i = 0; i < cands.length; i++) {
+    var c = cands[i].toLowerCase();
+    var idx = hl.indexOf(c);
+    if (idx !== -1) return headers[idx];
+  }
+  for (var i = 0; i < cands.length; i++) {
+    var c = cands[i].toLowerCase();
+    for (var j = 0; j < hl.length; j++) {
+      if (hl[j].indexOf(c) !== -1 || c.indexOf(hl[j]) !== -1) return headers[j];
+    }
+  }
+  return null;
+}
+
+function _parseDia(str) {
+  if (!str) return null;
+  var m = str.trim().match(/(\d{2})\/(\d{2})\/(\d{2,4})/);
+  if (!m) return null;
+  var y = parseInt(m[3]); if (y < 100) y += 2000;
+  return new Date(y, parseInt(m[2]) - 1, parseInt(m[1]));
+}
+
+function _mesLabel(d) {
+  var meses = ['JANEIRO','FEVEREIRO','MARÇO','ABRIL','MAIO','JUNHO','JULHO','AGOSTO','SETEMBRO','OUTUBRO','NOVEMBRO','DEZEMBRO'];
+  return meses[d.getMonth()] + ' DE ' + d.getFullYear();
+}
+
+function _diaLabel(d) {
+  var dias = ['Dom','Seg','Ter','Qua','Qui','Sex','Sáb'];
+  return _pad2(d.getDate()) + '/' + _pad2(d.getMonth() + 1) + ' (' + dias[d.getDay()] + ')';
+}
+
+function _minToHora(min) {
+  var h = Math.floor(Math.abs(min) / 60), m = Math.abs(min) % 60;
+  return (h < 10 ? '0' : '') + h + 'h' + (m < 10 ? '0' : '') + m;
+}
+
+function _atrasoStr(min) {
+  if (min < 60) return min + ' minuto' + (min !== 1 ? 's' : '');
+  var h = Math.floor(min / 60), m = min % 60;
+  var s = (h < 10 ? '0' : '') + h + 'h';
+  if (m > 0) s += (m < 10 ? '0' : '') + m;
+  return s + ' minutos';
+}
+
+function processarJornada(text) {
+  text = text.replace(/\r\n/g, '\n').replace(/\r/g, '\n');
+  var lines = text.split('\n');
+  var headerIdx = -1, sep = ';';
+  var intervaloMin = parseInt(document.getElementById('jornada-intervalo').value) || 90;
+
+  for (var i = 0; i < Math.min(lines.length, 25); i++) {
+    var l = lines[i];
+    sep = _detectSep(l);
+    var cols = l.split(sep).map(function(c) { return c.trim().replace(/^["']|["']$/g, ''); });
+    var low  = cols.map(function(c) { return c.toLowerCase(); });
+    if (low.some(function(c) { return c === 'dia' || c === 'data'; }) &&
+        low.some(function(c) { return c.indexOf('entrada') !== -1; })) {
+      headerIdx = i; break;
+    }
+  }
+
+  if (headerIdx === -1) {
+    alert('Cabeçalho não encontrado. Verifique se o arquivo é do Secullum e contém as colunas: Dia, Previsto, Entrada 1, Saída 1, Entrada 2.');
+    return;
+  }
+
+  var headers = lines[headerIdx].split(sep).map(function(c) { return c.trim().replace(/^["']|["']$/g, ''); });
+  var cDia  = _findCol(headers, ['dia','data']);
+  var cPrev = _findCol(headers, ['previsto','horário','horario','escala','escalado']);
+  var cE1   = _findCol(headers, ['entrada 1','entrada1','entrada 01','1ª entrada','ent 1','ent1','entrada01']);
+  var cS1   = _findCol(headers, ['saída 1','saida 1','saída1','saida1','saída 01','1ª saída','sai 1','sai1','saida01']);
+  var cE2   = _findCol(headers, ['entrada 2','entrada2','entrada 02','2ª entrada','ent 2','ent2','entrada02']);
+  var cS2   = _findCol(headers, ['saída 2','saida 2','saída2','saida2','saída 02','2ª saída','sai 2','sai2','saida02']);
+
+  if (!cDia || !cE1) { alert('Colunas obrigatórias não encontradas. Verifique o arquivo.'); return; }
+
+  var meses = {};
+
+  for (var i = headerIdx + 1; i < lines.length; i++) {
+    var line = lines[i].trim();
+    if (!line) continue;
+    var cols = line.split(sep).map(function(c) { return c.trim().replace(/^["']|["']$/g, ''); });
+    if (cols.length < 2) continue;
+    var row = {};
+    for (var j = 0; j < headers.length; j++) row[headers[j]] = cols[j] || '';
+
+    var date = _parseDia(cDia ? row[cDia] : '');
+    if (!date) continue;
+
+    var mk = _mesLabel(date);
+    var mo = date.getFullYear() * 100 + date.getMonth();
+    if (!meses[mk]) meses[mk] = { order: mo, atrasos: [], intervalos: [], saidasAntecipadas: [], horasExtras: [], faltas: [], incompletos: [] };
+
+    var diaShort = _pad2(date.getDate()) + '/' + _pad2(date.getMonth() + 1);
+    var prev = cPrev ? (row[cPrev] || '') : '';
+    var e1   = cE1   ? (row[cE1]   || '') : '';
+    var s1   = cS1   ? (row[cS1]   || '') : '';
+    var e2   = cE2   ? (row[cE2]   || '') : '';
+    var s2   = cS2   ? (row[cS2]   || '') : '';
+
+    // Falta: dia útil previsto mas sem nenhuma batida válida
+    if (prev && _previstoInicio(prev) !== null && !_isValidTime(e1)) {
+      meses[mk].faltas.push({ diaShort: diaShort, previsto: prev.trim() });
+      continue;
+    }
+
+    if (!_isValidTime(e1)) continue; // Feriado, Folga, Justificado Banco, etc.
+
+    // Atraso de entrada
+    if (prev) {
+      var pIni = _previstoInicio(prev), tE1 = _parseHHMM(e1);
+      if (pIni !== null && tE1 !== null && tE1 > pIni) {
+        meses[mk].atrasos.push({ diaShort: diaShort, entrada: e1.trim(), previsto: prev.trim(), atraso: tE1 - pIni });
+      }
+    }
+
+    // Determina a saída efetiva do dia:
+    // - Dia duplo (Seg-Sex): usa Saída 2
+    // - Dia simples (Sábado, 1 período): usa Saída 1
+    var saidaEfetiva = _isValidTime(s2) ? s2 : (!_isValidTime(e2) && _isValidTime(s1)) ? s1 : null;
+
+    // Saída antecipada / hora extra
+    if (saidaEfetiva && prev) {
+      var pFim = _previstoFim(prev), tSaida = _parseHHMM(saidaEfetiva);
+      if (pFim !== null && tSaida !== null) {
+        var diffSaida = tSaida - pFim;
+        if (diffSaida < 0) {
+          meses[mk].saidasAntecipadas.push({ diaShort: diaShort, saida: saidaEfetiva.trim(), previsto: prev.trim(), antecipacao: Math.abs(diffSaida) });
+        } else if (diffSaida > 0) {
+          meses[mk].horasExtras.push({ diaShort: diaShort, saida: saidaEfetiva.trim(), previsto: prev.trim(), extra: diffSaida });
+        }
+      }
+    }
+
+    // Dia incompleto: entrou com horário válido mas não registrou nenhuma saída válida
+    if (!_isValidTime(s1) && !_isValidTime(s2)) {
+      meses[mk].incompletos.push({ diaShort: diaShort, entrada: e1.trim() });
+    }
+
+    // Intervalo
+    if (s1 && e2) {
+      var tS1 = _parseHHMM(s1), tE2 = _parseHHMM(e2);
+      if (tS1 !== null && tE2 !== null) {
+        var iv = tE2 - tS1;
+        if (iv !== intervaloMin) {
+          meses[mk].intervalos.push({
+            diaShort: diaShort, saida: s1.trim(), retorno: e2.trim(),
+            ivMin: iv,
+            tipo: iv < intervaloMin ? 'cedo' : 'estouro',
+            diff: Math.abs(iv - intervaloMin)
+          });
+        }
+      }
+    }
+  }
+
+  var arr = Object.keys(meses).map(function(k) { return { key: k, data: meses[k] }; });
+  arr.sort(function(a, b) { return a.data.order - b.data.order; });
+
+  if (!arr.length) {
+    document.getElementById('jornada-output').innerHTML = '<div class="toast ok" style="display:block;margin-top:0">✓ Nenhuma ocorrência encontrada. Todos os registros estão dentro dos parâmetros.</div>';
+    document.getElementById('jornada-resultado').style.display = 'block';
+    return;
+  }
+
+  var hoje = new Date();
+  var dataHoje = _pad2(hoje.getDate()) + '/' + _pad2(hoje.getMonth() + 1) + '/' + hoje.getFullYear();
+  var nomeColab = (document.getElementById('jornada-nome').value || '').trim() || '_______________';
+  var periodoIni = (document.getElementById('jornada-periodo-ini').value || '').trim();
+  var periodoFim = (document.getElementById('jornada-periodo-fim').value || '').trim();
+  var periodoStr = (periodoIni && periodoFim) ? periodoIni + ' a ' + periodoFim : (periodoIni || '_______________');
+
+  var totalAtrasos = 0, totalAtrasoMin = 0, totalIv = 0, totalEstouros = 0;
+  var totalFaltas = 0, totalAntecipadas = 0, totalExtraMin = 0, totalIncompletos = 0;
+
+  var html = '<div class="jornada-doc">';
+  html += '<div class="jornada-titulo-principal">Relatório de Monitoramento de Jornada e Assiduidade</div>';
+  html += '<div class="jornada-header-field"><strong>Data:</strong> ' + dataHoje + '</div>';
+  html += '<div class="jornada-header-field"><strong>Assunto:</strong> Relatório de Monitoramento de Jornada e Assiduidade</div>';
+  html += '<div class="jornada-header-field"><strong>Colaborador:</strong> ' + nomeColab + '</div>';
+  html += '<div class="jornada-header-field"><strong>Período:</strong> ' + periodoStr + '</div>';
+  html += '<hr class="jornada-hr"/>';
+
+  arr.forEach(function(mes) {
+    var d = mes.data;
+    html += '<div class="jornada-mes-titulo">' + mes.key + '</div>';
+
+    // Faltas
+    if (d.faltas.length) {
+      totalFaltas += d.faltas.length;
+      html += '<div class="jornada-secao-label"><strong>Faltas / Ausências:</strong></div>';
+      html += '<ul class="jornada-list">';
+      d.faltas.forEach(function(f) {
+        html += '<li>' + f.diaShort + ': <span class="jornada-red">Ausência — nenhuma batida registrada</span> (Previsto: ' + f.previsto + ')</li>';
+      });
+      html += '</ul>';
+    }
+
+    // Atrasos de entrada
+    if (d.atrasos.length) {
+      html += '<div class="jornada-secao-label"><strong>Atrasos de entrada:</strong></div>';
+      html += '<ul class="jornada-list">';
+      d.atrasos.forEach(function(a) {
+        totalAtrasos++;
+        totalAtrasoMin += a.atraso;
+        html += '<li>' + a.diaShort + ': Entrada às <strong>' + a.entrada + '</strong> — Previsto: ' + a.previsto + ' — Atraso de <span class="jornada-red">' + _atrasoStr(a.atraso) + '</span></li>';
+      });
+      html += '</ul>';
+    } else if (!d.faltas.length) {
+      html += '<div class="jornada-ok-txt">✓ Sem atrasos de entrada neste mês.</div>';
+    }
+
+    // Saídas antecipadas
+    if (d.saidasAntecipadas.length) {
+      html += '<div class="jornada-secao-label"><strong>Saídas antecipadas:</strong></div>';
+      html += '<ul class="jornada-list">';
+      d.saidasAntecipadas.forEach(function(s) {
+        totalAntecipadas++;
+        html += '<li>' + s.diaShort + ': Saiu às <strong>' + s.saida + '</strong> — Previsto: ' + s.previsto + ' — Saiu <span class="jornada-red">' + _atrasoStr(s.antecipacao) + ' antes</span> do horário</li>';
+      });
+      html += '</ul>';
+    }
+
+    // Horas extras
+    if (d.horasExtras.length) {
+      html += '<div class="jornada-secao-label"><strong>Horas além do horário (extras):</strong></div>';
+      html += '<ul class="jornada-list">';
+      d.horasExtras.forEach(function(h) {
+        totalExtraMin += h.extra;
+        html += '<li>' + h.diaShort + ': Saiu às <strong>' + h.saida + '</strong> — Previsto: ' + h.previsto + ' — <span style="color:var(--ok)">+ ' + _atrasoStr(h.extra) + ' além do horário</span></li>';
+      });
+      html += '</ul>';
+    }
+
+    // Intervalos
+    if (d.intervalos.length) {
+      html += '<div class="jornada-secao-label"><strong>Descumprimentos de intervalo:</strong></div>';
+      html += '<ul class="jornada-list">';
+      d.intervalos.forEach(function(iv) {
+        totalIv++;
+        var ivStr = _minToHora(iv.ivMin);
+        var descr;
+        if (iv.tipo === 'cedo') {
+          descr = '— Voltou <span class="jornada-red">' + _atrasoStr(iv.diff) + ' antes</span> do tempo de intervalo';
+        } else {
+          totalEstouros++;
+          descr = '— Estouro de <span class="jornada-red">' + _atrasoStr(iv.diff) + '</span> além do intervalo';
+        }
+        html += '<li>' + iv.diaShort + ': Fez <strong>' + ivStr + '</strong> de intervalo (Saiu ' + iv.saida + ', voltou ' + iv.retorno + ') ' + descr + '</li>';
+      });
+      html += '</ul>';
+    } else {
+      html += '<div class="jornada-ok-txt">✓ Sem descumprimentos de intervalo neste mês.</div>';
+    }
+
+    // Dias sem registro de saída
+    if (d.incompletos.length) {
+      totalIncompletos += d.incompletos.length;
+      html += '<div class="jornada-secao-label"><strong>Dias com registro incompleto:</strong></div>';
+      html += '<ul class="jornada-list">';
+      d.incompletos.forEach(function(ic) {
+        html += '<li>' + ic.diaShort + ': Entrada às ' + ic.entrada + ' — <span class="jornada-red">saída não registrada no ponto</span></li>';
+      });
+      html += '</ul>';
+    }
+  });
+
+  _jornadaArr = arr;
+  _jornadaTotais = { atrasos: totalAtrasos, atrasoMin: totalAtrasoMin, iv: totalIv, estouros: totalEstouros, faltas: totalFaltas, antecipadas: totalAntecipadas, extraMin: totalExtraMin, incompletos: totalIncompletos };
+
+  html += '<div class="jornada-analise">';
+  html += '<div class="jornada-analise-titulo">Análise do Comportamento de Jornada</div>';
+  html += '<ul class="jornada-list">';
+
+  if (totalFaltas > 0) {
+    html += '<li>Foram identificadas <span class="jornada-red">' + totalFaltas + ' ausência' + (totalFaltas > 1 ? 's' : '') + '</span> no período, sem qualquer registro de ponto no dia previsto para trabalho.</li>';
+  }
+  if (totalAtrasos > 0) {
+    html += '<li>Foram identificados <span class="jornada-red">' + totalAtrasos + ' atraso' + (totalAtrasos > 1 ? 's' : '') + ' de entrada</span>, totalizando <span class="jornada-red">' + _atrasoStr(totalAtrasoMin) + '</span> de atraso acumulado no período.</li>';
+  }
+  if (totalAntecipadas > 0) {
+    html += '<li>Foram identificadas <span class="jornada-red">' + totalAntecipadas + ' saída' + (totalAntecipadas > 1 ? 's antecipadas' : ' antecipada') + '</span> antes do horário previsto de encerramento da jornada.</li>';
+  }
+  if (totalExtraMin > 0) {
+    var diasExtra = arr.reduce(function(t, m) { return t + m.data.horasExtras.length; }, 0);
+    html += '<li>Foram registradas horas além do horário previsto em <strong>' + diasExtra + ' dia' + (diasExtra > 1 ? 's' : '') + '</strong>, totalizando <strong>' + _atrasoStr(totalExtraMin) + '</strong> de horas extras, a serem tratadas conforme a política de banco de horas vigente.</li>';
+  }
+  var cedoCount = totalIv - totalEstouros;
+  if (cedoCount > 0) {
+    html += '<li>Foram identificados <span class="jornada-red">' + cedoCount + ' caso' + (cedoCount > 1 ? 's' : '') + ' de retorno antecipado</span> do intervalo, configurando descumprimento do período mínimo de descanso intrajornada.</li>';
+  }
+  if (totalEstouros > 0) {
+    html += '<li>Foram identificados <span class="jornada-red">' + totalEstouros + ' estouro' + (totalEstouros > 1 ? 's' : '') + ' de intervalo</span> além do tempo permitido.</li>';
+  }
+  if (totalIncompletos > 0) {
+    html += '<li>Foram identificados <span class="jornada-red">' + totalIncompletos + ' dia' + (totalIncompletos > 1 ? 's' : '') + ' com registro incompleto</span> (entrada sem saída correspondente), impossibilitando o cálculo correto da jornada nessas datas.</li>';
+  }
+  if (totalAtrasos === 0 && totalFaltas === 0 && totalAntecipadas === 0 && cedoCount === 0 && totalEstouros === 0 && totalIncompletos === 0 && totalExtraMin === 0) {
+    html += '<li>Não foram identificadas irregularidades no período analisado.</li>';
+  } else {
+    html += '<li>Reiteramos ao colaborador as normas vigentes da empresa referentes ao cumprimento do horário de trabalho e do intervalo intrajornada, conforme registros no ponto eletrônico.</li>';
+  }
+
+  html += '</ul>';
+  html += '</div>';
+
+  html += '<div class="jornada-assinatura">';
+  html += '___________________________<br>';
+  html += '<strong>Alanne Oliveira</strong><br>';
+  html += 'CRESCER Consultoria Empresarial<br>';
+  html += '(83) 99670.3518';
+  html += '</div>';
+
+  html += '</div>';
+
+  document.getElementById('jornada-output').innerHTML = html;
+  document.getElementById('jornada-resultado').style.display = 'block';
+}
+
+function carregarEmpresasJornada() { carregarEmpresas(); }
+
+// ── GERADOR DE DOCUMENTOS ──
+var _gerColabs = [];
+
+function carregarColaboradoresGerador() {
+  var empresa = document.getElementById('ger-empresa').value;
+  var sel = document.getElementById('ger-colaborador');
+  _gerColabs = [];
+  sel.innerHTML = '<option value="">Selecione o colaborador…</option>';
+  sel.disabled = true;
+  document.getElementById('ger-resultado-wrap').style.display = 'none';
+  // Limpa campos e mostra o formulário imediatamente
+  ['ger-nome','ger-cpf','ger-ctps','ger-cargo'].forEach(function(id) { document.getElementById(id).value = ''; });
+  document.getElementById('ger-adm').value = '';
+  if (!empresa) return;
+  // Carrega colaboradores em segundo plano para preencher automaticamente
+  sel.innerHTML = '<option value="">Carregando colaboradores…</option>';
+  apiGet('getColaboradores&empresa=' + encodeURIComponent(empresa), function(lista) {
+    _gerColabs = lista || [];
+    sel.innerHTML = '<option value="">Selecione para preencher automaticamente…</option>';
+    _gerColabs.forEach(function(c, i) {
+      var o = document.createElement('option'); o.value = i; o.textContent = c.nome; sel.appendChild(o);
+    });
+    var oSep = document.createElement('option'); oSep.disabled = true; oSep.textContent = '──────────────────'; sel.appendChild(oSep);
+    var oMan = document.createElement('option'); oMan.value = '__manual__'; oMan.textContent = '✏️ Limpar e preencher manualmente…'; sel.appendChild(oMan);
+    sel.disabled = false;
+  });
+}
+
+function preencherDadosGerador() {
+  var idx = document.getElementById('ger-colaborador').value;
+  document.getElementById('ger-resultado-wrap').style.display = 'none';
+  if (idx === '__manual__') {
+    ['ger-nome','ger-cpf','ger-ctps','ger-cargo'].forEach(function(id) { document.getElementById(id).value = ''; });
+    document.getElementById('ger-adm').value = '';
+    document.getElementById('ger-nome').focus();
+    return;
+  }
+  if (idx === '' || !_gerColabs[parseInt(idx)]) return;
+  var c = _gerColabs[parseInt(idx)];
+  document.getElementById('ger-nome').value  = c.nome    || '';
+  document.getElementById('ger-cpf').value   = c.cpf     || '';
+  document.getElementById('ger-ctps').value  = c.ctps    || '';
+  document.getElementById('ger-cargo').value = c.cargo   || '';
+  document.getElementById('ger-adm').value   = c.dataAdm || '';
+}
+
+function toggleGerExtras() {
+  var asoChecked = false, transpChecked = false;
+  document.querySelectorAll('.ger-check-list input[type=checkbox]').forEach(function(cb) {
+    if (cb.value === 'aso' && cb.checked) asoChecked = true;
+    if (cb.value === 'declaracao-transporte' && cb.checked) transpChecked = true;
+  });
+  document.getElementById('ger-extras-aso').style.display        = asoChecked    ? 'block' : 'none';
+  document.getElementById('ger-extras-transporte').style.display = transpChecked ? 'block' : 'none';
+}
+
+function gerarPacoteDocumentos() {
+  var empresa = document.getElementById('ger-empresa').value;
+  var nome    = document.getElementById('ger-nome').value.trim();
+  if (!empresa) { alert('Selecione a empresa.'); return; }
+  if (!nome)    { alert('Informe o nome do colaborador.'); return; }
+
+  var documentos = [];
+  document.querySelectorAll('.ger-check-list input[type=checkbox]:checked').forEach(function(cb) {
+    documentos.push(cb.value);
+  });
+  if (!documentos.length) { alert('Selecione pelo menos um documento para gerar.'); return; }
+
+  var btn = document.getElementById('btn-gerar-doc');
+  btn.disabled = true; btn.textContent = 'Gerando pacote...';
+  document.getElementById('ger-resultado-wrap').style.display = 'none';
+
+  var payload = {
+    documentos:    documentos,
+    empresa:       empresa,
+    nome:          nome,
+    cpf:           document.getElementById('ger-cpf').value.trim(),
+    ctps:          document.getElementById('ger-ctps').value.trim(),
+    cargo:         document.getElementById('ger-cargo').value.trim(),
+    dataAdm:       document.getElementById('ger-adm').value,
+    asoTipo:       document.getElementById('ger-aso-tipo')       ? document.getElementById('ger-aso-tipo').value         : '',
+    transpHorario: document.getElementById('ger-transp-horario') ? document.getElementById('ger-transp-horario').value   : '',
+    transpValor:   document.getElementById('ger-transp-valor')   ? document.getElementById('ger-transp-valor').value.trim() : ''
+  };
+
+  apiPost('gerarPacote', payload, function(res) {
+    btn.disabled = false; btn.textContent = 'Gerar Pacote de Documentos';
+    if (res && res.ok) {
+      document.getElementById('ger-pasta-link').href = res.pasta;
+      var lista = document.getElementById('ger-docs-lista');
+      lista.innerHTML = '';
+      (res.documentos || []).forEach(function(d) {
+        var a = document.createElement('a');
+        a.href = d.url; a.target = '_blank';
+        a.style.cssText = 'color:var(--graphite);font-size:13px;text-decoration:none;padding:4px 0;display:block';
+        a.textContent = d.nome + ' →';
+        lista.appendChild(a);
+      });
+      var wrap = document.getElementById('ger-resultado-wrap');
+      wrap.style.display = 'block';
+      wrap.scrollIntoView({ behavior: 'smooth', block: 'center' });
+    } else {
+      alert('Erro: ' + (res && res.erro ? res.erro : 'tente novamente'));
+    }
+  });
+}
+
+function enviarJornada() {
+  if (!_jornadaArr) { alert('Processe o arquivo CSV primeiro.'); return; }
+  var empresa = document.getElementById('jornada-empresa').value.trim();
+  if (!empresa) { alert('Selecione a empresa antes de enviar.'); return; }
+  var nomeColab  = (document.getElementById('jornada-nome').value || '').trim() || '___';
+  var periodoIni = (document.getElementById('jornada-periodo-ini').value || '').trim();
+  var periodoFim = (document.getElementById('jornada-periodo-fim').value || '').trim();
+  var observacoes = (document.getElementById('jornada-obs').value || '').trim();
+  var hoje = new Date();
+  var dataHoje = _pad2(hoje.getDate()) + '/' + _pad2(hoje.getMonth() + 1) + '/' + hoje.getFullYear();
+
+  var btn = document.getElementById('btn-enviar-jornada');
+  btn.disabled = true;
+  btn.textContent = 'Criando documento...';
+
+  var payload = {
+    colaborador: nomeColab,
+    empresa: empresa,
+    periodoIni: periodoIni,
+    periodoFim: periodoFim,
+    dataGeracao: dataHoje,
+    observacoes: observacoes,
+    meses: _jornadaArr.map(function(m) {
+      return { key: m.key, atrasos: m.data.atrasos, intervalos: m.data.intervalos };
+    }),
+    totais: _jornadaTotais
+  };
+
+  apiPost('criarDocJornada', payload, function(res) {
+    btn.disabled = false;
+    btn.textContent = 'Enviar e Criar Documento no Google Docs';
+    if (res && res.ok) {
+      var wrap = document.getElementById('jornada-doc-link-wrap');
+      document.getElementById('jornada-doc-link').href = res.url;
+      wrap.style.display = 'block';
+      wrap.scrollIntoView({ behavior: 'smooth', block: 'center' });
+    } else {
+      alert('Erro ao criar documento: ' + (res && res.erro ? res.erro : 'tente novamente'));
+    }
+  });
+}
+
+// ── CALENDÁRIO CUSTOMIZADO ──
+var calData = { year: 0, month: 0, atividades: [] };
+var MESES_PT = ['Janeiro','Fevereiro','Março','Abril','Maio','Junho','Julho','Agosto','Setembro','Outubro','Novembro','Dezembro'];
+var DIAS_PT  = ['Dom','Seg','Ter','Qua','Qui','Sex','Sáb'];
+
+function calInit() {
+  var hoje = new Date();
+  calData.year  = hoje.getFullYear();
+  calData.month = hoje.getMonth();
+  renderCal();
+}
+function calPrev() {
+  if (calData.month === 0) { calData.month = 11; calData.year--; } else calData.month--;
+  renderCal();
+}
+function calNext() {
+  if (calData.month === 11) { calData.month = 0; calData.year++; } else calData.month++;
+  renderCal();
+}
+function _pad2(n) { return n < 10 ? '0' + n : '' + n; }
+function _atividadesNoDia(dateKey) {
+  var result = [];
+  for (var i = 0; i < calData.atividades.length; i++) {
+    var a = calData.atividades[i];
+    if (!a.data) continue;
+    var parts = String(a.data).split(' ')[0].split('/');
+    if (parts.length < 3) continue;
+    if (parts[2] + '-' + parts[1] + '-' + parts[0] === dateKey) result.push(a);
+  }
+  return result;
+}
+function calDayClick(dateKey) {
+  var ativs = _atividadesNoDia(dateKey);
+  if (!ativs.length) return;
+  localStorage.setItem('crescer_visto_' + dateKey, '1');
+  renderCal();
+}
+function renderCal() {
+  document.getElementById('cal-title').textContent = MESES_PT[calData.month] + ' de ' + calData.year;
+  var grid    = document.getElementById('cal-grid');
+  var html    = '';
+  var hoje    = new Date();
+  var ehAtual = (hoje.getFullYear() === calData.year && hoje.getMonth() === calData.month);
+  var primeiro = new Date(calData.year, calData.month, 1).getDay();
+  var total    = new Date(calData.year, calData.month + 1, 0).getDate();
+
+  DIAS_PT.forEach(function(d) { html += '<div class="cal-head">' + d + '</div>'; });
+
+  var col = primeiro;
+  var row = 0;
+  for (var e = 0; e < primeiro; e++) {
+    html += '<div class="cal-cell cal-empty' + (row % 2 ? ' cal-row-alt' : '') + '"></div>';
+    col++;
+  }
+  for (var d = 1; d <= total; d++) {
+    if (col % 7 === 0) row++;
+    var dateKey  = calData.year + '-' + _pad2(calData.month + 1) + '-' + _pad2(d);
+    var ativs    = _atividadesNoDia(dateKey);
+    var visto    = localStorage.getItem('crescer_visto_' + dateKey);
+    var isHoje   = ehAtual && d === hoje.getDate();
+    var cls      = 'cal-cell';
+    if (row % 2) cls += ' cal-row-alt';
+    if (isHoje)          cls += ' cal-today';
+    else if (ativs.length && !visto) cls += ' cal-has-new';
+    else if (ativs.length && visto)  cls += ' cal-has-seen';
+    var onclick = ativs.length ? ' onclick="calDayClick(\'' + dateKey + '\')"' : '';
+    html += '<div class="' + cls + '"' + onclick + '>' + d + '</div>';
+    col++;
+  }
+  grid.innerHTML = html;
+}
+
+// ── AGENDA — Atividades Recentes ──
+function _isSemanaAtual(dataStr) {
+  try {
+    var parts = String(dataStr).split(' ')[0].split('/');
+    if (parts.length < 3) return false;
+    var d = new Date(parseInt(parts[2]), parseInt(parts[1]) - 1, parseInt(parts[0]));
+    var hoje = new Date();
+    var diaSemana = hoje.getDay();
+    var ini = new Date(hoje); ini.setDate(hoje.getDate() - diaSemana); ini.setHours(0,0,0,0);
+    var fim = new Date(ini); fim.setDate(ini.getDate() + 6); fim.setHours(23,59,59,999);
+    return d >= ini && d <= fim;
+  } catch(e) { return false; }
+}
+
+function carregarAtividades() {
+  var lista   = document.getElementById('ativ-lista');
+  var semana  = document.getElementById('semana-lista');
+  lista.innerHTML  = '<div class="loading show"><div class="spinner"></div><div class="loading-txt">Carregando…</div></div>';
+  semana.innerHTML = '<div class="loading show"><div class="spinner"></div></div>';
+
+  apiGet('getAtividades', function(dados) {
+    calData.atividades = dados || [];
+    calInit();
+    if (!dados || dados.length === 0) {
+      lista.innerHTML  = '<div class="ativ-vazio">Nenhuma atividade ainda.</div>';
+      semana.innerHTML = '<div class="semana-vazio">Nenhuma atividade esta semana.</div>';
+      return;
+    }
+
+    var htmlSemana = '';
+    var countSemana = 0;
+    for (var i = 0; i < dados.length; i++) {
+      var a = dados[i];
+      if (!_isSemanaAtual(a.data)) continue;
+      countSemana++;
+      htmlSemana += '<div class="semana-item">' +
+        '<div class="semana-dot ' + (a.cor || 'ok') + '"></div>' +
+        '<div>' +
+          '<div class="semana-tipo">' + a.tipo + '</div>' +
+          '<div class="semana-nome">' + (a.nome || '—') + '</div>' +
+          '<div class="semana-empresa">' + (a.empresa || '') + '</div>' +
+        '</div>' +
+      '</div>';
+    }
+    semana.innerHTML = countSemana ? htmlSemana : '<div class="semana-vazio">Nenhuma atividade esta semana.</div>';
+
+    var htmlLista = '';
+    for (var j = 0; j < dados.length; j++) {
+      var b = dados[j];
+      var dataFmt = b.data ? String(b.data).slice(0, 16) : '';
+      htmlLista += '<div class="ativ-item">' +
+        '<div class="ativ-dot ' + (b.cor || 'ok') + '"></div>' +
+        '<div style="flex:1;min-width:0">' +
+          '<div class="ativ-tipo">' + b.tipo + '</div>' +
+          '<div class="ativ-nome">' + (b.nome || '—') + '</div>' +
+          '<div class="ativ-empresa">' + (b.empresa || '') + '</div>' +
+        '</div>' +
+        '<div class="ativ-data">' + dataFmt + '</div>' +
+      '</div>';
+    }
+    lista.innerHTML = htmlLista;
+  });
+}
+
+function toggleNovaAtividade() {
+  var form = document.getElementById('nova-ativ-form');
+  var abrindo = form.style.display === 'none';
+  form.style.display = abrindo ? 'block' : 'none';
+  if (abrindo) {
+    var h = new Date();
+    var dd = (h.getDate() < 10 ? '0' : '') + h.getDate();
+    var mm = (h.getMonth() + 1 < 10 ? '0' : '') + (h.getMonth() + 1);
+    document.getElementById('ativ-data').value = h.getFullYear() + '-' + mm + '-' + dd;
+    document.getElementById('ativ-titulo').focus();
+  }
+}
+
+function salvarAtividade() {
+  var titulo = document.getElementById('ativ-titulo').value.trim();
+  var data   = document.getElementById('ativ-data').value;
+  if (!titulo) { alert('Informe o título da atividade.'); return; }
+  if (!data)   { alert('Informe a data.'); return; }
+  var btn = document.getElementById('btn-salvar-ativ');
+  btn.disabled = true; btn.textContent = 'Salvando…';
+  apiPost('salvarAtividade', { titulo: titulo, data: data, obs: document.getElementById('ativ-obs').value.trim() }, function(res) {
+    btn.disabled = false; btn.textContent = 'Salvar Atividade';
+    if (res && res.ok) {
+      document.getElementById('ativ-titulo').value = '';
+      document.getElementById('ativ-obs').value    = '';
+      document.getElementById('nova-ativ-form').style.display = 'none';
+      carregarAtividades();
+    } else {
+      alert('Erro: ' + (res && res.erro ? res.erro : 'tente novamente'));
+    }
+  });
+}
+
+function verificarNovidades() {
+  apiGet('getAtividades', function(dados) {
+    if (!dados || !dados.length) return;
+    var hoje = new Date();
+    var dd = String(hoje.getDate()).padStart ? String(hoje.getDate()).padStart(2,'0') : (hoje.getDate() < 10 ? '0'+hoje.getDate() : ''+hoje.getDate());
+    var mm = (hoje.getMonth()+1) < 10 ? '0'+(hoje.getMonth()+1) : ''+(hoje.getMonth()+1);
+    var hojeStr = dd + '/' + mm + '/' + hoje.getFullYear();
+    var novos = 0;
+    for (var i = 0; i < dados.length; i++) {
+      if (dados[i].data && String(dados[i].data).indexOf(hojeStr) === 0) novos++;
+    }
+    var badge = document.getElementById('agenda-badge');
+    if (badge && novos > 0) {
+      badge.textContent = novos + ' novo' + (novos > 1 ? 's' : '');
+      badge.style.display = 'inline-block';
+    }
+  });
+}
+
+
+// ── ENTREVISTA DE DESLIGAMENTO ──
+var _entColabs = [];
+function carregarColaboradoresEntrevista() {
+  var empresa = document.getElementById('ent-empresa').value;
+  if (empresa === '__novo__') {
+    document.getElementById('ent-empresa').value = '';
+    goto('cliente');
+    return;
+  }
+  var colabWrap = document.getElementById('ent-colab-wrap');
+  var nomeWrap  = document.getElementById('ent-nome-wrap');
+  document.getElementById('ent-nome').value = '';
+  colabWrap.style.display = 'none';
+  nomeWrap.style.display  = 'none';
+  if (!empresa) return;
+  var sel = document.getElementById('ent-colaborador');
+  sel.innerHTML = '<option value="">Carregando…</option>';
+  colabWrap.style.display = 'block';
+  apiGet('getColaboradores&empresa=' + encodeURIComponent(empresa), function(lista) {
+    _entColabs = lista || [];
+    sel.innerHTML = '<option value="">Selecione o colaborador…</option>';
+    _entColabs.forEach(function(c, i) {
+      var o = document.createElement('option'); o.value = i; o.textContent = c.nome; sel.appendChild(o);
+    });
+    var oSep = document.createElement('option'); oSep.disabled = true; oSep.textContent = '──────────────────'; sel.appendChild(oSep);
+    var oMan = document.createElement('option'); oMan.value = '__manual__'; oMan.textContent = '✏️ Preencher manualmente…'; sel.appendChild(oMan);
+  });
+}
+function preencherDadosEntrevista() {
+  var idx       = document.getElementById('ent-colaborador').value;
+  var nomeWrap  = document.getElementById('ent-nome-wrap');
+  var nomeInput = document.getElementById('ent-nome');
+  if (idx === '__manual__') { nomeInput.value = ''; nomeWrap.style.display = 'block'; nomeInput.focus(); return; }
+  if (idx === '' || !_entColabs[parseInt(idx)]) { nomeWrap.style.display = 'none'; return; }
+  nomeInput.value = _entColabs[parseInt(idx)].nome || '';
+  nomeWrap.style.display = 'block';
+}
+function setRating(field, val) {
+  document.getElementById(field).value = val;
+  var btns = document.querySelectorAll('#' + field + '-group .rating-btn');
+  btns.forEach(function(b, i) { b.classList.toggle('active', i < val); });
+}
+function salvarEntrevistaDesligamento() {
+  var empresa = getSelectVal('ent-empresa');
+  var nome    = document.getElementById('ent-nome').value.trim();
+  var data    = document.getElementById('ent-data').value;
+  if (!empresa) { showToast('ent', false, '✗ Selecione a empresa.'); return; }
+  if (!nome)    { showToast('ent', false, '✗ Informe o nome do colaborador.'); return; }
+  if (!data)    { showToast('ent', false, '✗ Informe a data da entrevista.'); return; }
+  var crescimento = document.querySelector('input[name="ent-crescimento"]:checked');
+  var recomenda   = document.querySelector('input[name="ent-recomenda"]:checked');
+  document.getElementById('btn-ent').disabled = true;
+  showLoading('ent', true);
+  apiPost('salvarEntrevistaDesligamento', {
+    empresa:     empresa,
+    nome:        nome,
+    data:        data,
+    tipo:        getSelectVal('ent-tipo'),
+    motivo:      document.getElementById('ent-motivo').value,
+    amb:         document.getElementById('ent-amb').value,
+    lid:         document.getElementById('ent-lid').value,
+    crescimento: crescimento ? crescimento.value : '',
+    recomenda:   recomenda   ? recomenda.value   : '',
+    mudanca:     document.getElementById('ent-mudanca').value.trim(),
+    obs:         document.getElementById('ent-obs').value.trim()
+  }, function(res) {
+    showLoading('ent', false);
+    document.getElementById('btn-ent').disabled = false;
+    if (res.ok) {
+      showToast('ent', true, '✓ Entrevista salva!' + (res.url ? ' <a href="' + res.url + '" target="_blank" style="color:inherit;font-weight:700">Ver documento</a>' : ''));
+    } else {
+      showToast('ent', false, '✗ Erro: ' + res.erro);
+    }
+  }, function() {
+    showLoading('ent', false);
+    document.getElementById('btn-ent').disabled = false;
+    showToast('ent', false, '✗ Erro de conexão.');
+  });
+}
+
+// ── LEMBRETES ──
+function _escHtml(s) {
+  return String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');
+}
+
+function carregarLembretes() {
+  var wrap = document.getElementById('lem-list-wrap');
+  if (!wrap) return;
+  wrap.innerHTML = '<div class="lem-empty">Carregando…</div>';
+  apiGet('getLembretes', function(res) {
+    if (!res.itens || res.itens.length === 0) {
+      wrap.innerHTML = '<div class="lem-empty">Nenhum lembrete ativo no momento.</div>';
+      return;
+    }
+    var hoje = new Date(); hoje.setHours(0,0,0,0);
+    var html = '<div class="lem-list">';
+    res.itens.forEach(function(it) {
+      var alvo = new Date(it.dataAlvo + 'T00:00:00');
+      var diff = Math.round((alvo - hoje) / 86400000);
+      var cls = diff < 0 ? 'lem-urgente' : diff === 0 ? 'lem-hoje' : 'lem-futuro';
+      var iconSvg, iconColor, badgeTxt, badgeBg, badgeColor;
+      if (it.tipo === 'aniversario') {
+        iconSvg = '<path d="M20 7H4a2 2 0 0 0-2 2v10a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2V9a2 2 0 0 0-2-2z"/><path d="M16 3l-4 4-4-4"/>';
+        iconColor = '#7c3aed'; badgeBg = '#ede9fe'; badgeColor = '#7c3aed';
+        badgeTxt = diff === 0 ? 'Hoje!' : diff < 0 ? 'Passou' : 'em ' + diff + 'd';
+      } else {
+        iconSvg = '<path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9"/><path d="M13.73 21a2 2 0 0 1-3.46 0"/>';
+        iconColor = diff <= 0 ? '#ef4444' : diff <= 3 ? '#d97706' : '#3b82f6';
+        badgeBg = diff <= 0 ? '#fee2e2' : diff <= 3 ? '#fef3c7' : '#e0e7ff';
+        badgeColor = diff <= 0 ? '#dc2626' : diff <= 3 ? '#d97706' : '#2563eb';
+        badgeTxt = diff < 0 ? 'Atrasado' : diff === 0 ? 'Hoje' : 'em ' + diff + 'd';
+      }
+      html += '<div class="lem-item ' + cls + '">';
+      html += '<div class="lem-item-icon"><svg fill="none" viewBox="0 0 24 24" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" style="width:20px;height:20px;stroke:' + iconColor + '">' + iconSvg + '</svg></div>';
+      html += '<div class="lem-item-body">';
+      html += '<div class="lem-item-title">' + _escHtml(it.titulo) + '</div>';
+      html += '<div class="lem-item-meta">';
+      if (it.empresa) html += _escHtml(it.empresa) + ' · ';
+      html += _escHtml(it.dataAlvo);
+      if (it.obs) html += ' · ' + _escHtml(it.obs);
+      html += '</div></div>';
+      html += '<span class="lem-item-badge" style="background:' + badgeBg + ';color:' + badgeColor + '">' + badgeTxt + '</span>';
+      html += '</div>';
+    });
+    html += '</div>';
+    wrap.innerHTML = html;
+  }, function() {
+    wrap.innerHTML = '<div class="lem-empty">Erro ao carregar lembretes.</div>';
+  });
+}
+
+function criarLembrete() {
+  var titulo = document.getElementById('lem-titulo').value.trim();
+  var data   = document.getElementById('lem-data').value;
+  if (!titulo) { showToast('lem', false, '✗ Informe o título do lembrete.'); return; }
+  if (!data)   { showToast('lem', false, '✗ Informe a data alvo.'); return; }
+  var dados = {
+    empresa:   document.getElementById('lem-empresa').value,
+    titulo:    titulo,
+    dataAlvo:  data,
+    antecedencia: parseInt(document.getElementById('lem-antec').value, 10) || 0,
+    obs:       document.getElementById('lem-obs').value.trim()
+  };
+  document.getElementById('btn-lem').disabled = true;
+  showLoading('lem', true);
+  apiPost('salvarLembrete', dados, function(res) {
+    showLoading('lem', false);
+    document.getElementById('btn-lem').disabled = false;
+    if (res.ok) {
+      showToast('lem', true, '✓ Lembrete salvo com sucesso!');
+      document.getElementById('lem-titulo').value = '';
+      document.getElementById('lem-data').value   = '';
+      document.getElementById('lem-obs').value    = '';
+      document.getElementById('lem-antec').value  = '7';
+      document.getElementById('lem-empresa').value = '';
+      carregarLembretes();
+    } else {
+      showToast('lem', false, '✗ Erro: ' + res.erro);
+    }
+  }, function(err) {
+    showLoading('lem', false);
+    document.getElementById('btn-lem').disabled = false;
+    showToast('lem', false, '✗ Erro de conexão: ' + err.message);
+  });
+}
+
+window.addEventListener('load', function() { carregarEmpresas(); verificarNovidades(); });
 </script>
 </body>
 </html>
