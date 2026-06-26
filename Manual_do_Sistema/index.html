@@ -345,6 +345,7 @@ body {
       <a href="#sec-agenda"      class="idx-item"><span class="idx-num">06</span><span class="idx-name">Agenda, Lembretes &amp; Aniversários</span></a>
       <a href="#sec-jornada"     class="idx-item"><span class="idx-num">07</span><span class="idx-name">Análise de Jornada</span></a>
       <a href="#sec-ferramentas" class="idx-item"><span class="idx-num">08</span><span class="idx-name">Ferramentas do Portal RH Interno</span></a>
+      <a href="#sec-colaboradores" class="idx-item"><span class="idx-num">09</span><span class="idx-name">Como alimentar a Base de Colaboradores</span></a>
       <a href="#sec-regras-planilha" class="idx-item"><span class="idx-num">⚠</span><span class="idx-name">O que não fazer na planilha</span></a>
     </div>
   </div>
@@ -1299,6 +1300,150 @@ body {
       </div>
     </div>
 
+  </div>
+
+</div>
+
+<!-- ════════════════════════════════════════ -->
+<!-- 09 · BASE DE COLABORADORES -->
+<!-- ════════════════════════════════════════ -->
+<div class="section-wrap" id="sec-colaboradores">
+  <div class="section-label">
+    <div class="section-num">09</div>
+    <div>
+      <div class="section-name">Como alimentar a Base de Colaboradores</div>
+      <div class="section-desc">Preencha uma vez — o sistema usa os dados para gerar todos os documentos automaticamente</div>
+    </div>
+  </div>
+
+  <div class="aflow-wrap">
+    <div class="aflow-title">Por que isso é importante?</div>
+    <div class="aflow-desc">
+      Todos os documentos gerados pelo sistema (Aviso Prévio, Pedido de Demissão, ASO, pacote de admissão, análise de jornada) buscam os dados do colaborador diretamente da <code>Base_Colaboradores</code>. Uma vez que essa aba estiver preenchida com os colaboradores ativos, o sistema já sobe tudo sozinho — sem precisar digitar nome, CPF e cargo toda vez.
+    </div>
+  </div>
+
+  <div class="step-card">
+    <div class="step-head">
+      <div class="step-num">1</div>
+      <div class="step-title">Abra a Planilha Mestre e vá na aba Base_Colaboradores</div>
+    </div>
+    <div class="step-body">
+      Acesse a planilha no Google Sheets. Clique na aba <strong>Base_Colaboradores</strong> na parte inferior. Os dados dos colaboradores começam sempre na <strong>linha 2</strong> — a linha 1 é o cabeçalho e não deve ser alterada.
+    </div>
+  </div>
+
+  <div class="step-card">
+    <div class="step-head">
+      <div class="step-num">2</div>
+      <div class="step-title">Preencha uma linha por colaborador</div>
+    </div>
+    <div class="step-body">
+      Siga exatamente a ordem das colunas abaixo. Não pule colunas nem insira colunas novas.
+      <div style="overflow-x:auto;margin-top:14px">
+        <table style="width:100%;border-collapse:collapse;font-size:13px">
+          <thead>
+            <tr style="background:var(--graphite);color:#fff">
+              <th style="padding:10px 12px;text-align:left;font-weight:700;border-radius:0">Coluna</th>
+              <th style="padding:10px 12px;text-align:left;font-weight:700">Exemplo</th>
+              <th style="padding:10px 12px;text-align:left;font-weight:700">Observação</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr style="border-bottom:1px solid var(--border)">
+              <td style="padding:10px 12px;font-weight:600">Data Cadastro</td>
+              <td style="padding:10px 12px;color:var(--txt-2)">26/06/2025</td>
+              <td style="padding:10px 12px;color:var(--txt-3)">Data em que você está cadastrando</td>
+            </tr>
+            <tr style="background:var(--bg);border-bottom:1px solid var(--border)">
+              <td style="padding:10px 12px;font-weight:600">Empresa</td>
+              <td style="padding:10px 12px;color:var(--txt-2)">Chez Vous</td>
+              <td style="padding:10px 12px;color:var(--err);font-weight:600">Exatamente igual ao nome em Base_Clientes</td>
+            </tr>
+            <tr style="border-bottom:1px solid var(--border)">
+              <td style="padding:10px 12px;font-weight:600">Nome</td>
+              <td style="padding:10px 12px;color:var(--txt-2)">João da Silva</td>
+              <td style="padding:10px 12px;color:var(--txt-3)">Nome completo</td>
+            </tr>
+            <tr style="background:var(--bg);border-bottom:1px solid var(--border)">
+              <td style="padding:10px 12px;font-weight:600">CPF</td>
+              <td style="padding:10px 12px;color:var(--txt-2)">000.000.000-00</td>
+              <td style="padding:10px 12px;color:var(--txt-3)">Com pontuação</td>
+            </tr>
+            <tr style="border-bottom:1px solid var(--border)">
+              <td style="padding:10px 12px;font-weight:600">CTPS</td>
+              <td style="padding:10px 12px;color:var(--txt-2)">1234567/0001</td>
+              <td style="padding:10px 12px;color:var(--txt-3)">Número/Série</td>
+            </tr>
+            <tr style="background:var(--bg);border-bottom:1px solid var(--border)">
+              <td style="padding:10px 12px;font-weight:600">Nascimento</td>
+              <td style="padding:10px 12px;color:var(--txt-2)">1990-05-15</td>
+              <td style="padding:10px 12px;color:var(--err);font-weight:600">Formato: yyyy-MM-dd</td>
+            </tr>
+            <tr style="border-bottom:1px solid var(--border)">
+              <td style="padding:10px 12px;font-weight:600">Endereço</td>
+              <td style="padding:10px 12px;color:var(--txt-2)">Rua das Flores, 123</td>
+              <td style="padding:10px 12px;color:var(--txt-3)">Livre</td>
+            </tr>
+            <tr style="background:var(--bg);border-bottom:1px solid var(--border)">
+              <td style="padding:10px 12px;font-weight:600">Cargo</td>
+              <td style="padding:10px 12px;color:var(--txt-2)">Auxiliar de Produção</td>
+              <td style="padding:10px 12px;color:var(--txt-3)">Livre</td>
+            </tr>
+            <tr style="border-bottom:1px solid var(--border)">
+              <td style="padding:10px 12px;font-weight:600">Data Admissão</td>
+              <td style="padding:10px 12px;color:var(--txt-2)">2024-01-10</td>
+              <td style="padding:10px 12px;color:var(--err);font-weight:600">Formato: yyyy-MM-dd</td>
+            </tr>
+            <tr style="background:var(--bg)">
+              <td style="padding:10px 12px;font-weight:600">Status</td>
+              <td style="padding:10px 12px;color:var(--txt-2)">ativo</td>
+              <td style="padding:10px 12px;color:var(--txt-3)"><code>ativo</code> ou <code>inativo</code></td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+
+  <div class="step-card">
+    <div class="step-head">
+      <div class="step-num">3</div>
+      <div class="step-title">Atenção ao formato das datas</div>
+    </div>
+    <div class="step-body">
+      As colunas <strong>Nascimento</strong> e <strong>Data Admissão</strong> devem estar no formato <code>yyyy-MM-dd</code> (ex: <code>1990-05-15</code>). Se o Google Sheets converter automaticamente para outro formato ao digitar, clique na célula, vá em <strong>Formatar → Número → Texto simples</strong> antes de digitar, ou use o formato exato.
+      <div class="aviso-ok-tip" style="margin-top:12px">
+        <strong>Dica:</strong> Se tiver os dados em Excel ou outro sistema, pode colar direto nas linhas a partir da linha 2 — desde que as colunas estejam na mesma ordem e as datas no formato correto.
+      </div>
+    </div>
+  </div>
+
+  <div class="step-card">
+    <div class="step-head">
+      <div class="step-num">4</div>
+      <div class="step-title">O que o sistema faz com esses dados</div>
+    </div>
+    <div class="step-body">
+      <div class="params-grid">
+        <div class="param-card normal">
+          <div class="param-label">Gerador de Documentos</div>
+          <div class="param-text">Ao selecionar empresa + colaborador, o sistema preenche automaticamente Nome, CPF, CTPS, Cargo e Data de Admissão nos documentos gerados.</div>
+        </div>
+        <div class="param-card normal">
+          <div class="param-label">Desligamento</div>
+          <div class="param-text">Aviso Prévio, Pedido de Demissão e ASO Demissional são preenchidos com os dados do colaborador automaticamente.</div>
+        </div>
+        <div class="param-card normal">
+          <div class="param-label">Aniversários</div>
+          <div class="param-text">A data de nascimento alimenta a seção de Lembretes & Aniversários — o sistema avisa automaticamente os próximos 30 dias.</div>
+        </div>
+        <div class="param-card normal">
+          <div class="param-label">Análise de Jornada</div>
+          <div class="param-text">O nome do colaborador é vinculado ao relatório de jornada gerado pelo sistema Secullum.</div>
+        </div>
+      </div>
+    </div>
   </div>
 
 </div>
