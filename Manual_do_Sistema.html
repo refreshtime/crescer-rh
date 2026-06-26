@@ -47,49 +47,52 @@ body {
 }
 
 /* ── HEADER ── */
-.header { background: var(--graphite); padding: 40px 28px 32px; }
+.header { background: var(--graphite); padding: 48px 28px 40px; }
 .header-inner { max-width: 900px; margin: 0 auto; }
-.brand { font-size: 10px; font-weight: 700; letter-spacing: 4px; color: var(--gold); margin-bottom: 8px; text-transform: uppercase; }
-.title { font-size: 24px; font-weight: 800; color: #fff; line-height: 1.2; letter-spacing: -0.3px; }
-.sub   { font-size: 13px; color: #9A9890; margin-top: 6px; font-weight: 400; }
-.header-pills { display: flex; gap: 8px; flex-wrap: wrap; margin-top: 18px; }
-.header-pill { font-size: 11px; font-weight: 600; padding: 4px 12px; border-radius: 20px; letter-spacing: 0.2px; }
+.brand { font-size: 10px; font-weight: 700; letter-spacing: 4px; color: var(--gold); margin-bottom: 10px; text-transform: uppercase; }
+.title { font-size: 28px; font-weight: 800; color: #fff; line-height: 1.2; letter-spacing: -0.5px; }
+.sub   { font-size: 14px; color: #9A9890; margin-top: 8px; font-weight: 400; line-height: 1.6; }
+.header-pills { display: flex; gap: 8px; flex-wrap: wrap; margin-top: 22px; }
+.header-pill { font-size: 11px; font-weight: 600; padding: 5px 14px; border-radius: 20px; letter-spacing: 0.3px; }
 .header-pill.int { background: rgba(139,122,85,0.2); color: #C9B07A; }
 .header-pill.ext { background: rgba(29,64,104,0.3);  color: #8AB2D8; }
 .header-pill.doc { background: rgba(255,255,255,0.08); color: #7A7870; }
 
 /* ── LAYOUT ── */
-.wrap { max-width: 900px; margin: 0 auto; padding: 40px 20px 100px; }
+.wrap { max-width: 900px; margin: 0 auto; padding: 48px 24px 100px; }
 
 /* ── ÍNDICE ── */
 .idx-box {
-  border-top: 2px solid var(--graphite);
-  border-bottom: 1px solid var(--border);
-  padding: 18px 0 22px;
+  background: var(--surface);
+  border: 1.5px solid var(--border);
+  border-radius: 16px;
+  padding: 24px 28px 26px;
   margin-bottom: 48px;
 }
-.idx-title { font-size: 10px; font-weight: 700; letter-spacing: 3px; text-transform: uppercase; color: var(--txt-3); margin-bottom: 14px; }
+.idx-title { font-size: 10px; font-weight: 700; letter-spacing: 3px; text-transform: uppercase; color: var(--txt-3); margin-bottom: 16px; }
 .idx-list  { display: grid; grid-template-columns: 1fr 1fr; gap: 0 48px; }
 @media(max-width:560px){ .idx-list { grid-template-columns: 1fr; } }
 .idx-item  {
-  display: flex; align-items: baseline; gap: 10px; text-decoration: none;
-  padding: 6px 0; transition: color .12s;
+  display: flex; align-items: center; gap: 10px; text-decoration: none;
+  padding: 7px 0; border-bottom: 1px solid var(--border); transition: color .12s;
 }
+.idx-item:last-child { border-bottom: none; }
 .idx-item:hover .idx-name { color: var(--graphite); text-decoration: underline; }
-.idx-num  { font-size: 11px; font-weight: 500; color: var(--txt-3); min-width: 20px; flex-shrink: 0; }
+.idx-num  { font-size: 11px; font-weight: 700; color: var(--txt-3); min-width: 22px; flex-shrink: 0; }
 .idx-name { font-size: 13px; font-weight: 500; color: var(--txt-2); line-height: 1.4; }
 
 /* ── CABEÇALHO DE SEÇÃO ── */
-.section-wrap { margin-bottom: 48px; }
-.section-label { display: flex; align-items: center; gap: 12px; margin-bottom: 20px; padding-bottom: 16px; border-bottom: 2px solid var(--border); }
-.section-num { width: 36px; height: 36px; border-radius: 10px; background: var(--graphite); color: #fff; font-size: 13px; font-weight: 800; display: flex; align-items: center; justify-content: center; flex-shrink: 0; }
-.section-name { font-size: 16px; font-weight: 800; color: var(--graphite); letter-spacing: -0.2px; }
-.section-desc { font-size: 13px; color: var(--txt-2); margin-top: 2px; font-weight: 400; }
+.section-wrap { margin-bottom: 56px; }
+.section-label { display: flex; align-items: center; gap: 14px; margin-bottom: 24px; padding-bottom: 18px; border-bottom: 2px solid var(--border); }
+.section-num { width: 38px; height: 38px; border-radius: 11px; background: var(--graphite); color: #fff; font-size: 13px; font-weight: 800; display: flex; align-items: center; justify-content: center; flex-shrink: 0; letter-spacing: -0.5px; }
+.section-name { font-size: 17px; font-weight: 800; color: var(--graphite); letter-spacing: -0.3px; }
+.section-desc { font-size: 13px; color: var(--txt-2); margin-top: 3px; font-weight: 400; }
 
 /* ── OS PORTAIS ── */
-.portais-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; }
-@media(max-width:620px){ .portais-grid { grid-template-columns: 1fr; } }
-.portal-card { border-radius: 14px; padding: 22px 20px 20px; border: 1.5px solid var(--border); background: var(--surface); position: relative; transition: box-shadow .15s; }
+.portais-grid { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 14px; }
+@media(max-width:760px){ .portais-grid { grid-template-columns: 1fr 1fr; } }
+@media(max-width:480px){ .portais-grid { grid-template-columns: 1fr; } }
+.portal-card { border-radius: 14px; padding: 24px 22px 22px; border: 1.5px solid var(--border); background: var(--surface); position: relative; transition: box-shadow .15s; }
 .portal-card:hover { box-shadow: 0 4px 20px rgba(0,0,0,0.07); }
 .portal-badge { position: absolute; top: 16px; right: 16px; font-size: 9px; font-weight: 700; letter-spacing: 1.5px; padding: 3px 9px; border-radius: 20px; text-transform: uppercase; }
 .portal-badge.rh  { background: var(--gold-l); color: var(--gold); }
@@ -98,7 +101,6 @@ body {
 .portal-badge.gui { background: var(--ok-l); color: var(--ok); }
 .portal-icon { font-size: 28px; margin-bottom: 12px; }
 .portal-name { font-size: 15px; font-weight: 700; color: var(--graphite); margin-bottom: 3px; }
-.portal-file { font-size: 11px; color: var(--txt-3); font-family: 'Courier New', monospace; background: var(--bg); padding: 3px 8px; border-radius: 5px; display: inline-block; margin-bottom: 12px; }
 .portal-desc { font-size: 13px; color: var(--txt-2); line-height: 1.7; }
 .portal-who  { font-size: 11px; font-weight: 600; color: var(--txt-3); margin-top: 14px; padding-top: 12px; border-top: 1px solid var(--border); display: flex; align-items: center; gap: 6px; }
 
@@ -301,8 +303,8 @@ body {
 .info-box strong { font-weight: 700; }
 
 /* ── RODAPÉ ── */
-.footer { text-align: center; padding: 32px 0 40px; border-top: 1px solid var(--border); margin-top: 16px; }
-.footer-eyebrow { font-size: 10px; font-weight: 700; letter-spacing: 2.5px; color: var(--txt-3); text-transform: uppercase; margin-bottom: 6px; }
+.footer { text-align: center; padding: 40px 0 48px; border-top: 1px solid var(--border); margin-top: 24px; }
+.footer-eyebrow { font-size: 10px; font-weight: 700; letter-spacing: 2.5px; color: var(--txt-3); text-transform: uppercase; margin-bottom: 8px; }
 .footer-name { font-size: 13px; color: var(--txt-2); }
 .footer-name strong { color: var(--graphite); font-weight: 700; }
 </style>
@@ -329,25 +331,25 @@ body {
   <div class="idx-box">
     <div class="idx-title">Índice</div>
     <div class="idx-list">
-      <a href="#sec-portais"     class="idx-item"><span class="idx-num">01</span><span class="idx-name">Os 4 Portais do Sistema</span></a>
-      <a href="#sec-fluxo"       class="idx-item"><span class="idx-num">05</span><span class="idx-name">Fluxo detalhado por processo</span></a>
+      <a href="#sec-portais"     class="idx-item"><span class="idx-num">01</span><span class="idx-name">Os 3 Portais do Sistema</span></a>
       <a href="#sec-entrada"     class="idx-item"><span class="idx-num">02</span><span class="idx-name">O que chega pelo Portal Externo</span></a>
-      <a href="#sec-agenda"      class="idx-item"><span class="idx-num">06</span><span class="idx-name">Agenda, Lembretes &amp; Aniversários</span></a>
       <a href="#sec-destino"     class="idx-item"><span class="idx-num">03</span><span class="idx-name">Onde os dados vão parar</span></a>
-      <a href="#sec-jornada"     class="idx-item"><span class="idx-num">07</span><span class="idx-name">Análise de Jornada</span></a>
       <a href="#sec-resultado"   class="idx-item"><span class="idx-num">04</span><span class="idx-name">Quem preenche o quê</span></a>
+      <a href="#sec-fluxo"       class="idx-item"><span class="idx-num">05</span><span class="idx-name">Fluxo detalhado por processo</span></a>
+      <a href="#sec-agenda"      class="idx-item"><span class="idx-num">06</span><span class="idx-name">Agenda, Lembretes &amp; Aniversários</span></a>
+      <a href="#sec-jornada"     class="idx-item"><span class="idx-num">07</span><span class="idx-name">Análise de Jornada</span></a>
       <a href="#sec-ferramentas" class="idx-item"><span class="idx-num">08</span><span class="idx-name">Ferramentas do Portal RH Interno</span></a>
     </div>
   </div>
 
   <!-- ════════════════════════════════════════ -->
-  <!-- 01 · OS 4 PORTAIS -->
+  <!-- 01 · OS 3 PORTAIS -->
   <!-- ════════════════════════════════════════ -->
   <div class="section-wrap" id="sec-portais">
     <div class="section-label">
       <div class="section-num">01</div>
       <div>
-        <div class="section-name">Os 4 Portais do Sistema</div>
+        <div class="section-name">Os 3 Portais do Sistema</div>
         <div class="section-desc">Cada portal tem um público e uma função diferente</div>
       </div>
     </div>
@@ -358,7 +360,6 @@ body {
         <div class="portal-badge rh">RH Interno</div>
         <div class="portal-icon">🖥️</div>
         <div class="portal-name">Portal da Equipe RH</div>
-        <div class="portal-file">portal/Index.html</div>
         <div class="portal-desc">Painel exclusivo do RH Crescer. Aqui a equipe cadastra empresas, faz diagnóstico de compliance, processa desligamentos, gera documentos, analisa jornada de trabalho e acompanha a agenda com lembretes e aniversários.</div>
         <div class="portal-who">👩‍💼 Quem acessa: equipe interna RH Crescer</div>
       </div>
@@ -367,25 +368,14 @@ body {
         <div class="portal-badge ext">Externo</div>
         <div class="portal-icon">📱</div>
         <div class="portal-name">Portal das Empresas</div>
-        <div class="portal-file">externo/index.html</div>
         <div class="portal-desc">Portal enviado para colaboradores e gestores das empresas clientes. Por aqui eles enviam documentos de admissão, atestados, solicitam vagas e comunicam desligamentos — sem precisar ligar ou mandar WhatsApp.</div>
         <div class="portal-who">🏢 Quem acessa: colaboradores e gestores das empresas clientes</div>
-      </div>
-
-      <div class="portal-card">
-        <div class="portal-badge gui">Guia</div>
-        <div class="portal-icon">📋</div>
-        <div class="portal-name">Onboarding do Gestor</div>
-        <div class="portal-file">onboarding/index.html</div>
-        <div class="portal-desc">Guia visual enviado ao gestor após o cadastro da empresa. Explica passo a passo como usar o portal externo: como admitir colaborador, enviar atestado, abrir vaga e comunicar desligamento. Linguagem simples, sem termos técnicos.</div>
-        <div class="portal-who">🏢 Quem acessa: gestores das empresas clientes (recebem o link)</div>
       </div>
 
       <div class="portal-card">
         <div class="portal-badge man">Manual</div>
         <div class="portal-icon">📖</div>
         <div class="portal-name">Manual do Sistema</div>
-        <div class="portal-file">Manual_do_Sistema.html</div>
         <div class="portal-desc">Este arquivo. Explica visualmente como tudo funciona. Consulte sempre que tiver dúvidas sobre o fluxo do sistema, quem faz o quê, ou onde os dados ficam salvos.</div>
         <div class="portal-who">📚 Quem acessa: equipe RH Crescer para consulta</div>
       </div>
@@ -1213,10 +1203,10 @@ body {
     <div class="step-card">
       <div class="step-head">
         <div class="step-num">B</div>
-        <div class="step-title">Cadastrar Empresa — campos e onboarding</div>
+        <div class="step-title">Cadastrar Empresa</div>
       </div>
       <div class="step-body" style="margin-bottom:14px">
-        Ao cadastrar uma empresa cliente, preencha todos os dados operacionais de uma vez. Após salvar, o sistema exibe um aviso para enviar o Guia do Gestor ao cliente.
+        Ao cadastrar uma empresa cliente, preencha todos os dados operacionais de uma vez. Uma pasta é criada automaticamente no Drive e o cadastro fica disponível em todos os menus do portal.
       </div>
       <div class="params-grid">
         <div class="param-card normal">
@@ -1234,10 +1224,6 @@ body {
         <div class="param-card normal">
           <div class="param-label">Grupos WhatsApp</div>
           <div class="param-text">Links dos grupos de liderança e de colaboradores após criação. Centraliza o acesso para toda a equipe RH.</div>
-        </div>
-        <div class="param-card ok">
-          <div class="param-label">Aviso de Onboarding</div>
-          <div class="param-text">Após salvar a empresa, aparece um aviso com link para o <strong>Guia do Gestor</strong> (onboarding/index.html). Envie esse link ao gestor da empresa para que ele saiba usar o portal externo.</div>
         </div>
       </div>
       <div class="code-box">
