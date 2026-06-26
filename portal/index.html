@@ -210,6 +210,8 @@ html, body { height: 100%; background: var(--bg); font-family: 'Outfit', sans-se
 .lem-item.lem-hoje { border-color:#f59e0b; }
 .lem-item.lem-hoje .lem-item-icon { background:#fef3c7; }
 .lem-item.lem-futuro .lem-item-icon { background:#e0e7ff; }
+.lem-concluir-btn { flex-shrink:0; width:32px; height:32px; border-radius:8px; background:#f0fdf4; border:1.5px solid #86efac; color:#16a34a; font-size:16px; font-weight:700; cursor:pointer; display:flex; align-items:center; justify-content:center; transition:background .15s; }
+.lem-concluir-btn:hover { background:#dcfce7; }
 .lem-empty { text-align:center; padding:32px 16px; color:var(--txt-3); font-size:14px; }
 
 /* LOADING */
@@ -2315,6 +2317,8 @@ function salvarEntrevistaDesligamento() {
 }
 
 // ── LEMBRETES ──
+var _lemData = [];
+
 function _escHtml(s) {
   return String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');
 }
@@ -2329,8 +2333,9 @@ function carregarLembretes() {
       return;
     }
     var hoje = new Date(); hoje.setHours(0,0,0,0);
+    _lemData = res.itens;
     var html = '<div class="lem-list">';
-    res.itens.forEach(function(it) {
+    res.itens.forEach(function(it, idx) {
       var alvo = new Date(it.dataAlvo + 'T00:00:00');
       var diff = Math.round((alvo - hoje) / 86400000);
       var cls = diff < 0 ? 'lem-urgente' : diff === 0 ? 'lem-hoje' : 'lem-futuro';
@@ -2356,12 +2361,27 @@ function carregarLembretes() {
       if (it.obs) html += ' · ' + _escHtml(it.obs);
       html += '</div></div>';
       html += '<span class="lem-item-badge" style="background:' + badgeBg + ';color:' + badgeColor + '">' + badgeTxt + '</span>';
+      if (it.tipo !== 'aniversario') {
+        html += '<button class="lem-concluir-btn" onclick="_concluirLem(' + idx + ')" title="Marcar como concluído">✓</button>';
+      }
       html += '</div>';
     });
     html += '</div>';
     wrap.innerHTML = html;
   }, function() {
     wrap.innerHTML = '<div class="lem-empty">Erro ao carregar lembretes.</div>';
+  });
+}
+
+function _concluirLem(idx) {
+  var it = _lemData[idx];
+  if (!it) return;
+  apiPost('concluirLembrete', { titulo: it.titulo, empresa: it.empresa || '', dataAlvo: it.dataAlvo }, function(res) {
+    if (res && res.ok) {
+      carregarLembretes();
+    } else {
+      showToast('lem', false, '✗ Erro ao concluir lembrete.');
+    }
   });
 }
 
