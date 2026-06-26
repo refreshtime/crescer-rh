@@ -1917,7 +1917,7 @@ function _todosLembretesPendentes(ss) {
 
 // ───────────────────────────────────────────────────────────
 //  _aniversariantesProximos — colaboradores com aniversário
-//  nos próximos 7 dias (inclusive hoje)
+//  nos próximos 30 dias (inclusive hoje)
 // ───────────────────────────────────────────────────────────
 function _aniversariantesProximos(ss) {
   var sheet = ss.getSheetByName('Base_Colaboradores');
@@ -1937,7 +1937,7 @@ function _aniversariantesProximos(ss) {
     var anivEsteAno = new Date(hoje.getFullYear(), nasc.getMonth(), nasc.getDate());
     var aniv = anivEsteAno < hoje ? new Date(hoje.getFullYear() + 1, nasc.getMonth(), nasc.getDate()) : anivEsteAno;
     var diff = Math.round((aniv - hoje) / 86400000);
-    if (diff >= 0 && diff <= 7) {
+    if (diff >= 0 && diff <= 30) {
       var fmtAniv = Utilities.formatDate(aniv, Session.getScriptTimeZone(), 'yyyy-MM-dd');
       result.push({ nome: nome, empresa: empresa, dataAniv: fmtAniv });
     }
