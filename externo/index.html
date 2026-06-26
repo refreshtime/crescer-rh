@@ -1,0 +1,805 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0"/>
+<title>CRESCER · Portal RH</title>
+<link rel="preconnect" href="https://fonts.googleapis.com"/>
+<link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800&display=swap" rel="stylesheet"/>
+<style>
+:root {
+  --bg:       #F7F6F3;
+  --surface:  #FFFFFF;
+  --border:   #E4E2DC;
+  --border-s: #CCCAC2;
+  --txt:      #1A1918;
+  --txt-2:    #6B6860;
+  --txt-3:    #9B9890;
+  --graphite: #2C2B28;
+  --gold:     #8B7A55;
+  --gold-l:   #F0EBE1;
+  --ok:       #3D7A5C;
+  --ok-l:     #EBF5F0;
+  --err:      #8B3A3A;
+  --err-l:    #F5EBEB;
+  --warn:     #7A5C20;
+  --warn-l:   #FFF8EC;
+  --radius:   14px;
+  --shadow:   0 2px 16px rgba(0,0,0,0.06);
+  --shadow-m: 0 4px 32px rgba(0,0,0,0.10);
+}
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+html, body { height: 100%; background: var(--bg); font-family: 'Outfit', sans-serif; color: var(--txt); -webkit-font-smoothing: antialiased; }
+.app { min-height: 100vh; max-width: 480px; margin: 0 auto; padding: 0 0 60px; }
+
+.header { padding: 52px 28px 0; margin-bottom: 40px; }
+.header-brand { font-size: 11px; font-weight: 700; letter-spacing: 4px; text-transform: uppercase; color: var(--gold); margin-bottom: 6px; }
+.header-title { font-size: 26px; font-weight: 700; color: var(--graphite); line-height: 1.2; }
+.header-sub   { font-size: 14px; color: var(--txt-2); margin-top: 6px; }
+.header-rule  { width: 32px; height: 2px; background: var(--gold); margin-top: 16px; }
+
+.screen { display: none; padding: 0 20px; }
+.screen.active { display: block; }
+
+.hub { padding: 0 20px; }
+.hub-card {
+  display: flex; align-items: center; gap: 20px;
+  background: var(--surface); border: 1px solid var(--border);
+  border-radius: var(--radius); padding: 24px 22px; margin-bottom: 14px;
+  cursor: pointer; transition: box-shadow .2s, border-color .2s, transform .15s;
+  -webkit-tap-highlight-color: transparent;
+}
+.hub-card:active { transform: scale(0.98); }
+.hub-card:hover  { box-shadow: var(--shadow-m); border-color: var(--border-s); }
+.hub-icon { width: 48px; height: 48px; border-radius: 12px; background: var(--gold-l); display: flex; align-items: center; justify-content: center; flex-shrink: 0; }
+.hub-icon svg { width: 22px; height: 22px; stroke: var(--gold); }
+.hub-label { font-size: 15px; font-weight: 600; color: var(--graphite); line-height: 1.2; }
+.hub-desc  { font-size: 12px; color: var(--txt-3); margin-top: 3px; }
+.hub-arrow { margin-left: auto; color: var(--border-s); }
+
+.form-header { display: flex; align-items: center; gap: 14px; margin-bottom: 32px; }
+.back-btn {
+  width: 38px; height: 38px; border-radius: 10px; border: 1px solid var(--border);
+  background: var(--surface); display: flex; align-items: center; justify-content: center;
+  cursor: pointer; flex-shrink: 0;
+}
+.back-btn svg { width: 18px; height: 18px; stroke: var(--txt-2); }
+.form-title { font-size: 20px; font-weight: 700; color: var(--graphite); }
+.form-step  { font-size: 11px; color: var(--txt-3); font-weight: 500; letter-spacing: 1px; margin-top: 2px; }
+
+.field { margin-bottom: 20px; }
+.field > label { display: block; font-size: 11px; font-weight: 700; letter-spacing: 1.5px; text-transform: uppercase; color: var(--txt-2); margin-bottom: 8px; }
+.field input, .field select, .field textarea {
+  width: 100%; background: var(--surface); border: 1.5px solid var(--border);
+  border-radius: 10px; padding: 14px 16px; font-family: 'Outfit', sans-serif;
+  font-size: 15px; color: var(--txt); outline: none; transition: border-color .2s;
+  appearance: none; -webkit-appearance: none;
+}
+.field textarea { resize: vertical; min-height: 90px; line-height: 1.5; }
+.field input:focus, .field select:focus, .field textarea:focus { border-color: var(--graphite); }
+.field input::placeholder, .field textarea::placeholder { color: var(--txt-3); }
+.field select {
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='16' height='16' viewBox='0 0 24 24' fill='none' stroke='%236B6860' stroke-width='2'%3E%3Cpath d='M6 9l6 6 6-6'/%3E%3C/svg%3E");
+  background-repeat: no-repeat; background-position: right 14px center; padding-right: 40px;
+}
+.field-row { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
+
+.section-tag { font-size: 11px; font-weight: 700; letter-spacing: 2px; text-transform: uppercase; color: var(--txt-3); margin-bottom: 16px; margin-top: 28px; }
+
+.upload-area {
+  border: 1.5px dashed var(--border-s); border-radius: 10px; background: var(--surface);
+  padding: 20px; text-align: center; cursor: pointer; position: relative; transition: border-color .2s, background .2s;
+}
+.upload-area:hover { border-color: var(--gold); background: var(--gold-l); }
+.upload-area input[type="file"] { position: absolute; inset: 0; opacity: 0; cursor: pointer; width: 100%; height: 100%; }
+.upload-icon  { font-size: 24px; margin-bottom: 6px; }
+.upload-label { font-size: 13px; font-weight: 600; color: var(--graphite); }
+.upload-hint  { font-size: 11px; color: var(--txt-3); margin-top: 2px; }
+.upload-name  { font-size: 12px; color: var(--ok); font-weight: 600; margin-top: 8px; display: none; }
+.badge-opt { background: var(--gold-l); color: var(--gold); font-size: 10px; font-weight: 700; padding: 2px 7px; border-radius: 20px; margin-left: 6px; vertical-align: middle; }
+
+.terms-accept { display: flex; align-items: center; gap: 12px; padding: 14px 18px; background: var(--gold-l); border: 1px solid var(--border); border-radius: 10px; cursor: pointer; margin-bottom: 20px; }
+.terms-accept input[type="checkbox"] { width: 20px; height: 20px; accent-color: var(--graphite); flex-shrink: 0; }
+.terms-accept span { font-size: 13px; font-weight: 500; color: var(--graphite); line-height: 1.4; }
+
+.btn-primary {
+  display: block; width: 100%; padding: 17px; background: var(--graphite);
+  color: #fff; border: none; border-radius: 12px; font-family: 'Outfit', sans-serif;
+  font-size: 15px; font-weight: 700; letter-spacing: 0.5px; cursor: pointer;
+  transition: opacity .2s, transform .15s; margin-top: 8px; text-decoration: none; text-align: center;
+}
+.btn-primary:active { transform: scale(0.98); opacity: 0.85; }
+.btn-primary:disabled { opacity: 0.45; cursor: not-allowed; }
+.btn-wpp { background: #25D366; margin-top: 16px; }
+
+.loading { display: none; flex-direction: column; align-items: center; justify-content: center; padding: 48px 0; gap: 16px; }
+.loading.show { display: flex; }
+.spinner { width: 36px; height: 36px; border: 3px solid var(--border); border-top-color: var(--graphite); border-radius: 50%; animation: spin .8s linear infinite; }
+@keyframes spin { to { transform: rotate(360deg); } }
+.loading-txt { font-size: 14px; color: var(--txt-2); font-weight: 500; }
+
+.toast { display: none; border-radius: 12px; padding: 18px 20px; margin-top: 24px; font-size: 14px; font-weight: 500; line-height: 1.5; }
+.toast.ok  { display: block; background: var(--ok-l);  color: var(--ok);  border: 1px solid #B8DFD0; }
+.toast.err { display: block; background: var(--err-l); color: var(--err); border: 1px solid #E8C4C4; }
+
+.info-card { background: var(--gold-l); border: 1px solid #D4C4A0; border-radius: 10px; padding: 14px 16px; font-size: 13px; color: var(--warn); font-weight: 500; margin-bottom: 20px; line-height: 1.6; }
+</style>
+</head>
+<body>
+<div class="app">
+
+  <div class="header">
+    <div class="header-brand">Crescer · RH</div>
+    <div class="header-title">Portal de Atendimento</div>
+    <div class="header-sub">Envio de documentos e comunicados</div>
+    <div class="header-rule"></div>
+  </div>
+
+  <!-- ══ HUB ══ -->
+  <div class="hub screen active" id="screen-hub">
+
+    <div class="hub-card" onclick="goto('documentos')">
+      <div class="hub-icon">
+        <svg fill="none" viewBox="0 0 24 24" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/>
+          <polyline points="14 2 14 8 20 8"/>
+          <line x1="12" y1="18" x2="12" y2="12"/><line x1="9" y1="15" x2="15" y2="15"/>
+        </svg>
+      </div>
+      <div>
+        <div class="hub-label">Enviar Meus Documentos</div>
+        <div class="hub-desc">Novo colaborador — envio de documentos para admissão</div>
+      </div>
+      <div class="hub-arrow"><svg width="18" height="18" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor"><path d="M9 18l6-6-6-6"/></svg></div>
+    </div>
+
+    <div class="hub-card" onclick="goto('vaga')">
+      <div class="hub-icon">
+        <svg fill="none" viewBox="0 0 24 24" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+          <circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/>
+        </svg>
+      </div>
+      <div>
+        <div class="hub-label">Abrir Vaga</div>
+        <div class="hub-desc">Solicitar processo seletivo ao RH da Crescer</div>
+      </div>
+      <div class="hub-arrow"><svg width="18" height="18" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor"><path d="M9 18l6-6-6-6"/></svg></div>
+    </div>
+
+    <div class="hub-card" onclick="goto('atestado')">
+      <div class="hub-icon">
+        <svg fill="none" viewBox="0 0 24 24" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+          <rect x="3" y="3" width="18" height="18" rx="2"/>
+          <path d="M12 8v8M8 12h8"/>
+        </svg>
+      </div>
+      <div>
+        <div class="hub-label">Enviar Atestado Médico</div>
+        <div class="hub-desc">Registrar afastamento com atestado</div>
+      </div>
+      <div class="hub-arrow"><svg width="18" height="18" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor"><path d="M9 18l6-6-6-6"/></svg></div>
+    </div>
+
+  </div>
+
+  <!-- ══ DOCUMENTOS DE ADMISSÃO ══ -->
+  <div class="screen" id="screen-documentos">
+    <div class="form-header">
+      <button class="back-btn" onclick="goto('hub')"><svg fill="none" viewBox="0 0 24 24" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M19 12H5M12 19l-7-7 7-7"/></svg></button>
+      <div><div class="form-title">Enviar Documentos</div><div class="form-step">Admissão — envio pelo colaborador</div></div>
+    </div>
+
+    <div class="info-card">Envie os documentos solicitados pelo RH da Crescer. Após o envio, você receberá uma confirmação e poderá avisar o RH pelo WhatsApp.</div>
+
+    <div class="section-tag">Seus Dados</div>
+    <div class="field"><label>Nome Completo</label><input type="text" id="doc-nome" placeholder="Seu nome completo" autocomplete="name"/></div>
+    <div class="field"><label>CPF</label><input type="text" id="doc-cpf" placeholder="000.000.000-00" maxlength="14" inputmode="numeric"/></div>
+    <div class="field"><label>CTPS <span style="font-weight:400;text-transform:none;letter-spacing:0">(Carteira de Trabalho)</span></label><input type="text" id="doc-ctps" placeholder="1234567/0001" maxlength="12" inputmode="numeric"/></div>
+    <div class="field-row">
+      <div class="field"><label>Data de Nascimento</label><input type="date" id="doc-nasc"/></div>
+      <div class="field"><label>WhatsApp</label><input type="tel" id="doc-tel" placeholder="(00) 99999-9999" maxlength="15" inputmode="numeric"/></div>
+    </div>
+    <div class="field"><label>E-mail</label><input type="email" id="doc-email" placeholder="seuemail@exemplo.com" autocomplete="email" inputmode="email"/></div>
+    <div class="field-row">
+      <div class="field"><label>Contato de Urgência 1</label><input type="tel" id="doc-urgencia1" placeholder="(00) 99999-9999" maxlength="15" inputmode="numeric"/></div>
+      <div class="field"><label>Contato de Urgência 2</label><input type="tel" id="doc-urgencia2" placeholder="(00) 99999-9999" maxlength="15" inputmode="numeric"/></div>
+    </div>
+
+    <div class="field">
+      <label>Empresa</label>
+      <select id="doc-empresa">
+        <option value="">Selecione a empresa…</option>
+      </select>
+    </div>
+
+    <div class="section-tag">Documentos de Identificação</div>
+    <div class="field"><label>RG — Frente</label>
+      <div class="upload-area"><input type="file" id="up-rg-frente" accept="image/*,.pdf" onchange="onUp(this,'rg-frente')"/>
+        <div class="upload-icon">🪪</div><div class="upload-label">Toque para enviar</div>
+        <div class="upload-hint">JPG, PNG ou PDF · máx. 5MB</div><div class="upload-name" id="up-rg-frente-name"></div>
+      </div>
+    </div>
+    <div class="field"><label>RG — Verso</label>
+      <div class="upload-area"><input type="file" id="up-rg-verso" accept="image/*,.pdf" onchange="onUp(this,'rg-verso')"/>
+        <div class="upload-icon">🪪</div><div class="upload-label">Toque para enviar</div>
+        <div class="upload-hint">JPG, PNG ou PDF · máx. 5MB</div><div class="upload-name" id="up-rg-verso-name"></div>
+      </div>
+    </div>
+    <div class="field"><label>CPF — Documento físico</label>
+      <div class="upload-area"><input type="file" id="up-cpf" accept="image/*,.pdf" onchange="onUp(this,'cpf')"/>
+        <div class="upload-icon">📄</div><div class="upload-label">Toque para enviar</div>
+        <div class="upload-hint">JPG, PNG ou PDF · máx. 5MB</div><div class="upload-name" id="up-cpf-name"></div>
+      </div>
+    </div>
+
+    <div class="field"><label>CNH</label>
+      <div class="upload-area"><input type="file" id="up-cnh" accept="image/*,.pdf" onchange="onUp(this,'cnh')"/>
+        <div class="upload-icon">🚗</div><div class="upload-label">Toque para enviar</div>
+        <div class="upload-hint">JPG, PNG ou PDF · máx. 5MB</div><div class="upload-name" id="up-cnh-name"></div>
+      </div>
+    </div>
+    <div class="field"><label>Certidão de Nascimento ou Casamento</label>
+      <div class="upload-area"><input type="file" id="up-certidao" accept="image/*,.pdf" onchange="onUp(this,'certidao')"/>
+        <div class="upload-icon">📜</div><div class="upload-label">Toque para enviar</div>
+        <div class="upload-hint">JPG, PNG ou PDF · máx. 5MB</div><div class="upload-name" id="up-certidao-name"></div>
+      </div>
+    </div>
+
+    <div class="section-tag">Foto e Comprovantes</div>
+    <div class="field"><label>Foto 3x4</label>
+      <div class="upload-area"><input type="file" id="up-foto" accept="image/*" onchange="onUp(this,'foto')"/>
+        <div class="upload-icon">📷</div><div class="upload-label">Toque para enviar</div>
+        <div class="upload-hint">JPG ou PNG · fundo branco · máx. 5MB</div><div class="upload-name" id="up-foto-name"></div>
+      </div>
+    </div>
+    <div class="field"><label>Comprovante de Residência</label>
+      <div class="upload-area"><input type="file" id="up-residencia" accept="image/*,.pdf" onchange="onUp(this,'residencia')"/>
+        <div class="upload-icon">🏠</div><div class="upload-label">Toque para enviar</div>
+        <div class="upload-hint">Conta de luz, água ou gás · máx. 5MB</div><div class="upload-name" id="up-residencia-name"></div>
+      </div>
+    </div>
+    <div class="field"><label>Comprovante de Escolaridade</label>
+      <div class="upload-area"><input type="file" id="up-escolaridade" accept="image/*,.pdf" onchange="onUp(this,'escolaridade')"/>
+        <div class="upload-icon">🎓</div><div class="upload-label">Toque para enviar</div>
+        <div class="upload-hint">Diploma, histórico ou declaração · máx. 5MB</div><div class="upload-name" id="up-escolaridade-name"></div>
+      </div>
+    </div>
+
+    <div class="section-tag">Dados Complementares</div>
+    <div class="field"><label>PIS / PASEP</label>
+      <div class="upload-area"><input type="file" id="up-pis" accept="image/*,.pdf" onchange="onUp(this,'pis')"/>
+        <div class="upload-icon">📋</div><div class="upload-label">Cartão PIS ou print no app</div>
+        <div class="upload-hint">JPG, PNG ou PDF · máx. 5MB</div><div class="upload-name" id="up-pis-name"></div>
+      </div>
+    </div>
+    <div class="field"><label>Título de Eleitor</label>
+      <div class="upload-area"><input type="file" id="up-titulo" accept="image/*,.pdf" onchange="onUp(this,'titulo')"/>
+        <div class="upload-icon">🗳️</div><div class="upload-label">Toque para enviar</div>
+        <div class="upload-hint">JPG, PNG ou PDF · máx. 5MB</div><div class="upload-name" id="up-titulo-name"></div>
+      </div>
+    </div>
+    <div class="field"><label>Dados Bancários</label>
+      <div class="upload-area"><input type="file" id="up-banco" accept="image/*,.pdf" onchange="onUp(this,'banco')"/>
+        <div class="upload-icon">🏦</div><div class="upload-label">Foto do cartão ou print do app</div>
+        <div class="upload-hint">Banco, agência e conta visíveis · máx. 5MB</div><div class="upload-name" id="up-banco-name"></div>
+      </div>
+    </div>
+    <div class="field"><label>Certidão de Nascimento dos Filhos <span class="badge-opt">se houver</span></label>
+      <div class="upload-area"><input type="file" id="up-filhos" accept="image/*,.pdf" onchange="onUp(this,'filhos')"/>
+        <div class="upload-icon">👶</div><div class="upload-label">Toque para enviar</div>
+        <div class="upload-hint">Um arquivo por filho · máx. 5MB</div><div class="upload-name" id="up-filhos-name"></div>
+      </div>
+    </div>
+    <div class="field"><label>CPF dos Filhos <span class="badge-opt">se houver</span></label>
+      <div class="upload-area"><input type="file" id="up-cpf-filhos" accept="image/*,.pdf" onchange="onUp(this,'cpf-filhos')"/>
+        <div class="upload-icon">📄</div><div class="upload-label">Toque para enviar</div>
+        <div class="upload-hint">JPG, PNG ou PDF · máx. 5MB</div><div class="upload-name" id="up-cpf-filhos-name"></div>
+      </div>
+    </div>
+    <div class="field"><label>Cartão de Vacina <span class="badge-opt">filhos até 14 anos</span></label>
+      <div class="upload-area"><input type="file" id="up-vacina" accept="image/*,.pdf" onchange="onUp(this,'vacina')"/>
+        <div class="upload-icon">💉</div><div class="upload-label">Toque para enviar</div>
+        <div class="upload-hint">JPG, PNG ou PDF · máx. 5MB</div><div class="upload-name" id="up-vacina-name"></div>
+      </div>
+    </div>
+    <div class="field"><label>Declaração Escolar <span class="badge-opt">filhos até 14 anos</span></label>
+      <div class="upload-area"><input type="file" id="up-decl-escolar" accept="image/*,.pdf" onchange="onUp(this,'decl-escolar')"/>
+        <div class="upload-icon">🏫</div><div class="upload-label">Toque para enviar</div>
+        <div class="upload-hint">JPG, PNG ou PDF · máx. 5MB</div><div class="upload-name" id="up-decl-escolar-name"></div>
+      </div>
+    </div>
+
+    <div class="section-tag">Autorização LGPD</div>
+    <label class="terms-accept">
+      <input type="checkbox" id="doc-lgpd"/>
+      <span>Autorizo a Crescer Consultoria a tratar meus dados pessoais enviados acima para fins de admissão, conforme a Lei Geral de Proteção de Dados (Lei nº 13.709/2018).</span>
+    </label>
+
+    <div class="loading" id="loading-doc"><div class="spinner"></div><div class="loading-txt">Enviando seus documentos…</div></div>
+    <div class="toast" id="toast-doc"></div>
+    <button class="btn-primary" id="btn-doc" onclick="enviarDocumentos()">Enviar Documentos</button>
+  </div>
+
+  <!-- ══ SUCESSO ══ -->
+  <div class="screen" id="screen-sucesso">
+    <div style="text-align:center;padding:48px 12px 32px;">
+      <div style="width:80px;height:80px;border-radius:50%;background:var(--ok-l);display:flex;align-items:center;justify-content:center;margin:0 auto 24px;">
+        <svg width="40" height="40" fill="none" viewBox="0 0 24 24" stroke-width="2.5" stroke="var(--ok)" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6L9 17l-5-5"/></svg>
+      </div>
+      <div style="font-size:22px;font-weight:800;color:var(--graphite);margin-bottom:10px">Documentos enviados!</div>
+      <div style="font-size:14px;color:var(--txt-2);line-height:1.7;margin-bottom:32px">Seus documentos foram recebidos e salvos com segurança no sistema da Crescer.<br/><br/>O RH irá verificar seus documentos e entrará em contato com os próximos passos.</div>
+      <button class="btn-primary" onclick="goto('hub')">Voltar ao início</button>
+    </div>
+  </div>
+
+  <!-- ══ VAGA ══ -->
+  <div class="screen" id="screen-vaga">
+    <div class="form-header">
+      <button class="back-btn" onclick="goto('hub')"><svg fill="none" viewBox="0 0 24 24" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M19 12H5M12 19l-7-7 7-7"/></svg></button>
+      <div><div class="form-title">Abrir Vaga</div><div class="form-step">Solicitação de processo seletivo</div></div>
+    </div>
+
+    <div class="info-card">Preencha os dados da vaga. O RH da Crescer receberá as informações, entrará em contato e fará a divulgação no InfoJobs e demais canais.</div>
+
+    <div class="section-tag">Dados da Vaga</div>
+    <div class="field"><label>Título da Vaga</label><input type="text" id="vaga-titulo" placeholder="Ex: Auxiliar de Cozinha, Atendente…"/></div>
+    <div class="field">
+      <label>Empresa</label>
+      <select id="vaga-empresa">
+        <option value="">Selecione a empresa…</option>
+      </select>
+    </div>
+    <div class="field-row">
+      <div class="field">
+        <label>Área / Departamento</label>
+        <select id="vaga-area">
+          <option value="">Selecione…</option>
+          <option>Administrativo</option><option>Atendimento / Recepção</option>
+          <option>Cozinha / Produção</option><option>Vendas / Comercial</option>
+          <option>Limpeza / Higienização</option><option>Estoque / Logística</option>
+          <option>Financeiro</option><option>Segurança</option><option>TI</option>
+          <option>Outro</option>
+        </select>
+      </div>
+      <div class="field">
+        <label>Nível</label>
+        <select id="vaga-nivel">
+          <option value="">Selecione…</option>
+          <option>Aprendiz</option><option>Auxiliar / Operacional</option>
+          <option>Assistente</option><option>Analista / Técnico</option>
+          <option>Supervisor</option><option>Coordenador</option><option>Gerente</option>
+        </select>
+      </div>
+    </div>
+    <div class="field-row">
+      <div class="field">
+        <label>Tipo de Contrato</label>
+        <select id="vaga-contrato">
+          <option value="">Selecione…</option>
+          <option>CLT — Efetivo</option><option>CLT — Temporário</option>
+          <option>Aprendiz (menor)</option><option>Estágio</option><option>PJ</option>
+        </select>
+      </div>
+      <div class="field">
+        <label>Modalidade</label>
+        <select id="vaga-modalidade">
+          <option>Presencial</option><option>Híbrido</option><option>Remoto</option>
+        </select>
+      </div>
+    </div>
+    <div class="field-row">
+      <div class="field"><label>Qtd. de Vagas</label><input type="number" id="vaga-qtd" value="1" min="1" inputmode="numeric"/></div>
+      <div class="field">
+        <label>Motivo da Abertura</label>
+        <select id="vaga-motivo">
+          <option>Novo cargo</option><option>Substituição</option>
+          <option>Expansão</option><option>Sazonalidade</option>
+        </select>
+      </div>
+    </div>
+    <div class="field-row">
+      <div class="field"><label>Cidade</label><input type="text" id="vaga-cidade" placeholder="Ex: João Pessoa"/></div>
+      <div class="field">
+        <label>Estado</label>
+        <select id="vaga-estado">
+          <option>AC</option><option>AL</option><option>AP</option><option>AM</option>
+          <option>BA</option><option>CE</option><option>DF</option><option>ES</option>
+          <option>GO</option><option>MA</option><option>MT</option><option>MS</option>
+          <option>MG</option><option>PA</option><option selected>PB</option><option>PR</option>
+          <option>PE</option><option>PI</option><option>RJ</option><option>RN</option>
+          <option>RS</option><option>RO</option><option>RR</option><option>SC</option>
+          <option>SE</option><option>SP</option><option>TO</option>
+        </select>
+      </div>
+    </div>
+
+    <div class="section-tag">Remuneração e Benefícios</div>
+    <div class="field-row">
+      <div class="field"><label>Salário De (R$)</label><input type="text" id="vaga-sal-de" placeholder="Ex: 1.412,00" inputmode="decimal"/></div>
+      <div class="field"><label>Salário Até (R$)</label><input type="text" id="vaga-sal-ate" placeholder="Ex: 1.800,00" inputmode="decimal"/></div>
+    </div>
+    <label class="terms-accept" style="margin-bottom:20px">
+      <input type="checkbox" id="vaga-a-combinar"/>
+      <span>Salário a combinar (não divulgar o valor)</span>
+    </label>
+    <div class="field"><label>Benefícios Oferecidos</label><input type="text" id="vaga-beneficios" placeholder="Ex: VR, VT, Plano de saúde, Refeição no local…"/></div>
+
+    <div class="section-tag">Perfil Desejado</div>
+    <div class="field-row">
+      <div class="field">
+        <label>Escolaridade Mínima</label>
+        <select id="vaga-escolaridade">
+          <option value="">Selecione…</option>
+          <option>Sem exigência</option><option>Ensino Fundamental</option>
+          <option>Ensino Médio</option><option>Ensino Técnico</option>
+          <option>Superior incompleto</option><option>Superior completo</option>
+        </select>
+      </div>
+      <div class="field">
+        <label>Experiência Mínima</label>
+        <select id="vaga-experiencia">
+          <option value="">Selecione…</option>
+          <option>Sem experiência</option><option>Menos de 6 meses</option>
+          <option>6 meses a 1 ano</option><option>1 a 2 anos</option>
+          <option>Mais de 2 anos</option>
+        </select>
+      </div>
+    </div>
+    <div class="field"><label>Descrição das Atividades</label>
+      <textarea id="vaga-descricao" placeholder="Descreva o dia a dia da função e principais responsabilidades…"></textarea>
+    </div>
+    <div class="field"><label>Requisitos Obrigatórios</label>
+      <textarea id="vaga-requisitos" placeholder="Ex: CNH B, experiência em atendimento, disponibilidade de horário…"></textarea>
+    </div>
+    <div class="field"><label>Diferenciais <span style="font-weight:400;text-transform:none;letter-spacing:0">(opcional)</span></label>
+      <textarea id="vaga-diferenciais" placeholder="Conhecimentos ou habilidades valorizados mas não obrigatórios…"></textarea>
+    </div>
+
+    <div class="section-tag">Aprovação</div>
+    <div class="field"><label>Seu Nome (Gestor responsável)</label>
+      <input type="text" id="vaga-gestor" placeholder="Quem está solicitando a vaga"/>
+    </div>
+    <div class="field"><label>Data Limite para Contratar</label><input type="date" id="vaga-data-limite"/></div>
+
+    <div class="loading" id="loading-vaga"><div class="spinner"></div><div class="loading-txt">Enviando solicitação…</div></div>
+    <div class="toast" id="toast-vaga"></div>
+    <button class="btn-primary" id="btn-vaga" onclick="enviarVaga()">Solicitar Abertura de Vaga</button>
+  </div>
+
+  <!-- ══ ATESTADO ══ -->
+  <div class="screen" id="screen-atestado">
+    <div class="form-header">
+      <button class="back-btn" onclick="goto('hub')"><svg fill="none" viewBox="0 0 24 24" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M19 12H5M12 19l-7-7 7-7"/></svg></button>
+      <div><div class="form-title">Atestado Médico</div><div class="form-step">Registro de afastamento</div></div>
+    </div>
+
+    <div class="field"><label>Seu Nome Completo</label><input type="text" id="at-nome" placeholder="Nome do colaborador"/></div>
+    <div class="field">
+      <label>Empresa</label>
+      <select id="at-empresa">
+        <option value="">Selecione a empresa…</option>
+      </select>
+    </div>
+    <div class="field-row">
+      <div class="field"><label>Dias de Afastamento</label><input type="number" id="at-dias" placeholder="Ex: 3" min="1" inputmode="numeric"/></div>
+      <div class="field"><label>CID <span style="font-weight:400;text-transform:none;letter-spacing:0">(se houver)</span></label><input type="text" id="at-cid" placeholder="Ex: J00"/></div>
+    </div>
+    <div class="field"><label>Atestado (imagem ou PDF)</label>
+      <div class="upload-area"><input type="file" id="up-at" accept="image/*,.pdf" onchange="onUp(this,'at')"/>
+        <div class="upload-icon">🏥</div><div class="upload-label">Toque para enviar</div>
+        <div class="upload-hint">JPG, PNG ou PDF · máx. 10MB</div><div class="upload-name" id="up-at-name"></div>
+      </div>
+    </div>
+
+    <div class="loading" id="loading-at"><div class="spinner"></div><div class="loading-txt">Enviando atestado…</div></div>
+    <div class="toast" id="toast-at"></div>
+    <button class="btn-primary" id="btn-at" onclick="enviarAtestado()">Enviar Atestado</button>
+  </div>
+
+  <!-- ══ DESLIGAMENTO ══ -->
+</div><!-- /app -->
+
+<div style="text-align:center;padding:18px 0 28px;font-size:11px;color:#9B9890;font-family:'Outfit',sans-serif;letter-spacing:1px">
+  Feito por <strong style="color:#6B6860">Domani Consultoria</strong>
+</div>
+
+<script>
+// ── CONFIGURAÇÃO ──
+var SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbzYHX6Ce_TfFJkjkLbINAVBdLyys2Gk9kuHajYMHZD1HDGegcp29B9cchMMuFlWqbcBPw/exec';
+
+var PORTFOLIO_EMPRESAS = [
+  'Chez Vous','Albanisa','Espetinho da Liberdade','Marpeças',
+  'Ca Serviços','Chez Vous Café','Delicias Do Cariri','Planeta Essência',
+  'Edione','Imperial Pizza','Mix Bolos','Kroc Pastéis',
+  'Kroc Lanches','Kroc Salgados','Panificadora Pastiannes',
+  'Pastyanne Restaurante','Vip Dog'
+];
+
+// ── Navegação ──
+function goto(id) {
+  document.querySelectorAll('.screen').forEach(function(s) { s.classList.remove('active'); });
+  var t = document.getElementById('screen-' + id);
+  if (t) { t.classList.add('active'); window.scrollTo({ top: 0, behavior: 'smooth' }); }
+  limparToasts();
+}
+function limparToasts() {
+  document.querySelectorAll('.toast').forEach(function(t) { t.className = 'toast'; t.innerHTML = ''; });
+}
+
+// ── Preenche dropdowns ──
+function preencherEmpresas() {
+  var selIds = ['doc-empresa','at-empresa','vaga-empresa'];
+  selIds.forEach(function(id) {
+    var sel = document.getElementById(id);
+    PORTFOLIO_EMPRESAS.forEach(function(nome) {
+      var o = document.createElement('option');
+      o.value = o.textContent = nome;
+      sel.appendChild(o);
+    });
+  });
+  apiGet('getEmpresas', function(lista) {
+    selIds.forEach(function(id) {
+      var sel = document.getElementById(id);
+      var existentes = [];
+      for (var k = 1; k < sel.options.length; k++) {
+        existentes.push(sel.options[k].value.toLowerCase().trim());
+      }
+      lista.forEach(function(e) {
+        var nome = e.razaoSocial.trim();
+        if (existentes.indexOf(nome.toLowerCase()) === -1) {
+          var o = document.createElement('option');
+          o.value = o.textContent = nome;
+          sel.appendChild(o);
+        }
+      });
+    });
+  });
+}
+
+// ── API ──
+function apiGet(action, callback) {
+  fetch(SCRIPT_URL + '?action=' + action, { redirect: 'follow' })
+    .then(function(r) { return r.json(); })
+    .then(callback)
+    .catch(function(e) { console.warn('GET err:', e); });
+}
+function apiPost(action, dados, onOk, onErr) {
+  fetch(SCRIPT_URL, {
+    method: 'POST',
+    body: JSON.stringify({ action: action, dados: dados }),
+    redirect: 'follow'
+  })
+    .then(function(r) { return r.json(); })
+    .then(onOk)
+    .catch(onErr || function(e) { console.warn('POST err:', e); });
+}
+
+// ── Upload ──
+var arquivos = {};
+function onUp(input, key) {
+  var file = input.files[0];
+  var nameEl = document.getElementById(input.id + '-name');
+  if (!file) return;
+  if (file.size > 5 * 1024 * 1024) { alert('Arquivo muito grande. Máximo 5MB.'); input.value = ''; return; }
+  if (nameEl) { nameEl.textContent = '✓ ' + file.name; nameEl.style.display = 'block'; }
+  var reader = new FileReader();
+  reader.onload = function(e) { arquivos[key] = { base64: e.target.result, mime: file.type }; };
+  reader.readAsDataURL(file);
+}
+
+// ── Helpers ──
+function showLoading(id, show) {
+  var el = document.getElementById('loading-' + id);
+  if (show) el.classList.add('show'); else el.classList.remove('show');
+}
+function showToast(id, ok, msg) {
+  var el = document.getElementById('toast-' + id);
+  el.className = 'toast ' + (ok ? 'ok' : 'err');
+  el.innerHTML = msg;
+}
+function validar(campos) {
+  for (var i = 0; i < campos.length; i++) {
+    var el = document.getElementById(campos[i][0]);
+    var val = el ? el.value.trim() : '';
+    if (!val) { alert('Preencha o campo: ' + campos[i][1]); if (el) el.focus(); return false; }
+  }
+  return true;
+}
+
+// ── Máscaras ──
+function _maskTel(el) {
+  var v = el.value.replace(/\D/g,'').slice(0,11);
+  if (v.length <= 10) {
+    v = v.replace(/(\d{2})(\d)/,'($1) $2').replace(/(\d{4})(\d)/,'$1-$2');
+  } else {
+    v = v.replace(/(\d{2})(\d)/,'($1) $2').replace(/(\d{5})(\d)/,'$1-$2');
+  }
+  el.value = v;
+}
+document.getElementById('doc-cpf').addEventListener('input', function(e) {
+  var v = e.target.value.replace(/\D/g,'').slice(0,11);
+  v = v.replace(/(\d{3})(\d)/,'$1.$2').replace(/(\d{3})\.(\d{3})(\d)/,'$1.$2.$3').replace(/\.(\d{3})(\d)/,'.$1-$2');
+  e.target.value = v;
+});
+document.getElementById('doc-ctps').addEventListener('input', function(e) {
+  var v = e.target.value.replace(/\D/g,'').slice(0,11);
+  v = v.replace(/(\d{7})(\d)/,'$1/$2');
+  e.target.value = v;
+});
+['doc-tel','doc-urgencia1','doc-urgencia2'].forEach(function(id) {
+  document.getElementById(id).addEventListener('input', function(e) { _maskTel(e.target); });
+});
+
+// ── ENVIAR DOCUMENTOS ──
+function enviarDocumentos() {
+  if (!validar([
+    ['doc-nome','Nome Completo'],
+    ['doc-cpf','CPF'],
+    ['doc-email','E-mail'],
+    ['doc-urgencia1','Contato de Urgência 1'],
+    ['doc-urgencia2','Contato de Urgência 2'],
+    ['doc-empresa','Empresa']
+  ])) return;
+  if (!document.getElementById('doc-lgpd').checked) {
+    alert('É necessário aceitar a autorização LGPD para enviar os documentos.'); return;
+  }
+  if (!arquivos['rg-frente'])  { alert('Envie a foto do RG (frente).'); return; }
+  if (!arquivos['rg-verso'])   { alert('Envie a foto do RG (verso).'); return; }
+  if (!arquivos['cpf'])        { alert('Envie a foto do CPF.'); return; }
+  if (!arquivos['cnh'])        { alert('Envie a CNH.'); return; }
+  if (!arquivos['certidao'])   { alert('Envie a Certidão de Nascimento ou Casamento.'); return; }
+  if (!arquivos['foto'])       { alert('Envie a foto 3x4.'); return; }
+  if (!arquivos['residencia']) { alert('Envie o comprovante de residência.'); return; }
+  if (!arquivos['escolaridade']){ alert('Envie o comprovante de escolaridade.'); return; }
+  if (!arquivos['pis'])        { alert('Envie o PIS/PASEP.'); return; }
+  if (!arquivos['titulo'])     { alert('Envie o Título de Eleitor.'); return; }
+  if (!arquivos['banco'])      { alert('Envie os dados bancários.'); return; }
+
+  var nome    = document.getElementById('doc-nome').value.trim();
+  var empresa = document.getElementById('doc-empresa').value;
+
+  var dados = {
+    nome:      nome,
+    cpf:       document.getElementById('doc-cpf').value.trim(),
+    ctps:      document.getElementById('doc-ctps').value.trim(),
+    nascimento:document.getElementById('doc-nasc').value,
+    telefone:  document.getElementById('doc-tel').value.trim(),
+    email:     document.getElementById('doc-email').value.trim(),
+    urgencia1: document.getElementById('doc-urgencia1').value.trim(),
+    urgencia2: document.getElementById('doc-urgencia2').value.trim(),
+    empresa:   empresa,
+    lgpd:      true,
+    rgFrenteBase64:      arquivos['rg-frente']    ? arquivos['rg-frente'].base64    : null,
+    rgFrenteMime:        arquivos['rg-frente']    ? arquivos['rg-frente'].mime      : null,
+    rgVersoBase64:       arquivos['rg-verso']     ? arquivos['rg-verso'].base64     : null,
+    rgVersoMime:         arquivos['rg-verso']     ? arquivos['rg-verso'].mime       : null,
+    cpfBase64:           arquivos['cpf']          ? arquivos['cpf'].base64          : null,
+    cpfMime:             arquivos['cpf']          ? arquivos['cpf'].mime            : null,
+    cnhBase64:           arquivos['cnh']          ? arquivos['cnh'].base64          : null,
+    cnhMime:             arquivos['cnh']          ? arquivos['cnh'].mime            : null,
+    certidaoBase64:      arquivos['certidao']     ? arquivos['certidao'].base64     : null,
+    certidaoMime:        arquivos['certidao']     ? arquivos['certidao'].mime       : null,
+    fotoBase64:          arquivos['foto']         ? arquivos['foto'].base64         : null,
+    fotoMime:            arquivos['foto']         ? arquivos['foto'].mime           : null,
+    residenciaBase64:    arquivos['residencia']   ? arquivos['residencia'].base64   : null,
+    residenciaMime:      arquivos['residencia']   ? arquivos['residencia'].mime     : null,
+    escolaridadeBase64:  arquivos['escolaridade'] ? arquivos['escolaridade'].base64 : null,
+    escolaridadeMime:    arquivos['escolaridade'] ? arquivos['escolaridade'].mime   : null,
+    pisBase64:           arquivos['pis']          ? arquivos['pis'].base64          : null,
+    pisMime:             arquivos['pis']          ? arquivos['pis'].mime            : null,
+    tituloBase64:        arquivos['titulo']       ? arquivos['titulo'].base64       : null,
+    tituloMime:          arquivos['titulo']       ? arquivos['titulo'].mime         : null,
+    bancoBase64:         arquivos['banco']        ? arquivos['banco'].base64        : null,
+    bancoMime:           arquivos['banco']        ? arquivos['banco'].mime          : null,
+    filhosBase64:        arquivos['filhos']       ? arquivos['filhos'].base64       : null,
+    filhosMime:          arquivos['filhos']       ? arquivos['filhos'].mime         : null,
+    cpfFilhosBase64:     arquivos['cpf-filhos']   ? arquivos['cpf-filhos'].base64   : null,
+    cpfFilhosMime:       arquivos['cpf-filhos']   ? arquivos['cpf-filhos'].mime     : null,
+    vacinaBase64:        arquivos['vacina']       ? arquivos['vacina'].base64       : null,
+    vacinaMime:          arquivos['vacina']       ? arquivos['vacina'].mime         : null,
+    declEscolarBase64:   arquivos['decl-escolar'] ? arquivos['decl-escolar'].base64 : null,
+    declEscolarMime:     arquivos['decl-escolar'] ? arquivos['decl-escolar'].mime   : null
+  };
+
+  document.getElementById('btn-doc').disabled = true;
+  showLoading('doc', true);
+
+  apiPost('processDocumentosColaborador', dados, function(res) {
+    showLoading('doc', false);
+    document.getElementById('btn-doc').disabled = false;
+    if (res.ok) {
+      goto('sucesso');
+    } else {
+      showToast('doc', false, '✗ Erro ao enviar: ' + res.erro + '. Tente novamente ou entre em contato com o RH.');
+    }
+  }, function(err) {
+    showLoading('doc', false);
+    document.getElementById('btn-doc').disabled = false;
+    showToast('doc', false, '✗ Erro de conexão. Verifique sua internet e tente novamente.');
+  });
+}
+
+// ── ABRIR VAGA ──
+function enviarVaga() {
+  if (!validar([
+    ['vaga-titulo','Título da Vaga'],
+    ['vaga-empresa','Empresa'],
+    ['vaga-area','Área'],
+    ['vaga-nivel','Nível'],
+    ['vaga-contrato','Tipo de Contrato'],
+    ['vaga-gestor','Seu Nome']
+  ])) return;
+
+  var dados = {
+    titulo:       document.getElementById('vaga-titulo').value.trim(),
+    empresa:      document.getElementById('vaga-empresa').value,
+    area:         document.getElementById('vaga-area').value,
+    nivel:        document.getElementById('vaga-nivel').value,
+    tipoContrato: document.getElementById('vaga-contrato').value,
+    modalidade:   document.getElementById('vaga-modalidade').value,
+    qtdVagas:     document.getElementById('vaga-qtd').value,
+    motivo:       document.getElementById('vaga-motivo').value,
+    cidade:       document.getElementById('vaga-cidade').value.trim(),
+    estado:       document.getElementById('vaga-estado').value,
+    salarioDe:    document.getElementById('vaga-sal-de').value.trim(),
+    salarioAte:   document.getElementById('vaga-sal-ate').value.trim(),
+    aCombinar:    document.getElementById('vaga-a-combinar').checked,
+    beneficios:   document.getElementById('vaga-beneficios').value.trim(),
+    escolaridade: document.getElementById('vaga-escolaridade').value,
+    experiencia:  document.getElementById('vaga-experiencia').value,
+    descricao:    document.getElementById('vaga-descricao').value.trim(),
+    requisitos:   document.getElementById('vaga-requisitos').value.trim(),
+    diferenciais: document.getElementById('vaga-diferenciais').value.trim(),
+    gestor:       document.getElementById('vaga-gestor').value.trim(),
+    dataLimite:   document.getElementById('vaga-data-limite').value,
+    infojobs:     'Sim',
+    aprovada:     false
+  };
+
+  document.getElementById('btn-vaga').disabled = true;
+  showLoading('vaga', true);
+  apiPost('processVaga', dados, function(res) {
+    showLoading('vaga', false);
+    document.getElementById('btn-vaga').disabled = false;
+    if (res.ok) showToast('vaga', true, '✓ Solicitação enviada! O RH da Crescer recebeu os dados da vaga e entrará em contato em breve para confirmar a divulgação.');
+    else showToast('vaga', false, '✗ Erro: ' + res.erro);
+  }, function(err) {
+    showLoading('vaga', false);
+    document.getElementById('btn-vaga').disabled = false;
+    showToast('vaga', false, '✗ Erro de conexão. Verifique sua internet e tente novamente.');
+  });
+}
+
+// ── ENVIAR ATESTADO ──
+function enviarAtestado() {
+  if (!validar([['at-nome','Nome'],['at-empresa','Empresa'],['at-dias','Dias de afastamento']])) return;
+  if (!arquivos['at']) { alert('Anexe o arquivo do atestado médico.'); return; }
+
+  var dados = {
+    nome:    document.getElementById('at-nome').value.trim(),
+    empresa: document.getElementById('at-empresa').value,
+    dias:    document.getElementById('at-dias').value,
+    cid:     document.getElementById('at-cid').value.trim(),
+    arquivoBase64: arquivos['at'].base64,
+    arquivoMime:   arquivos['at'].mime
+  };
+
+  document.getElementById('btn-at').disabled = true;
+  showLoading('at', true);
+  apiPost('processAtestado', dados, function(res) {
+    showLoading('at', false);
+    document.getElementById('btn-at').disabled = false;
+    if (res.ok) showToast('at', true, '✓ Atestado enviado com sucesso! O RH da Crescer foi notificado e irá registrar seu afastamento.');
+    else showToast('at', false, '✗ Erro: ' + res.erro);
+  }, function(err) {
+    showLoading('at', false);
+    document.getElementById('btn-at').disabled = false;
+    showToast('at', false, '✗ Erro de conexão. Verifique sua internet e tente novamente.');
+  });
+}
+
+
+window.addEventListener('load', preencherEmpresas);
+</script>
+</body>
+</html>
