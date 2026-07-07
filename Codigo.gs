@@ -369,7 +369,9 @@ function processDocumentosColaborador(dados) {
       ['pis',         'PIS_PASEP'],
       ['titulo',      'TituloEleitor'],
       ['banco',       'DadosBancarios'],
-      ['filhos',      'CertidaoFilhos']
+      ['filhos',      'CertidaoFilhos'],
+      ['ctps',             'CTPS'],
+      ['exameAdmissional', 'ExameAdmissional']
     ];
 
     var enviados = [];
