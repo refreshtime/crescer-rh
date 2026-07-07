@@ -194,7 +194,6 @@ html, body { height: 100%; background: var(--bg); font-family: 'Outfit', sans-se
     <div class="section-tag">Seus Dados</div>
     <div class="field"><label>Nome Completo</label><input type="text" id="doc-nome" placeholder="Seu nome completo" autocomplete="name"/></div>
     <div class="field"><label>CPF</label><input type="text" id="doc-cpf" placeholder="000.000.000-00" maxlength="14" inputmode="numeric"/></div>
-    <div class="field"><label>CTPS <span style="font-weight:400;text-transform:none;letter-spacing:0">(Carteira de Trabalho)</span></label><input type="text" id="doc-ctps" placeholder="1234567/0001" maxlength="12" inputmode="numeric"/></div>
     <div class="field-row">
       <div class="field"><label>Data de Nascimento</label><input type="date" id="doc-nasc"/></div>
       <div class="field"><label>WhatsApp</label><input type="tel" id="doc-tel" placeholder="(00) 99999-9999" maxlength="15" inputmode="numeric"/></div>
@@ -232,6 +231,12 @@ html, body { height: 100%; background: var(--bg); font-family: 'Outfit', sans-se
       </div>
     </div>
 
+    <div class="field"><label>CTPS <span style="font-weight:400;text-transform:none;letter-spacing:0">(Carteira de Trabalho — foto)</span></label>
+      <div class="upload-area"><input type="file" id="up-ctps" accept="image/*,.pdf" onchange="onUp(this,'ctps')"/>
+        <div class="upload-icon">📒</div><div class="upload-label">Toque para enviar</div>
+        <div class="upload-hint">JPG, PNG ou PDF · máx. 5MB</div><div class="upload-name" id="up-ctps-name"></div>
+      </div>
+    </div>
     <div class="field"><label>CNH</label>
       <div class="upload-area"><input type="file" id="up-cnh" accept="image/*,.pdf" onchange="onUp(this,'cnh')"/>
         <div class="upload-icon">🚗</div><div class="upload-label">Toque para enviar</div>
@@ -306,6 +311,14 @@ html, body { height: 100%; background: var(--bg); font-family: 'Outfit', sans-se
       <div class="upload-area"><input type="file" id="up-decl-escolar" accept="image/*,.pdf" onchange="onUp(this,'decl-escolar')"/>
         <div class="upload-icon">🏫</div><div class="upload-label">Toque para enviar</div>
         <div class="upload-hint">JPG, PNG ou PDF · máx. 5MB</div><div class="upload-name" id="up-decl-escolar-name"></div>
+      </div>
+    </div>
+
+    <div class="section-tag">Exame Médico</div>
+    <div class="field"><label>Exame Admissional <span class="badge-opt">opcional</span></label>
+      <div class="upload-area"><input type="file" id="up-exame-admissional" accept="image/*,.pdf" onchange="onUp(this,'exame-admissional')"/>
+        <div class="upload-icon">🩺</div><div class="upload-label">Toque para enviar</div>
+        <div class="upload-hint">JPG, PNG ou PDF · máx. 5MB</div><div class="upload-name" id="up-exame-admissional-name"></div>
       </div>
     </div>
 
@@ -621,11 +634,6 @@ document.getElementById('doc-cpf').addEventListener('input', function(e) {
   v = v.replace(/(\d{3})(\d)/,'$1.$2').replace(/(\d{3})\.(\d{3})(\d)/,'$1.$2.$3').replace(/\.(\d{3})(\d)/,'.$1-$2');
   e.target.value = v;
 });
-document.getElementById('doc-ctps').addEventListener('input', function(e) {
-  var v = e.target.value.replace(/\D/g,'').slice(0,11);
-  v = v.replace(/(\d{7})(\d)/,'$1/$2');
-  e.target.value = v;
-});
 ['doc-tel','doc-urgencia1','doc-urgencia2'].forEach(function(id) {
   document.getElementById(id).addEventListener('input', function(e) { _maskTel(e.target); });
 });
@@ -643,25 +651,12 @@ function enviarDocumentos() {
   if (!document.getElementById('doc-lgpd').checked) {
     alert('É necessário aceitar a autorização LGPD para enviar os documentos.'); return;
   }
-  if (!arquivos['rg-frente'])  { alert('Envie a foto do RG (frente).'); return; }
-  if (!arquivos['rg-verso'])   { alert('Envie a foto do RG (verso).'); return; }
-  if (!arquivos['cpf'])        { alert('Envie a foto do CPF.'); return; }
-  if (!arquivos['cnh'])        { alert('Envie a CNH.'); return; }
-  if (!arquivos['certidao'])   { alert('Envie a Certidão de Nascimento ou Casamento.'); return; }
-  if (!arquivos['foto'])       { alert('Envie a foto 3x4.'); return; }
-  if (!arquivos['residencia']) { alert('Envie o comprovante de residência.'); return; }
-  if (!arquivos['escolaridade']){ alert('Envie o comprovante de escolaridade.'); return; }
-  if (!arquivos['pis'])        { alert('Envie o PIS/PASEP.'); return; }
-  if (!arquivos['titulo'])     { alert('Envie o Título de Eleitor.'); return; }
-  if (!arquivos['banco'])      { alert('Envie os dados bancários.'); return; }
-
   var nome    = document.getElementById('doc-nome').value.trim();
   var empresa = document.getElementById('doc-empresa').value;
 
   var dados = {
     nome:      nome,
     cpf:       document.getElementById('doc-cpf').value.trim(),
-    ctps:      document.getElementById('doc-ctps').value.trim(),
     nascimento:document.getElementById('doc-nasc').value,
     telefone:  document.getElementById('doc-tel').value.trim(),
     email:     document.getElementById('doc-email').value.trim(),
@@ -698,7 +693,11 @@ function enviarDocumentos() {
     vacinaBase64:        arquivos['vacina']       ? arquivos['vacina'].base64       : null,
     vacinaMime:          arquivos['vacina']       ? arquivos['vacina'].mime         : null,
     declEscolarBase64:   arquivos['decl-escolar'] ? arquivos['decl-escolar'].base64 : null,
-    declEscolarMime:     arquivos['decl-escolar'] ? arquivos['decl-escolar'].mime   : null
+    declEscolarMime:     arquivos['decl-escolar'] ? arquivos['decl-escolar'].mime   : null,
+    ctpsBase64:          arquivos['ctps']          ? arquivos['ctps'].base64          : null,
+    ctpsMime:            arquivos['ctps']          ? arquivos['ctps'].mime            : null,
+    exameAdmissionalBase64: arquivos['exame-admissional'] ? arquivos['exame-admissional'].base64 : null,
+    exameAdmissionalMime:   arquivos['exame-admissional'] ? arquivos['exame-admissional'].mime   : null
   };
 
   document.getElementById('btn-doc').disabled = true;
