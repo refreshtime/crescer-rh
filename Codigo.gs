@@ -1186,6 +1186,9 @@ function criarDocJornada(dados) {
     _jornadaParBold(body, 'Colaborador: ', dados.colaborador  || '');
     var periodo = (dados.periodoIni && dados.periodoFim) ? dados.periodoIni + ' a ' + dados.periodoFim : (dados.periodoIni || '');
     _jornadaParBold(body, 'Período: ',     periodo);
+    if (dados.bancoHoras) {
+      _jornadaParBold(body, 'Saldo de Banco de Horas: ', dados.bancoHoras);
+    }
 
     body.appendHorizontalRule();
     body.appendParagraph('');
@@ -1330,12 +1333,13 @@ function criarDocJornada(dados) {
 
     // ── Registra na planilha ──
     var ss    = SpreadsheetApp.openById(CONFIG.SPREADSHEET_ID);
-    var sheet = _getOrCreateSheet(ss, 'Jornadas', ['Data', 'Empresa', 'Colaborador', 'Período', 'Link do Documento']);
+    var sheet = _getOrCreateSheet(ss, 'Jornadas', ['Data', 'Empresa', 'Colaborador', 'Período', 'Saldo Banco Horas', 'Link do Documento']);
     sheet.appendRow([
       dados.dataGeracao || '',
       dados.empresa     || '',
       dados.colaborador || '',
       periodo,
+      dados.bancoHoras  || '',
       doc.getUrl()
     ]);
 

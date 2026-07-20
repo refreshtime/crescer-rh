@@ -1755,7 +1755,7 @@ function processarJornada(text) {
   var periodoStr = (periodoIni && periodoFim) ? periodoIni + ' a ' + periodoFim : (periodoIni || '_______________');
 
   var totalAtrasos = 0, totalAtrasoMin = 0, totalIv = 0, totalEstouros = 0;
-  var totalFaltas = 0, totalAntecipadas = 0, totalExtraMin = 0, totalIncompletos = 0;
+  var totalFaltas = 0, totalAntecipadas = 0, totalExtraMin = 0, totalAntecipacaoMin = 0, totalIncompletos = 0;
 
   var html = '<div class="jornada-doc">';
   html += '<div class="jornada-titulo-principal">Relatório de Monitoramento de Jornada e Assiduidade</div>';
@@ -1800,6 +1800,7 @@ function processarJornada(text) {
       html += '<ul class="jornada-list">';
       d.saidasAntecipadas.forEach(function(s) {
         totalAntecipadas++;
+        totalAntecipacaoMin += s.antecipacao;
         html += '<li>' + s.diaShort + ': Saiu às <strong>' + s.saida + '</strong> — Previsto: ' + s.previsto + ' — Saiu <span class="jornada-red">' + _atrasoStr(s.antecipacao) + ' antes</span> do horário</li>';
       });
       html += '</ul>';
@@ -1849,8 +1850,13 @@ function processarJornada(text) {
     }
   });
 
+  var saldoMin = totalExtraMin - totalAtrasoMin - totalAntecipacaoMin;
+  var saldoAbs = Math.abs(saldoMin);
+  var saldoH = Math.floor(saldoAbs / 60), saldoM = saldoAbs % 60;
+  var saldoStr = (saldoMin >= 0 ? '+' : '-') + (saldoH < 10 ? '0' : '') + saldoH + 'h' + (saldoM < 10 ? '0' : '') + saldoM;
+
   _jornadaArr = arr;
-  _jornadaTotais = { atrasos: totalAtrasos, atrasoMin: totalAtrasoMin, iv: totalIv, estouros: totalEstouros, faltas: totalFaltas, antecipadas: totalAntecipadas, extraMin: totalExtraMin, incompletos: totalIncompletos };
+  _jornadaTotais = { atrasos: totalAtrasos, atrasoMin: totalAtrasoMin, iv: totalIv, estouros: totalEstouros, faltas: totalFaltas, antecipadas: totalAntecipadas, extraMin: totalExtraMin, antecipacaoMin: totalAntecipacaoMin, saldoMin: saldoMin, saldoStr: saldoStr, incompletos: totalIncompletos };
 
   html += '<div class="jornada-analise">';
   html += '<div class="jornada-analise-titulo">Análise do Comportamento de Jornada</div>';
@@ -1879,6 +1885,7 @@ function processarJornada(text) {
   if (totalIncompletos > 0) {
     html += '<li>Foram identificados <span class="jornada-red">' + totalIncompletos + ' dia' + (totalIncompletos > 1 ? 's' : '') + ' com registro incompleto</span> (entrada sem saída correspondente), impossibilitando o cálculo correto da jornada nessas datas.</li>';
   }
+  html += '<li>Saldo de banco de horas no período: <strong' + (saldoMin < 0 ? ' class="jornada-red"' : '') + '>' + saldoStr + '</strong>' + (saldoMin < 0 ? ' — débito a compensar.' : saldoMin === 0 ? ' — saldo neutro.' : ' — crédito de horas.') + '</li>';
   if (totalAtrasos === 0 && totalFaltas === 0 && totalAntecipadas === 0 && cedoCount === 0 && totalEstouros === 0 && totalIncompletos === 0 && totalExtraMin === 0) {
     html += '<li>Não foram identificadas irregularidades no período analisado.</li>';
   } else {
@@ -2032,6 +2039,7 @@ function enviarJornada() {
     periodoFim: periodoFim,
     dataGeracao: dataHoje,
     observacoes: observacoes,
+    bancoHoras: _jornadaTotais.saldoStr || '',
     meses: _jornadaArr.map(function(m) {
       return { key: m.key, atrasos: m.data.atrasos, intervalos: m.data.intervalos };
     }),
